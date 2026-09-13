@@ -1,0 +1,13 @@
+# Robots.txt for Aadrit Srivastava Portfolio
+User-agent: *
+Allow: /
+Allow: /privacy
+Allow: /terms
+
+# Disallow private administrative consoles and internal endpoints
+Disallow: /admin
+Disallow: /admin/*
+Disallow: /api/*
+
+Sitemap: https://aadrit.dev/sitemap.xml
+

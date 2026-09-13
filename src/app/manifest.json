@@ -1,0 +1,16 @@
+{
+  "name": "Aadrit Srivastava - Portfolio",
+  "short_name": "Aadrit",
+  "description": "AI/ML & Systems Engineer Portfolio",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#080b11",
+  "theme_color": "#080b11",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

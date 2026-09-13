@@ -1,0 +1,174 @@
+const http = require("http");
+const fs = require("fs");
+const path = require("path");
+
+function request(url, options = {}, body = null) {
+  return new Promise((resolve, reject) => {
+    const parsed = new URL(url);
+    const reqOptions = {
+      hostname: parsed.hostname,
+      port: parsed.port || 80,
+      path: parsed.pathname + parsed.search,
+      method: options.method || "GET",
+      headers: options.headers || {},
+    };
+
+    const req = http.request(reqOptions, (res) => {
+      let data = "";
+      res.on("data", (chunk) => (data += chunk));
+      res.on("end", () => {
+        resolve({
+          statusCode: res.statusCode,
+          headers: res.headers,
+          body: data,
+        });
+      });
+    });
+
+    req.on("error", reject);
+    if (body) {
+      req.write(typeof body === "string" ? body : JSON.stringify(body));
+    }
+    req.end();
+  });
+}
+
+async function runE2ETests() {
+  console.log("=== RUNNING LIVE END-TO-END SECURITY VERIFICATION ===");
+  let passed = 0;
+  let failed = 0;
+
+  function assert(cond, msg) {
+    if (cond) {
+      console.log(`  [PASS] ${msg}`);
+      passed++;
+    } else {
+      console.error(`  [FAIL] ${msg}`);
+      failed++;
+    }
+  }
+
+  try {
+    // 1. Home Page & Security Headers
+    console.log("\n1. Testing Home Page & Security Response Headers");
+    const homeRes = await request("http://localhost:3000/");
+    assert(homeRes.statusCode === 200, "Home page returned HTTP 200");
+    assert(homeRes.headers["x-frame-options"] === "DENY", "X-Frame-Options: DENY present");
+    assert(homeRes.headers["x-content-type-options"] === "nosniff", "X-Content-Type-Options: nosniff present");
+    assert(homeRes.headers["strict-transport-security"]?.includes("max-age=63072000"), "HSTS header configured");
+    assert(homeRes.headers["referrer-policy"] === "strict-origin-when-cross-origin", "Referrer-Policy header present");
+    assert(homeRes.headers["content-security-policy"]?.includes("default-src 'self'"), "CSP header present");
+    assert(!homeRes.headers["x-powered-by"], "X-Powered-By is suppressed (no fingerprinting)");
+    assert(homeRes.body.includes("Aadrit Srivastava"), "Home page contains Aadrit Srivastava");
+    assert(homeRes.body.includes("/images/aadrit.png"), "Home page references authentic portrait image");
+
+    // 2. Dedicated Pages
+    console.log("\n2. Testing Legal & Custom Error Pages");
+    const privacyRes = await request("http://localhost:3000/privacy");
+    assert(privacyRes.statusCode === 200, "/privacy page returned HTTP 200");
+    assert(privacyRes.body.includes("Privacy Policy"), "Privacy policy text present");
+
+    const termsRes = await request("http://localhost:3000/terms");
+    assert(termsRes.statusCode === 200, "/terms page returned HTTP 200");
+    assert(termsRes.body.includes("Terms of Use"), "Terms of use text present");
+
+    const notFoundRes = await request("http://localhost:3000/some-random-route-xyz-404");
+    assert(notFoundRes.statusCode === 404, "Unknown route returned HTTP 404");
+    assert(notFoundRes.body.includes("Requested Resource Unreachable") || notFoundRes.body.includes("ROUTER_EXCEPTION"), "Custom 404 terminal UI rendered");
+
+    // 3. Admin Route Protection
+    console.log("\n3. Testing Admin Route Protection");
+    const unauthAdmin = await request("http://localhost:3000/admin");
+    assert(unauthAdmin.statusCode === 307 || unauthAdmin.statusCode === 302, "Unauthenticated /admin redirects to login");
+    assert(unauthAdmin.headers.location?.includes("/admin/login"), "Redirect target is /admin/login");
+
+    const unauthApiAdmin = await request("http://localhost:3000/api/admin/messages");
+    assert(unauthApiAdmin.statusCode === 401, "Unauthenticated /api/admin/messages returns 401 Unauthorized");
+
+    // 4. Contact Form API & Sanitization
+    console.log("\n4. Testing Contact Form API & XSS Sanitization");
+    const contactPayload = {
+      name: "Research Recruiter",
+      email: "recruiter@university.edu",
+      subject: "AI Systems Engineering Role",
+      message: "Hello Aadrit, <script>alert('xss')</script> We reviewed your SLM and Hemlock projects.",
+    };
+
+    const contactRes = await request("http://localhost:3000/api/contact", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+    }, contactPayload);
+
+    assert(contactRes.statusCode === 200, "Valid contact submission accepted with HTTP 200");
+    const contactJson = JSON.parse(contactRes.body);
+    assert(contactJson.success === true, "Response JSON has success: true");
+
+    // Check server storage sanitization
+    const messagesFile = path.join(__dirname, "..", "data", "messages.json");
+    if (fs.existsSync(messagesFile)) {
+      const messages = JSON.parse(fs.readFileSync(messagesFile, "utf-8"));
+      const lastMsg = messages[0];
+      assert(!lastMsg.message.includes("<script>"), "Script tag was completely stripped from saved message");
+      assert(lastMsg.message.includes("We reviewed your SLM"), "Legitimate message content preserved");
+    }
+
+    // 5. Rate Limiting Test
+    console.log("\n5. Testing Rate Limiting on Contact Form");
+    let rateLimited = false;
+    for (let i = 0; i < 7; i++) {
+      const burstRes = await request("http://localhost:3000/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-Forwarded-For": "203.0.113.195", // Simulated client IP
+        },
+      }, contactPayload);
+      if (burstRes.statusCode === 429) {
+        rateLimited = true;
+        break;
+      }
+    }
+    assert(rateLimited, "Rate limiter engaged with HTTP 429 Too Many Requests under burst traffic");
+
+    // 6. Admin Authentication & Session Generation
+    console.log("\n6. Testing Admin Authentication");
+    const invalidAuthRes = await request("http://localhost:3000/api/auth", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+    }, { password: "WrongMasterKey!" });
+    assert(invalidAuthRes.statusCode === 401, "Invalid master password rejected with 401");
+
+    const validAuthRes = await request("http://localhost:3000/api/auth", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+    }, { password: "Aadrit@Secured2026!" });
+    assert(validAuthRes.statusCode === 200, "Valid master password accepted with 200");
+    const setCookie = validAuthRes.headers["set-cookie"];
+    assert(setCookie && setCookie[0].includes("session_token"), "Set-Cookie issues session_token");
+    assert(setCookie && setCookie[0].includes("HttpOnly"), "Session cookie has HttpOnly flag");
+    assert(setCookie && /SameSite=strict/i.test(setCookie[0]), "Session cookie has SameSite=strict flag");
+
+    // 7. Authenticated Admin Access
+    console.log("\n7. Testing Authenticated Admin Session");
+    const cookieVal = setCookie[0].split(";")[0];
+    const authAdminRes = await request("http://localhost:3000/api/admin/messages", {
+      method: "GET",
+      headers: { Cookie: cookieVal },
+    });
+    assert(authAdminRes.statusCode === 200, "Authenticated request to /api/admin/messages returns 200");
+    const adminData = JSON.parse(authAdminRes.body);
+    assert(Array.isArray(adminData.messages), "Admin receives messages list");
+    assert(Array.isArray(adminData.auditLogs), "Admin receives audit logs");
+
+    console.log("\n=========================================");
+    console.log(`LIVE E2E RESULTS: ${passed} Passed, ${failed} Failed`);
+    console.log("=========================================\n");
+
+    if (failed > 0) process.exit(1);
+  } catch (err) {
+    console.error("E2E Test Error:", err);
+    process.exit(1);
+  }
+}
+
+runE2ETests();
