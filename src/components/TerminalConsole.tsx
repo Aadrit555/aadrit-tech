@@ -2,6 +2,13 @@
 
 import { useState, useRef, useEffect, KeyboardEvent } from "react";
 import { Terminal as TerminalIcon, CornerDownLeft, RotateCcw, Copy, Check } from "lucide-react";
+import {
+  profile,
+  projects,
+  focusAreas,
+  leadershipRoles,
+  securityControls,
+} from "@/data/portfolio";
 
 interface HistoryEntry {
   command: string;
@@ -15,7 +22,7 @@ export default function TerminalConsole() {
       command: "welcome",
       output: [
         "DEVON CORP. HOENN POKÉDEX DIAGNOSTICS [v3.0-emerald]",
-        "Aadrit :: Systems & AI/ML Developer Register",
+        `${profile.name} :: ${profile.role} Register`,
         "Type 'help' to inspect system commands or click quick actions below.",
       ],
     },
@@ -58,63 +65,61 @@ export default function TerminalConsole() {
 
       case "whoami":
         output = [
-          "NAME:     Aadrit",
-          "ROLE:     AI/ML & Systems Developer",
-          "SCHOOL:   SRM University AP (B.Tech Computer Science & Engineering, 2025-2029)",
-          "FOCUS:    Machine learning in Python and systems software in C",
+          `NAME:     ${profile.name}`,
+          `ROLE:     ${profile.role}`,
+          `SCHOOL:   ${profile.university} (${profile.degree}, ${profile.period})`,
+          `FOCUS:    ${profile.pokedexEntry}`,
         ];
         break;
 
       case "projects":
         output = [
           "PROJECTS:",
-          "  1. SLM - Character-level intent model in PyTorch using self-attention and REINFORCE",
-          "     Repo: github.com/Aadrit555/DIDsomethin_SLM",
-          "  2. Hemlock - C-based image defense & provenance with perceptual hashing and RSA signatures",
-          "     Recognition: FOSS United JUST A HACKATHON Winner · 2024",
-          "     Repo: github.com/Aadrit555/Hemlock",
-          "  3. Chimera - Multi-agent simulation testing learning strategies in Python",
-          "  4. SuperRAG - Modular multi-phase RAG combining vector search, knowledge graphs, and reranking",
-          "     Repo: github.com/Aadrit555/SuperRAG",
+          ...projects.flatMap((p, idx) => {
+            const lines = [
+              `  ${idx + 1}. ${p.title} - ${p.description}`,
+            ];
+            if (p.awardBadge) {
+              lines.push(`     Recognition: ${p.awardBadge}`);
+            }
+            if (p.githubUrl) {
+              lines.push(`     Repo: ${p.githubUrl.replace(/^https?:\/\//, "")}`);
+            }
+            return lines;
+          }),
         ];
         break;
 
       case "skills":
         output = [
           "CORE FOCUS AREAS:",
-          "  Systems:   C, Memory Management, Microcontrollers, Perceptual Hashing",
-          "  ML/NLP:    Python, PyTorch, Attention Policies, REINFORCE, RAG",
-          "  Tools:     Git, Linux, Bash, FastAPI, REST APIs",
+          ...focusAreas.map((fa) => `  ${(fa.title + ":").padEnd(18)} ${fa.subtitle}`),
         ];
         break;
 
       case "experience":
         output = [
-          "MEMBER :: Next Tech Lab (ntlap)",
-          "  - Machine learning models and evaluation in Python",
-          "  - Automated dataset preprocessing pipelines for ML experiments",
-          "CO-LEAD :: FOSS SRMAP",
-          "  - Leading campus open-source community initiatives and sprints",
-          "  - Organizing hackathons and student mentorship in open source",
+          "EXPERIENCE & LEADERSHIP:",
+          ...leadershipRoles.flatMap((role) => [
+            `${role.role.toUpperCase()} :: ${role.organization}`,
+            ...role.bullets.map((b) => `  - ${b}`),
+          ]),
         ];
         break;
 
       case "security":
         output = [
           "IMPLEMENTED SECURITY CONTROLS:",
-          "  - Server-side input validation (Zod schema enforcement)",
-          "  - Signed admin session tokens (HMAC-SHA256)",
-          "  - Security response headers (CSP, HSTS, X-Frame-Options, nosniff)",
-          "  - Request rate limiting on contact and authentication endpoints",
+          ...securityControls.map((sc) => `  - ${sc}`),
         ];
         break;
 
       case "contact":
         output = [
           "COMMUNICATION CHANNELS:",
-          "  Email:    aadrit.yks@gmail.com",
-          "  GitHub:   https://github.com/Aadrit555",
-          "  LinkedIn: https://www.linkedin.com/in/skaoldi-ntlap",
+          `  Email:    ${profile.contact.email}`,
+          `  GitHub:   ${profile.contact.github}`,
+          `  LinkedIn: ${profile.contact.linkedin}`,
         ];
         break;
 
@@ -181,7 +186,7 @@ export default function TerminalConsole() {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const quickCommands = ["whoami", "projects", "skills", "security", "contact"];
+  const quickCommands = ["whoami", "projects", "skills", "experience", "security", "contact"];
 
   return (
     <section id="terminal" className="py-12 md:py-20 bg-transparent relative z-10">

@@ -56,7 +56,7 @@ export default function PrivacyPage() {
             </p>
             <ul className="list-disc list-inside space-y-1.5 pl-2 text-zinc-600 font-mono text-xs">
               <li>Contact Form: Name, email address, subject, and message submitted voluntarily for correspondence.</li>
-              <li>Rate Limiting: Client IP addresses processed temporarily in-memory to prevent rapid request bursts.</li>
+              <li>Application-Level Rate Limiting: Client IP addresses processed temporarily in-memory to prevent rapid request bursts.</li>
             </ul>
           </section>
 
@@ -77,7 +77,7 @@ export default function PrivacyPage() {
               <span>4. Data Rights & Inquiries</span>
             </h2>
             <p>
-              If you have sent a message and would like your message history updated or removed, contact directly at:
+              You may contact me to request access to or deletion of information submitted through the contact form:
             </p>
             <div className="p-3 rounded bg-zinc-50 border border-border-dim font-mono text-xs text-zinc-900 font-medium">
               aadrit.yks@gmail.com

@@ -2,7 +2,8 @@
 
 import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
-import { ArrowDown, ArrowUpRight, Github, Linkedin, Volume2, VolumeX, ShieldCheck, Zap, Radio } from "lucide-react";
+import { ArrowDown, ArrowUpRight, Github, Linkedin, Volume2, VolumeX, Zap } from "lucide-react";
+import { profile, focusAreas } from "@/data/portfolio";
 
 export default function HeroSection() {
   const [audioMode, setAudioMode] = useState<"idle" | "voice" | "cry">("idle");
@@ -55,10 +56,9 @@ export default function HeroSection() {
         };
 
         voiceSound.onerror = () => {
-          // Fallback to browser SpeechSynthesis if audio file fails
           if ("speechSynthesis" in window) {
             const utterance = new SpeechSynthesisUtterance(
-              "Aadrit. Systems and Machine Learning Developer. Dex register number 384. Specializes in low-level systems in C and deep learning models. Affiliated with Next Tech Lab."
+              `${profile.name}. ${profile.role}. Dex register number ${profile.dexNumber}. Specializes in low-level systems in C and deep learning models. Affiliated with Next Tech Lab.`
             );
             utterance.rate = 0.95;
             utterance.pitch = 0.9;
@@ -108,7 +108,6 @@ export default function HeroSection() {
         setAudioMode("idle");
       });
 
-      // Trigger canvas dragon flight animation
       const canvas = document.querySelector("canvas");
       if (canvas) {
         const rect = canvas.getBoundingClientRect();
@@ -127,13 +126,9 @@ export default function HeroSection() {
   return (
     <section className="pt-6 pb-8 md:pt-10 md:pb-12 bg-transparent relative z-10">
       <div className="max-w-5xl mx-auto px-4 sm:px-6">
-        {/* ================= POKÉDEX HARDWARE CHASSIS ================= */}
         <div className="pokedex-chassis rounded-2xl p-3 sm:p-5 relative">
-          {/* Pokédex Top Sensor & Indicator Array */}
           <div className="flex items-center justify-between px-2 sm:px-3 pt-1 pb-3 border-b-2 border-red-900/60">
-            {/* Left Sensor Cluster: Glowing Cyan Optic Lens + Tri-Color Status LEDs */}
             <div className="flex items-center gap-3">
-              {/* Primary Glowing Optic Sensor Lens */}
               <div
                 className="w-10 h-10 sm:w-12 sm:h-12 rounded-full pokedex-optic-lens relative flex items-center justify-center flex-shrink-0 cursor-pointer transition-transform hover:scale-105"
                 onClick={audioMode === "idle" ? playDexVoice : stopAudio}
@@ -146,7 +141,6 @@ export default function HeroSection() {
                 />
               </div>
 
-              {/* Tri-Color Indicator LEDs */}
               <div className="flex items-center gap-2">
                 <div className="w-3.5 h-3.5 rounded-full pokedex-led-red animate-pulse" title="System Power" />
                 <div className="w-3.5 h-3.5 rounded-full pokedex-led-yellow" title="Memory Register" />
@@ -154,13 +148,11 @@ export default function HeroSection() {
               </div>
             </div>
 
-            {/* Right Hardware Readout & Speaker Slots */}
             <div className="flex items-center gap-3 text-right font-mono">
               <div className="hidden sm:flex flex-col items-end">
                 <span className="text-[10px] text-red-200/90 tracking-widest font-bold">DEVON CORP. HOENN OS</span>
-                <span className="text-[9px] text-red-300/70">MODEL: PKMN-EMERALD // NO. 0384</span>
+                <span className="text-[9px] text-red-300/70">MODEL: PKMN-EMERALD // NO. {profile.dexNumber}</span>
               </div>
-              {/* Speaker Grille Slits */}
               <div className="flex flex-col gap-1 pr-1">
                 <div className="w-8 h-1 bg-red-950/70 rounded-sm" />
                 <div className="w-8 h-1 bg-red-950/70 rounded-sm" />
@@ -169,40 +161,34 @@ export default function HeroSection() {
             </div>
           </div>
 
-          {/* ================= INSET LCD SCREEN BEZEL ================= */}
           <div className="pokedex-screen-bezel rounded-xl p-2 sm:p-3.5 mt-3">
-            {/* Pokédex Display Panel */}
             <div className="pokedex-screen-display rounded-lg p-5 sm:p-8 text-zinc-900 relative overflow-hidden">
-              {/* Screen Top Status Banner */}
               <div className="flex flex-wrap items-center justify-between gap-2 pb-4 mb-6 border-b border-zinc-200 text-xs font-mono text-zinc-500">
                 <div className="flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                  <span className="font-bold text-zinc-800">DEX REGISTER #0384</span>
+                  <span className="font-bold text-zinc-800">DEX REGISTER #{profile.dexNumber}</span>
                   <span className="text-zinc-300">·</span>
-                  <span>HOENN REGIONAL</span>
+                  <span>{profile.region.toUpperCase()} REGIONAL</span>
                 </div>
                 <div className="flex items-center gap-3 text-[11px]">
                   <span className="px-2 py-0.5 rounded bg-zinc-100 border border-zinc-300 font-semibold text-zinc-700">
                     SPECIALTY: AI & SYSTEMS
                   </span>
-                  <span className="text-zinc-500 hidden sm:inline">SRM University AP · B.Tech CSE · 2025–2029</span>
+                  <span className="text-zinc-500 hidden sm:inline">{profile.university} · {profile.degree.replace("in ", "")} · {profile.period}</span>
                 </div>
               </div>
 
-              {/* Main Content Grid: Identity Readout + Scanner Viewport */}
               <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start mb-8">
-                {/* Left Column: Developer Profile & Focus Areas */}
                 <div className="md:col-span-7 space-y-4">
                   <div>
                     <h1 className="text-3xl sm:text-5xl md:text-6xl font-normal tracking-tight text-zinc-950 font-sans leading-none">
-                      Aadrit<span className="text-[#dc2626] font-serif italic">*</span>
+                      {profile.name}<span className="text-[#dc2626] font-serif italic">*</span>
                     </h1>
                     <div className="text-lg sm:text-xl md:text-2xl text-zinc-600 font-serif italic font-normal mt-1">
-                      AI/ML & Systems Developer
+                      {profile.role}
                     </div>
                   </div>
 
-                  {/* Pokémon Dual-Type Badges */}
                   <div className="flex flex-wrap items-center gap-2 pt-1">
                     <span className="pokedex-type-dragon px-2.5 py-1 rounded text-[11px] font-mono font-bold tracking-wider shadow-sm">
                       SYSTEMS // C
@@ -215,15 +201,13 @@ export default function HeroSection() {
                     </span>
                   </div>
 
-                  {/* Pokédex Entry Text */}
                   <div className="p-3.5 rounded-md bg-zinc-100/90 border border-zinc-200/90 font-sans text-xs sm:text-sm text-zinc-700 leading-relaxed shadow-inner">
                     <div className="text-[10px] font-mono font-bold uppercase tracking-wider text-zinc-500 mb-1">
                       Pokédex Entry // Profile
                     </div>
-                    Computer Science undergraduate at SRM University AP building lightweight machine learning systems in Python and systems software in C.
+                    {profile.pokedexEntry}
                   </div>
 
-                  {/* Core Focus Areas */}
                   <div className="space-y-2 pt-2">
                     <div className="text-[11px] font-mono font-bold text-zinc-600 uppercase tracking-wider flex items-center gap-1.5">
                       <Zap className="w-3 h-3 text-amber-500" />
@@ -231,22 +215,22 @@ export default function HeroSection() {
                     </div>
 
                     <div className="grid grid-cols-2 gap-2 font-mono text-[11px]">
-                      <div className="p-2 rounded bg-zinc-100/90 border border-zinc-200/80">
-                        <span className="text-emerald-700 font-bold block">Systems</span>
-                        <span className="text-zinc-600 text-[10px]">C · Embedded · Memory</span>
-                      </div>
-                      <div className="p-2 rounded bg-zinc-100/90 border border-zinc-200/80">
-                        <span className="text-cyan-700 font-bold block">Machine Learning</span>
-                        <span className="text-zinc-600 text-[10px]">Python · NLP · Attention Policies</span>
-                      </div>
-                      <div className="p-2 rounded bg-zinc-100/90 border border-zinc-200/80">
-                        <span className="text-amber-700 font-bold block">Security</span>
-                        <span className="text-zinc-600 text-[10px]">Perceptual Hash · Signatures · Integrity</span>
-                      </div>
-                      <div className="p-2 rounded bg-zinc-100/90 border border-zinc-200/80">
-                        <span className="text-zinc-700 font-bold block">Open Source</span>
-                        <span className="text-zinc-600 text-[10px]">FOSS SRMAP · Next Tech Lab</span>
-                      </div>
+                      {focusAreas.map((area) => (
+                        <div key={area.id} className="p-2 rounded bg-zinc-100/90 border border-zinc-200/80">
+                          <span className={`font-bold block ${
+                            area.id === "systems"
+                              ? "text-emerald-700"
+                              : area.id === "ml"
+                              ? "text-cyan-700"
+                              : area.id === "security"
+                              ? "text-amber-700"
+                              : "text-zinc-700"
+                          }`}>
+                            {area.title}
+                          </span>
+                          <span className="text-zinc-600 text-[10px]">{area.subtitle}</span>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 </div>
@@ -287,9 +271,8 @@ export default function HeroSection() {
                       </div>
                     </div>
 
-                    {/* Pokédex Audio Station & Voice Synthesizer */}
+                    {/* Audio Synthesizer */}
                     <div className="mt-3 w-full space-y-2">
-                      {/* Audio Synthesizer Status Readout */}
                       <div className="p-2 rounded bg-zinc-100 border border-zinc-200 text-[10px] font-mono text-zinc-700 flex items-center justify-between gap-2">
                         <div className="flex items-center gap-1.5 min-w-0">
                           <span
@@ -308,7 +291,6 @@ export default function HeroSection() {
                                 : "DEX AUDIO: READY"}
                           </span>
                         </div>
-                        {/* Audio Equalizer Spectrum Bars */}
                         <div className="flex items-end gap-0.5 h-3 flex-shrink-0" title="Audio Spectrum">
                           <span
                             className={`w-0.5 bg-emerald-600 rounded-xs transition-all duration-150 ${audioMode !== "idle" ? "h-3 animate-pulse" : "h-1"
@@ -329,7 +311,6 @@ export default function HeroSection() {
                         </div>
                       </div>
 
-                      {/* Interactive Pokédex Voice & Cry Buttons */}
                       <div className="grid grid-cols-2 gap-1.5">
                         <button
                           onClick={playDexVoice}
@@ -368,7 +349,7 @@ export default function HeroSection() {
                 </div>
               </div>
 
-              {/* Roles & Affiliations Bar */}
+              {/* Affiliations Bar */}
               <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-xs font-mono text-zinc-600 mb-6 pb-4 border-b border-zinc-200">
                 <span className="flex items-center gap-1.5">
                   <span className="w-2 h-2 rounded-full bg-[#dc2626]" />
@@ -390,11 +371,11 @@ export default function HeroSection() {
                 <span className="text-zinc-300 hidden sm:inline">·</span>
                 <span className="flex items-center gap-1.5">
                   <span className="w-2 h-2 rounded-full bg-amber-500" />
-                  <span className="text-zinc-900 font-bold">Academic:</span> B.Tech CSE Undergrad (2025 - 2029)
+                  <span className="text-zinc-900 font-bold">Academic:</span> {profile.degree.replace("in ", "")} ({profile.period})
                 </span>
               </div>
 
-              {/* Pokédex Hardware Controls / Action Buttons */}
+              {/* Action Buttons */}
               <div className="flex flex-wrap items-center gap-3">
                 <a
                   href="#work"
@@ -414,7 +395,7 @@ export default function HeroSection() {
                 </a>
 
                 <a
-                  href="https://github.com/Aadrit555"
+                  href={profile.contact.github}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="pokedex-btn-action bg-zinc-100 text-zinc-800 hover:bg-zinc-200 border border-zinc-300 flex items-center gap-1.5"
@@ -425,7 +406,7 @@ export default function HeroSection() {
                 </a>
 
                 <a
-                  href="https://www.linkedin.com/in/skaoldi-ntlap"
+                  href={profile.contact.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="pokedex-btn-action bg-zinc-100 text-zinc-800 hover:bg-zinc-200 border border-zinc-300 flex items-center gap-1.5"
