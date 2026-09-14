@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState, MouseEvent } from "react";
+import { twMerge } from "tailwind-merge";
 
 interface SpotlightCardProps {
   children: React.ReactNode;
@@ -11,7 +12,7 @@ interface SpotlightCardProps {
 export default function SpotlightCard({
   children,
   className = "",
-  spotlightColor = "rgba(255, 255, 255, 0.08)",
+  spotlightColor = "rgba(0, 0, 0, 0.03)",
 }: SpotlightCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
   const [position, setPosition] = useState<{ x: number; y: number }>({ x: -1000, y: -1000 });
@@ -36,7 +37,10 @@ export default function SpotlightCard({
       ref={cardRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className={`relative rounded-md border border-border-dim bg-surface overflow-hidden transition-all duration-300 hover:border-border-bright ${className}`}
+      className={twMerge(
+        "relative rounded-md border border-white/70 bg-white/85 backdrop-blur-md overflow-hidden transition-all duration-300 hover:border-zinc-300 shadow-md",
+        className
+      )}
     >
       {/* Dynamic Cursor Spotlight Layer */}
       <div
@@ -52,7 +56,7 @@ export default function SpotlightCard({
         className="pointer-events-none absolute -inset-px rounded-md transition-opacity duration-300 z-20"
         style={{
           opacity,
-          background: `radial-gradient(350px circle at ${position.x}px ${position.y}px, rgba(255, 255, 255, 0.18), transparent 70%)`,
+          background: `radial-gradient(350px circle at ${position.x}px ${position.y}px, rgba(249, 69, 45, 0.2), transparent 70%)`,
           mask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
           WebkitMask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
           maskComposite: "exclude",

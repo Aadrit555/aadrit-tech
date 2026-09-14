@@ -95,6 +95,6 @@ export const config = {
     /*
      * Match all request paths except static files, _next/static, _next/image, favicon
      */
-    "/((?!_next/static|_next/image|favicon.ico|images/|robots.txt|sitemap.xml).*)",
+    "/((?!_next/static|_next/image|favicon.ico|images/|sounds/|robots.txt|sitemap.xml).*)",
   ],
 };

@@ -41,6 +41,7 @@ const nextConfig = {
               "img-src 'self' blob: data: https://avatars.githubusercontent.com https://raw.githubusercontent.com",
               "font-src 'self' data:",
               "connect-src 'self'",
+              "media-src 'self' blob: data:",
               "frame-ancestors 'none'",
               "object-src 'none'",
               "base-uri 'self'",

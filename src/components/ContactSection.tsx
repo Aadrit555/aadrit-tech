@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Mail, Phone, MapPin, Send, CheckCircle2, AlertCircle, ShieldAlert, Copy, Check } from "lucide-react";
+import { Mail, MapPin, Send, CheckCircle2, AlertCircle, ShieldAlert, Copy, Check } from "lucide-react";
 import SpotlightCard from "@/components/animations/SpotlightCard";
 
 export default function ContactSection() {
@@ -100,14 +100,6 @@ export default function ContactSection() {
                       <span className="text-[10px] text-accent-emerald font-mono">COPIED</span>
                     )}
                   </div>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-3 text-text-secondary">
-                <Phone className="w-4 h-4 text-accent-cyan mt-0.5" />
-                <div>
-                  <span className="text-text-muted block text-[11px]">Direct Voice / WhatsApp</span>
-                  <span className="text-text-primary">+91 7233023333</span>
                 </div>
               </div>
 

@@ -10,16 +10,16 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "#0c0c0c",
-        surface: "#141414",
-        "surface-raised": "#1c1c1c",
-        "border-dim": "#262626",
-        "border-bright": "#383838",
-        "accent-emerald": "#10b981",
-        "accent-cyan": "#06b6d4",
+        background: "#ffffff",
+        surface: "#ffffff",
+        "surface-raised": "#f4f4f5",
+        "border-dim": "#e4e4e7",
+        "border-bright": "#d4d4d8",
+        "accent-emerald": "#059669",
+        "accent-cyan": "#0891b2",
         "accent-orange": "#f9452d",
-        "text-primary": "#f8fafc",
-        "text-secondary": "#a1a1aa",
+        "text-primary": "#09090b",
+        "text-secondary": "#52525b",
         "text-muted": "#71717a",
       },
       fontFamily: {

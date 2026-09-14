@@ -39,7 +39,7 @@ export default function InteractiveGrid() {
     window.addEventListener("mousemove", handleMouseMove);
     document.addEventListener("mouseleave", handleMouseLeave);
 
-    const gridSize = 40;
+    const gridSize = 28;
 
     const render = () => {
       ctx.clearRect(0, 0, width, height);
@@ -47,7 +47,7 @@ export default function InteractiveGrid() {
       const cols = Math.ceil(width / gridSize);
       const rows = Math.ceil(height / gridSize);
 
-      // Render subtle grid intersection dots with proximity illumination
+      // Render subtle pixelated grid dots with proximity reaction on light canvas
       for (let i = 0; i <= cols; i++) {
         for (let j = 0; j <= rows; j++) {
           const x = i * gridSize;
@@ -57,22 +57,21 @@ export default function InteractiveGrid() {
           const dy = mouseY - y;
           const dist = Math.sqrt(dx * dx + dy * dy);
 
-          const maxDist = 180;
-          let alpha = 0.12;
-          let radius = 1;
+          const maxDist = 160;
+          let alpha = 0.14;
+          let size = 1.2;
 
           if (dist < maxDist) {
             const factor = 1 - dist / maxDist;
-            alpha = 0.12 + factor * 0.45;
-            radius = 1 + factor * 1.5;
-            ctx.fillStyle = `rgba(16, 185, 129, ${alpha})`; // Subtle emerald proximity glow
+            alpha = 0.14 + factor * 0.45;
+            size = 1.2 + factor * 1.5;
+            ctx.fillStyle = `rgba(249, 69, 45, ${alpha})`; // Signature orange-red proximity glow
           } else {
-            ctx.fillStyle = `rgba(148, 163, 184, ${alpha})`; // Base slate dot
+            ctx.fillStyle = `rgba(161, 161, 170, ${alpha})`; // Base neutral pixel dot
           }
 
-          ctx.beginPath();
-          ctx.arc(x, y, radius, 0, Math.PI * 2);
-          ctx.fill();
+          // Draw square pixel dot for pixelated background aesthetic
+          ctx.fillRect(x - size / 2, y - size / 2, size, size);
         }
       }
 
@@ -92,8 +91,7 @@ export default function InteractiveGrid() {
   return (
     <canvas
       ref={canvasRef}
-      className="pointer-events-none fixed inset-0 z-0 opacity-40"
-      style={{ mixBlendMode: "screen" }}
+      className="pointer-events-none fixed inset-0 z-0 opacity-80"
     />
   );
 }

@@ -6,7 +6,6 @@ import Link from "next/link";
 import {
   MapPin,
   Mail,
-  Phone,
   Github,
   Linkedin,
   ShieldCheck,
@@ -107,11 +106,6 @@ export default function Hero() {
                   <span className="text-[10px] text-accent-emerald font-mono">COPIED</span>
                 )}
               </div>
-
-              <div className="flex items-center gap-1.5">
-                <Phone className="w-3.5 h-3.5 text-text-secondary" />
-                <span>+91 7233023333</span>
-              </div>
             </div>
 
             {/* Strict Micro-rounded Action Buttons - NO PILL BUTTONS */}
@@ -132,7 +126,7 @@ export default function Hero() {
               </a>
 
               <a
-                href="https://www.linkedin.com/in/aadrit-srivastava"
+                href="https://www.linkedin.com/in/skaoldi-ntlap"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-secondary flex items-center gap-2"

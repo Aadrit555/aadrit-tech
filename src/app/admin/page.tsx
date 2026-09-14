@@ -64,18 +64,18 @@ export default function AdminDashboardPage() {
   };
 
   return (
-    <div className="py-10 bg-background min-h-[calc(100vh-56px)] font-sans">
+    <div className="py-10 bg-white min-h-[calc(100vh-64px)] font-sans relative z-10">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 space-y-8">
         {/* Top Control Bar */}
-        <div className="tech-card p-4 sm:p-6 bg-surface flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="p-4 sm:p-6 bg-white border border-border-dim rounded-md shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="space-y-1">
             <div className="flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-accent-emerald"></span>
-              <h1 className="text-xl font-bold text-white font-mono">
+              <h1 className="text-xl font-bold text-zinc-950 font-mono">
                 System Administration Console
               </h1>
             </div>
-            <p className="text-xs font-mono text-text-muted">
+            <p className="text-xs font-mono text-zinc-500">
               Authenticated Session | Endpoint /api/admin/messages
             </p>
           </div>
@@ -92,7 +92,7 @@ export default function AdminDashboardPage() {
 
             <button
               onClick={handleLogout}
-              className="btn-danger flex items-center gap-1.5 text-xs"
+              className="px-3 py-1.5 rounded-md bg-red-600 text-white hover:bg-red-700 transition-colors font-mono text-xs flex items-center gap-1.5"
             >
               <LogOut className="w-3.5 h-3.5" />
               <span>Sign Out</span>
@@ -101,7 +101,7 @@ export default function AdminDashboardPage() {
         </div>
 
         {error && (
-          <div className="p-4 rounded-md bg-red-950/40 border border-red-900/60 text-red-300 text-xs font-mono flex items-center gap-2">
+          <div className="p-4 rounded-md bg-red-50 border border-red-200 text-red-700 text-xs font-mono flex items-center gap-2">
             <AlertTriangle className="w-4 h-4 flex-shrink-0" />
             <span>{error}</span>
           </div>
@@ -112,46 +112,46 @@ export default function AdminDashboardPage() {
           {/* Messages Column */}
           <div className="lg:col-span-8 space-y-4">
             <div className="flex items-center justify-between">
-              <div className="text-xs font-mono text-accent-emerald tracking-wider uppercase">
+              <div className="text-xs font-mono text-[#f9452d] tracking-wider uppercase font-semibold">
                 [INCOMING_MESSAGES ({messages.length})]
               </div>
             </div>
 
             {loading && messages.length === 0 ? (
-              <div className="p-8 tech-card bg-surface text-center font-mono text-xs text-text-muted">
+              <div className="p-8 border border-border-dim bg-zinc-50 rounded-md text-center font-mono text-xs text-zinc-500">
                 Loading encrypted records...
               </div>
             ) : messages.length === 0 ? (
-              <div className="p-8 tech-card bg-surface text-center font-mono text-xs text-text-muted space-y-2">
-                <Mail className="w-6 h-6 mx-auto text-text-muted" />
+              <div className="p-8 border border-border-dim bg-zinc-50 rounded-md text-center font-mono text-xs text-zinc-500 space-y-2">
+                <Mail className="w-6 h-6 mx-auto text-zinc-400" />
                 <div>No inquiries recorded yet.</div>
               </div>
             ) : (
               <div className="space-y-4">
                 {messages.map((msg) => (
-                  <div key={msg.id} className="tech-card p-5 bg-surface space-y-3">
+                  <div key={msg.id} className="p-5 bg-white border border-border-dim rounded-md shadow-sm space-y-3">
                     <div className="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-border-dim text-xs font-mono">
-                      <div className="font-semibold text-white">
+                      <div className="font-semibold text-zinc-950">
                         {msg.name}{" "}
-                        <span className="text-text-muted font-normal">
+                        <span className="text-zinc-500 font-normal">
                           &lt;{msg.email}&gt;
                         </span>
                       </div>
-                      <div className="flex items-center gap-1.5 text-[11px] text-text-muted">
+                      <div className="flex items-center gap-1.5 text-[11px] text-zinc-500">
                         <Clock className="w-3 h-3" />
                         <span>{new Date(msg.receivedAt).toLocaleString()}</span>
                       </div>
                     </div>
 
-                    <div className="text-xs font-mono font-bold text-accent-cyan">
+                    <div className="text-xs font-mono font-bold text-zinc-900">
                       Subject: {msg.subject}
                     </div>
 
-                    <div className="text-xs text-text-secondary whitespace-pre-wrap leading-relaxed bg-surface-raised p-3 rounded border border-border-dim font-sans">
+                    <div className="text-xs text-zinc-700 whitespace-pre-wrap leading-relaxed bg-zinc-50 p-3 rounded border border-border-dim font-sans">
                       {msg.message}
                     </div>
 
-                    <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-border-dim text-[10px] font-mono text-text-muted">
+                    <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-border-dim text-[10px] font-mono text-zinc-400">
                       <span className="flex items-center gap-1">
                         <Globe className="w-3 h-3" />
                         <span>IP: {msg.ip}</span>
@@ -166,22 +166,22 @@ export default function AdminDashboardPage() {
 
           {/* Audit Logs Column */}
           <div className="lg:col-span-4 space-y-4">
-            <div className="text-xs font-mono text-accent-cyan tracking-wider uppercase">
+            <div className="text-xs font-mono text-zinc-500 tracking-wider uppercase font-semibold">
               [SECURITY_AUDIT_STREAM]
             </div>
 
-            <div className="tech-card p-4 bg-[#07090f] border-border-bright rounded-md">
-              <div className="flex items-center gap-2 mb-3 pb-2 border-b border-border-dim text-xs font-mono text-text-muted">
+            <div className="p-4 bg-zinc-950 text-zinc-300 border border-zinc-800 rounded-md shadow-md">
+              <div className="flex items-center gap-2 mb-3 pb-2 border-b border-zinc-800 text-xs font-mono text-zinc-400">
                 <Terminal className="w-3.5 h-3.5 text-accent-emerald" />
                 <span>/data/audit.log</span>
               </div>
 
-              <div className="font-mono text-[11px] text-text-muted space-y-2 max-h-[500px] overflow-y-auto">
+              <div className="font-mono text-[11px] text-zinc-400 space-y-2 max-h-[500px] overflow-y-auto">
                 {auditLogs.length === 0 ? (
                   <div>No security events logged yet.</div>
                 ) : (
                   auditLogs.map((log, idx) => (
-                    <div key={idx} className="leading-relaxed border-b border-border-dim/40 pb-1">
+                    <div key={idx} className="leading-relaxed border-b border-zinc-800/60 pb-1">
                       {log}
                     </div>
                   ))
