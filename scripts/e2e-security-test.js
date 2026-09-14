@@ -48,6 +48,24 @@ async function runE2ETests() {
     }
   }
 
+  // Check if target server is reachable
+  try {
+    await request("http://localhost:3000/api/health");
+  } catch {
+    console.error("\n[ERROR] Server is not running on http://localhost:3000.");
+    console.error("Please start the server first with: npm start (or npm run dev)");
+    console.error("Then re-run: npm run test:e2e\n");
+    process.exit(1);
+  }
+
+  // Load test administrative credentials dynamically from environment
+  let testPassword = process.env.TEST_ADMIN_PASSWORD;
+  if (!testPassword && fs.existsSync(path.join(__dirname, "..", ".env.local"))) {
+    const envContent = fs.readFileSync(path.join(__dirname, "..", ".env.local"), "utf-8");
+    const match = envContent.match(/TEST_ADMIN_PASSWORD=(.+)/);
+    if (match) testPassword = match[1].trim();
+  }
+
   try {
     // 1. Home Page & Security Headers
     console.log("\n1. Testing Home Page & Security Response Headers");
@@ -92,10 +110,11 @@ async function runE2ETests() {
 
     // 4. Contact Form API & Sanitization
     console.log("\n4. Testing Contact Form API & XSS Sanitization");
+    const uniqueSubject = `AI Systems Evaluation ${Date.now()}`;
     const contactPayload = {
       name: "Dr. O'Brien & Co.",
-      email: "recruiter@university.edu",
-      subject: "AI Systems Role",
+      email: `recruiter-${Date.now()}@university.edu`,
+      subject: uniqueSubject,
       message: "Hello Aadrit, <script>alert('xss')</script> We reviewed your SLM and Hemlock projects. Don't hesitate to reach out.",
     };
 
@@ -108,28 +127,16 @@ async function runE2ETests() {
     const contactJson = JSON.parse(contactRes.body);
     assert(contactJson.success === true, "Response JSON has success: true");
 
-    // Check server storage sanitization
-    const messagesFile = path.join(__dirname, "..", "data", "messages.json");
-    if (fs.existsSync(messagesFile)) {
-      const messages = JSON.parse(fs.readFileSync(messagesFile, "utf-8"));
-      const lastMsg = messages[0];
-      assert(!lastMsg.message.includes("<script>"), "Script tag was completely stripped from saved message");
-      assert(lastMsg.message.includes("We reviewed your SLM"), "Legitimate message content preserved");
-      assert(!lastMsg.message.includes("&#x27;"), "Apostrophe not double-escaped as &#x27;");
-      assert(lastMsg.message.includes("Don't hesitate"), "Apostrophe preserved cleanly in stored message");
-      assert(!lastMsg.name.includes("&amp;"), "Ampersand not double-escaped as &amp;");
-      assert(lastMsg.name.includes("O'Brien & Co."), "Name with apostrophe and ampersand preserved cleanly");
-    }
-
     // 5. Rate Limiting Test
     console.log("\n5. Testing Rate Limiting on Contact Form");
     let rateLimited = false;
+    const burstClientIp = `203.0.113.${Math.floor(Math.random() * 200) + 1}`;
     for (let i = 0; i < 7; i++) {
       const burstRes = await request("http://localhost:3000/api/contact", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "X-Forwarded-For": "203.0.113.195", // Simulated client IP
+          "X-Forwarded-For": burstClientIp,
         },
       }, contactPayload);
       if (burstRes.statusCode === 429) {
@@ -147,27 +154,47 @@ async function runE2ETests() {
     }, { password: "WrongMasterKey!" });
     assert(invalidAuthRes.statusCode === 401, "Invalid master password rejected with 401");
 
-    const validAuthRes = await request("http://localhost:3000/api/auth", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-    }, { password: "Aadrit@Secured2026!" });
-    assert(validAuthRes.statusCode === 200, "Valid master password accepted with 200");
-    const setCookie = validAuthRes.headers["set-cookie"];
-    assert(setCookie && setCookie[0].includes("session_token"), "Set-Cookie issues session_token");
-    assert(setCookie && setCookie[0].includes("HttpOnly"), "Session cookie has HttpOnly flag");
-    assert(setCookie && /SameSite=strict/i.test(setCookie[0]), "Session cookie has SameSite=strict flag");
+    let setCookieHeader = null;
+    if (testPassword) {
+      const validAuthRes = await request("http://localhost:3000/api/auth", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+      }, { password: testPassword });
+      assert(validAuthRes.statusCode === 200, "Valid master password accepted with 200");
+      setCookieHeader = validAuthRes.headers["set-cookie"];
+      assert(setCookieHeader && setCookieHeader[0].includes("session_token"), "Set-Cookie issues session_token");
+      assert(setCookieHeader && setCookieHeader[0].includes("HttpOnly"), "Session cookie has HttpOnly flag");
+      assert(setCookieHeader && /SameSite=strict/i.test(setCookieHeader[0]), "Session cookie has SameSite=strict flag");
+    } else {
+      console.log("  [SKIP] TEST_ADMIN_PASSWORD not set in environment or .env.local — skipping authenticated tests");
+    }
 
-    // 7. Authenticated Admin Access
-    console.log("\n7. Testing Authenticated Admin Session");
-    const cookieVal = setCookie[0].split(";")[0];
-    const authAdminRes = await request("http://localhost:3000/api/admin/messages", {
-      method: "GET",
-      headers: { Cookie: cookieVal },
-    });
-    assert(authAdminRes.statusCode === 200, "Authenticated request to /api/admin/messages returns 200");
-    const adminData = JSON.parse(authAdminRes.body);
-    assert(Array.isArray(adminData.messages), "Admin receives messages list");
-    assert(Array.isArray(adminData.auditLogs), "Admin receives audit logs");
+    // 7. Authenticated Admin Access & End-to-End Storage Verification
+    if (setCookieHeader) {
+      console.log("\n7. Testing Authenticated Admin Session & Stored Data Flow");
+      const cookieVal = setCookieHeader[0].split(";")[0];
+      const authAdminRes = await request("http://localhost:3000/api/admin/messages", {
+        method: "GET",
+        headers: { Cookie: cookieVal },
+      });
+      assert(authAdminRes.statusCode === 200, "Authenticated request to /api/admin/messages returns 200");
+      const adminData = JSON.parse(authAdminRes.body);
+      assert(Array.isArray(adminData.messages), "Admin receives messages list");
+      assert(Array.isArray(adminData.auditLogs), "Admin receives audit logs");
+      assert(adminData.stats && adminData.stats.storageMode === "filesystem", "Admin receives descriptive storageMode status");
+
+      // Verify sanitization through the application's actual data retrieval flow
+      const retrievedMsg = adminData.messages.find(m => m.subject === uniqueSubject);
+      assert(!!retrievedMsg, "Newly submitted contact message retrieved via Admin API");
+      if (retrievedMsg) {
+        assert(!retrievedMsg.message.includes("<script>"), "Script tag was completely stripped in stored record");
+        assert(retrievedMsg.message.includes("We reviewed your SLM"), "Legitimate message content preserved");
+        assert(!retrievedMsg.message.includes("&#x27;"), "Apostrophe not double-escaped as &#x27;");
+        assert(retrievedMsg.message.includes("Don't hesitate"), "Apostrophe preserved cleanly in stored record");
+        assert(!retrievedMsg.name.includes("&amp;"), "Ampersand not double-escaped as &amp;");
+        assert(retrievedMsg.name.includes("O'Brien & Co."), "Name with apostrophe and ampersand preserved cleanly");
+      }
+    }
 
     console.log("\n=========================================");
     console.log(`LIVE E2E RESULTS: ${passed} Passed, ${failed} Failed`);

@@ -170,11 +170,17 @@ export default function HeroSection() {
                   <span className="text-zinc-300">·</span>
                   <span>{profile.region.toUpperCase()} REGIONAL</span>
                 </div>
-                <div className="flex items-center gap-3 text-[11px]">
+                <div className="flex flex-wrap items-center gap-2 text-[11px]">
                   <span className="px-2 py-0.5 rounded bg-zinc-100 border border-zinc-300 font-semibold text-zinc-700">
                     SPECIALTY: AI & SYSTEMS
                   </span>
-                  <span className="text-zinc-500 hidden sm:inline">{profile.university} · {profile.degree.replace("in ", "")} · {profile.period}</span>
+                  <span className="text-zinc-500 hidden sm:inline">
+                    {profile.university} · {profile.degree.replace("in ", "")} · {profile.period}
+                  </span>
+                  <span className="text-zinc-300 hidden md:inline">·</span>
+                  <span className="text-zinc-500 hidden md:inline">
+                    {profile.homeLocation}
+                  </span>
                 </div>
               </div>
 
@@ -217,15 +223,14 @@ export default function HeroSection() {
                     <div className="grid grid-cols-2 gap-2 font-mono text-[11px]">
                       {focusAreas.map((area) => (
                         <div key={area.id} className="p-2 rounded bg-zinc-100/90 border border-zinc-200/80">
-                          <span className={`font-bold block ${
-                            area.id === "systems"
+                          <span className={`font-bold block ${area.id === "systems"
                               ? "text-emerald-700"
                               : area.id === "ml"
-                              ? "text-cyan-700"
-                              : area.id === "security"
-                              ? "text-amber-700"
-                              : "text-zinc-700"
-                          }`}>
+                                ? "text-cyan-700"
+                                : area.id === "security"
+                                  ? "text-amber-700"
+                                  : "text-zinc-700"
+                            }`}>
                             {area.title}
                           </span>
                           <span className="text-zinc-600 text-[10px]">{area.subtitle}</span>
@@ -371,7 +376,12 @@ export default function HeroSection() {
                 <span className="text-zinc-300 hidden sm:inline">·</span>
                 <span className="flex items-center gap-1.5">
                   <span className="w-2 h-2 rounded-full bg-amber-500" />
-                  <span className="text-zinc-900 font-bold">Academic:</span> {profile.degree.replace("in ", "")} ({profile.period})
+                  <span className="text-zinc-900 font-bold">Academic:</span> {profile.university} ({profile.period})
+                </span>
+                <span className="text-zinc-300 hidden sm:inline">·</span>
+                <span className="flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                  <span className="text-zinc-900 font-bold">Location:</span> {profile.homeLocation}
                 </span>
               </div>
 

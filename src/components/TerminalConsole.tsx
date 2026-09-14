@@ -130,7 +130,7 @@ export default function TerminalConsole() {
 
       case "sudo":
         output = [
-          "Permission denied. Nice try, trainer.",
+          "Permission denied.",
         ];
         break;
 

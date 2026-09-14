@@ -7,8 +7,8 @@ const envPath = path.join(__dirname, "..", ".env.local");
 if (!fs.existsSync(envPath)) {
   const sessionSecret = crypto.randomBytes(32).toString("hex");
   const salt = crypto.randomBytes(16).toString("hex");
-  // Default master admin password for secure local console: Aadrit@Secured2026!
-  const defaultPassword = process.env.INITIAL_ADMIN_PASSWORD || "Aadrit@Secured2026!";
+  // Generate a random secure local credential or use provided environment variable
+  const defaultPassword = process.env.INITIAL_ADMIN_PASSWORD || crypto.randomBytes(16).toString("hex");
   const hash = crypto.pbkdf2Sync(defaultPassword, salt, 100000, 32, "sha256").toString("hex");
   const storedSaltAndHash = `${salt}:${hash}`;
 
@@ -17,6 +17,7 @@ if (!fs.existsSync(envPath)) {
 
 SESSION_SECRET=${sessionSecret}
 ADMIN_PASSWORD_HASH=${storedSaltAndHash}
+TEST_ADMIN_PASSWORD=${defaultPassword}
 ALLOWED_ORIGIN=http://localhost:3000
 SITE_URL=http://localhost:3000
 RATE_LIMIT_WINDOW_MS=60000

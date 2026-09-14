@@ -27,7 +27,7 @@ export async function GET(request: Request) {
       auditLogs,
       stats: {
         totalMessages: messages.length,
-        systemStatus: "OPTIMAL",
+        storageMode: "filesystem",
         lastAuditCount: auditLogs.length,
       },
     });

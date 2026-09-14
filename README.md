@@ -1,6 +1,6 @@
 # aadrit.tech
 
-> Personal portfolio and interactive Pokédex-inspired technical dossier for **Aadrit** — Computer Science Undergraduate at SRM University AP.
+> Personal portfolio and interactive Pokédex-inspired technical dossier for **Aadrit** — AI/ML & Systems Developer · Computer Science Undergraduate at SRM University AP.
 
 [![Next.js](https://img.shields.io/badge/Next.js-14-black.svg)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.7-blue.svg)](https://www.typescriptlang.org/)
@@ -57,6 +57,27 @@ Open [http://localhost:3000](http://localhost:3000) to view the application in y
 
 ---
 
+## Testing & Verification
+
+### Security Unit Tests
+Executes unit checks for cryptographic primitives (PBKDF2, HMAC-SHA256, timing-safe comparison) and input sanitization:
+```bash
+npm run test:security
+```
+
+### Live End-to-End Tests
+Tests live HTTP security headers, endpoint rate limiting, and authenticated admin sessions against a running server:
+```bash
+# In Terminal 1: Build & start production server
+npm run build
+npm run start
+
+# In Terminal 2: Run end-to-end suite
+npm run test:e2e
+```
+
+---
+
 ## Scripts
 
 | Script | Description |
@@ -64,7 +85,7 @@ Open [http://localhost:3000](http://localhost:3000) to view the application in y
 | `npm run dev` | Starts local Next.js development server with Turbopack |
 | `npm run build` | Builds optimized production bundle |
 | `npm run start` | Runs production server |
-| `npm run test:security` | Executes cryptographic and security unit test suite |
+| `npm run test:security` | Executes cryptographic and security unit test suite via tsx |
 | `npm run test:e2e` | Runs live end-to-end security and endpoint verification |
 
 ---

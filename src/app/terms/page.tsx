@@ -55,7 +55,7 @@ export default function TermsPage() {
               Hemlock, SuperRAG) is governed by their respective open-source licenses on GitHub.
             </p>
             <p>
-              The portfolio design, original written content, and branding are provided for personal viewing unless otherwise stated.
+              Original portfolio content, branding, and written material belong to Aadrit unless otherwise noted. Open-source repositories remain subject to their respective licenses.
             </p>
           </section>
 

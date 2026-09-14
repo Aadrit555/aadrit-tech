@@ -50,7 +50,8 @@ export const profile = {
   university: "SRM University AP",
   degree: "B.Tech in Computer Science & Engineering",
   period: "2025–2029",
-  location: "Lucknow, UP, India",
+  location: "Lucknow, India",
+  homeLocation: "Based in Lucknow, India",
   dexNumber: "0384",
   region: "Hoenn",
   pokedexEntry:
@@ -58,7 +59,7 @@ export const profile = {
   bio: [
     "I am a Computer Science student at SRM University AP, a member at Next Tech Lab (ntlap), and co-lead at FOSS SRMAP.",
     "I work with C for microcontrollers and embedded systems, and Python for lightweight machine learning models designed to run on standard hardware.",
-    "Recipient of the national MANAK Inspire Award by DST and recognized at FOSS United JUST A HACKATHON.",
+    "Recipient of the national MANAK Inspire Award by DST and winner at FOSS United JUST A HACKATHON.",
   ],
   contact: {
     email: "aadrit.yks@gmail.com",
@@ -239,7 +240,7 @@ export const academicAndHonors: HonorItem[] = [
     role: "FOSS United",
     period: "2024",
     description:
-      "Recognized as a winning project at FOSS United for embedded microcontroller memory protection in C.",
+      "Winning project at FOSS United JUST A HACKATHON 2024 for C systems implementation.",
   },
 ];
 
@@ -249,3 +250,4 @@ export const securityControls: string[] = [
   "Security response headers (CSP, HSTS, X-Frame-Options, nosniff)",
   "Application-level rate limiting on contact and authentication endpoints",
 ];
+
