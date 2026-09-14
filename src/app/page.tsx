@@ -14,8 +14,8 @@ export default function Home() {
       <WorkHistory />
       <AboutSection />
       <TerminalConsole />
-      <ArcadeSection />
       <FooterCta />
+      <ArcadeSection />
     </div>
   );
 }

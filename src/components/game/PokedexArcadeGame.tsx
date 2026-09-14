@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, useCallback } from "react";
 import * as THREE from "three";
+import Image from "next/image";
 import { chiptune } from "./audio";
 import {
   Volume2,
@@ -9,10 +10,10 @@ import {
   RotateCcw,
   Sparkles,
   Trophy,
-  Target,
   Zap,
-  Info,
   CheckCircle2,
+  X,
+  Crosshair,
 } from "lucide-react";
 
 type BallType = "poke" | "great" | "ultra" | "master";
@@ -30,286 +31,297 @@ const BALL_CONFIGS: Record<BallType, BallConfig> = {
     name: "Poké Ball",
     topColor: 0xee1515,
     multiplier: 1.0,
-    description: "Standard issue Devon Corp ballistics model.",
+    description: "Standard field ballistics model (1.0x).",
   },
   great: {
     name: "Great Ball",
     topColor: 0x1d4ed8,
     accentColor: 0xef4444,
-    multiplier: 1.5,
-    description: "Reinforced chassis with +50% capture probability.",
+    multiplier: 1.6,
+    description: "Reinforced matrix with +60% catch rate.",
   },
   ultra: {
     name: "Ultra Ball",
     topColor: 0x18181b,
     accentColor: 0xfacc15,
-    multiplier: 2.0,
-    description: "High-spec titanium casing with 2x field capture rate.",
+    multiplier: 2.2,
+    description: "High-spec titanium casing (2.2x rate).",
   },
   master: {
     name: "Master Ball",
     topColor: 0x7e22ce,
     accentColor: 0xf43f5e,
     multiplier: 999.0,
-    description: "Prototype Devon capture matrix with guaranteed lock-on.",
+    description: "Devon prototype with 100% capture lock.",
   },
 };
 
 interface TargetPokemon {
   id: string;
-  name: string;
   dexNumber: string;
-  color: number;
-  ringColor: number;
-  radius: number;
-  baseX: number;
-  baseY: number;
-  baseZ: number;
-  speed: number;
-  pattern: "lissajous" | "sine" | "bounce" | "circle";
+  name: string;
+  type: string;
+  difficulty: "Legendary" | "Hard" | "Medium" | "Starter";
+  baseCatchRate: number; // 0.0 to 1.0
   points: number;
-  catchRate: number;
+  spriteUrl: string;
+  thumbUrl: string;
+  initialPos: [number, number, number];
+  size: [number, number]; // width, height in 3D units
+  color: number;
 }
 
 const TARGETS: TargetPokemon[] = [
   {
     id: "rayquaza",
-    name: "Rayquaza",
     dexNumber: "0384",
-    color: 0x059669,
-    ringColor: 0xf59e0b,
-    radius: 0.65,
-    baseX: 0,
-    baseY: 3.2,
-    baseZ: -16,
-    speed: 1.6,
-    pattern: "lissajous",
-    points: 300,
-    catchRate: 0.38,
+    name: "Rayquaza",
+    type: "Dragon / Flying",
+    difficulty: "Legendary",
+    baseCatchRate: 0.18,
+    points: 1000,
+    spriteUrl: "/images/pokemon/rayquaza.png",
+    thumbUrl: "/images/pokemon/rayquaza_thumb.png",
+    initialPos: [0, 4.2, -14],
+    size: [4.2, 4.2],
+    color: 0x10b981,
   },
   {
     id: "gastly",
-    name: "Gastly",
     dexNumber: "0092",
-    color: 0x581c87,
-    ringColor: 0xa855f7,
-    radius: 0.5,
-    baseX: -4.5,
-    baseY: 2.6,
-    baseZ: -13,
-    speed: 1.2,
-    pattern: "sine",
-    points: 150,
-    catchRate: 0.65,
+    name: "Gastly",
+    type: "Ghost / Poison",
+    difficulty: "Medium",
+    baseCatchRate: 0.45,
+    points: 400,
+    spriteUrl: "/images/pokemon/gastly.png",
+    thumbUrl: "/images/pokemon/gastly_thumb.png",
+    initialPos: [-4.5, 3.2, -10.5],
+    size: [2.6, 2.6],
+    color: 0xa855f7,
   },
   {
     id: "torchic",
-    name: "Torchic",
     dexNumber: "0255",
-    color: 0xea580c,
-    ringColor: 0xfbbf24,
-    radius: 0.42,
-    baseX: 4.2,
-    baseY: 1.8,
-    baseZ: -11,
-    speed: 1.8,
-    pattern: "bounce",
-    points: 100,
-    catchRate: 0.85,
+    name: "Torchic",
+    type: "Fire",
+    difficulty: "Starter",
+    baseCatchRate: 0.65,
+    points: 250,
+    spriteUrl: "/images/pokemon/torchic.png",
+    thumbUrl: "/images/pokemon/torchic_thumb.png",
+    initialPos: [4.6, 2.4, -9.5],
+    size: [2.2, 2.2],
+    color: 0xf97316,
   },
   {
     id: "mudkip",
-    name: "Mudkip",
     dexNumber: "0258",
-    color: 0x0284c7,
-    ringColor: 0xf97316,
-    radius: 0.42,
-    baseX: -2.2,
-    baseY: 1.5,
-    baseZ: -9,
-    speed: 1.4,
-    pattern: "circle",
-    points: 100,
-    catchRate: 0.85,
+    name: "Mudkip",
+    type: "Water",
+    difficulty: "Starter",
+    baseCatchRate: 0.65,
+    points: 250,
+    spriteUrl: "/images/pokemon/mudkip.png",
+    thumbUrl: "/images/pokemon/mudkip_thumb.png",
+    initialPos: [-2.2, 1.8, -7.5],
+    size: [2.1, 2.1],
+    color: 0x0ea5e9,
   },
   {
     id: "treecko",
-    name: "Treecko",
     dexNumber: "0252",
-    color: 0x16a34a,
-    ringColor: 0xef4444,
-    radius: 0.42,
-    baseX: 2.5,
-    baseY: 2.2,
-    baseZ: -12,
-    speed: 1.3,
-    pattern: "sine",
-    points: 100,
-    catchRate: 0.85,
+    name: "Treecko",
+    type: "Grass",
+    difficulty: "Starter",
+    baseCatchRate: 0.65,
+    points: 250,
+    spriteUrl: "/images/pokemon/treecko.png",
+    thumbUrl: "/images/pokemon/treecko_thumb.png",
+    initialPos: [2.4, 2.1, -8.0],
+    size: [2.2, 2.2],
+    color: 0x22c55e,
   },
 ];
 
-export default function PokedexArcadeGame() {
+interface PokedexArcadeGameProps {
+  onClose?: () => void;
+}
+
+export default function PokedexArcadeGame({ onClose }: PokedexArcadeGameProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  // UI State
+  // Game state
   const [selectedBall, setSelectedBall] = useState<BallType>("poke");
   const [score, setScore] = useState(0);
-  const [highScore, setHighScore] = useState(0);
   const [streak, setStreak] = useState(0);
-  const [caughtList, setCaughtList] = useState<string[]>([]);
-  const [gameMessage, setGameMessage] = useState<string>("AIM & DRAG OR PRESS SPACE TO LAUNCH");
+  const [highScore, setHighScore] = useState(0);
   const [soundEnabled, setSoundEnabled] = useState(true);
-  const [isAiming, setIsAiming] = useState(true);
+  const [caughtList, setCaughtList] = useState<string[]>([]);
+  const [announcement, setAnnouncement] = useState<string>("AIM & LAUNCH TO INITIATE CAPTURE");
+  const [announcementType, setAnnouncementType] = useState<"normal" | "success" | "warning">("normal");
 
-  // References for Three.js scene & animation loop
-  const sceneRef = useRef<THREE.Scene | null>(null);
-  const cameraRef = useRef<THREE.PerspectiveCamera | null>(null);
-  const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
-  const animFrameRef = useRef<number | null>(null);
-  const isIntersectingRef = useRef<boolean>(true);
+  // Three.js internal references
+  const gameRef = useRef<{
+    scene: THREE.Scene;
+    camera: THREE.PerspectiveCamera;
+    renderer: THREE.WebGLRenderer;
+    ballGroup: THREE.Group;
+    ballLed: THREE.Mesh;
+    trajectoryLine: THREE.Line;
+    sprites: Map<string, {
+      sprite: THREE.Sprite;
+      pedestal: THREE.Mesh;
+      basePos: THREE.Vector3;
+      speed: number;
+      caught: boolean;
+      data: TargetPokemon;
+    }>;
+    particles: THREE.Points;
+    particleGeo: THREE.BufferGeometry;
+    particlePositions: Float32Array;
+    particleVelocities: Float32Array;
+    particleLife: Float32Array;
+    aimTarget: THREE.Vector2; // -1 to 1 screen coords
+    isAiming: boolean;
+    ballState: "idle" | "flying" | "bouncing" | "wobbling" | "captured" | "breakout";
+    ballVelocity: THREE.Vector3;
+    wobbleCount: number;
+    wobbleTimer: number;
+    targetCaptured: TargetPokemon | null;
+    animFrameId: number;
+  } | null>(null);
 
-  // Game objects & physics refs
-  const pokeBallGroupRef = useRef<THREE.Group | null>(null);
-  const ballTopMeshRef = useRef<THREE.Mesh | null>(null);
-  const buttonCoreMeshRef = useRef<THREE.Mesh | null>(null);
-  const ballShadowMeshRef = useRef<THREE.Mesh | null>(null);
-  const targetMeshesRef = useRef<{ mesh: THREE.Group; data: TargetPokemon }[]>([]);
-  const particlesRef = useRef<THREE.Points | null>(null);
-  const particlePositionsRef = useRef<Float32Array | null>(null);
-  const particleVelocitiesRef = useRef<Float32Array | null>(null);
-
-  // Physics state
-  const ballStateRef = useRef<"IDLE" | "THROWN" | "HIT" | "BOUNCING" | "WOBBLING" | "RESULT">("IDLE");
-  const ballPosRef = useRef({ x: 0, y: 0.8, z: 2.2 });
-  const ballVelRef = useRef({ x: 0, y: 0, z: 0 });
-  const hitTargetRef = useRef<TargetPokemon | null>(null);
-  const wobbleStepRef = useRef(0);
-  const wobbleTimeRef = useRef(0);
-
-  // Drag interaction
-  const dragStartRef = useRef<{ x: number; y: number; time: number } | null>(null);
-  const aimAngleRef = useRef({ x: 0, y: 0 });
-
-  // Load high score from localStorage
+  // Load high score and caught roster from localStorage
   useEffect(() => {
     try {
-      const saved = localStorage.getItem("pokedex_arcade_highscore");
-      if (saved) setHighScore(parseInt(saved, 10));
+      const savedHigh = localStorage.getItem("pokedex_high_score");
+      if (savedHigh) setHighScore(parseInt(savedHigh, 10));
+      const savedCaught = localStorage.getItem("pokedex_caught_species");
+      if (savedCaught) setCaughtList(JSON.parse(savedCaught));
     } catch { }
   }, []);
 
-  const updateScore = useCallback((pts: number) => {
-    setScore((prev) => {
-      const next = prev + pts;
-      setHighScore((curHigh) => {
-        const higher = Math.max(curHigh, next);
-        try {
-          localStorage.setItem("pokedex_arcade_highscore", higher.toString());
-        } catch { }
-        return higher;
-      });
-      return next;
-    });
-  }, []);
-
-  const resetBall = useCallback(() => {
-    ballStateRef.current = "IDLE";
-    ballPosRef.current = { x: 0, y: 0.8, z: 2.2 };
-    ballVelRef.current = { x: 0, y: 0, z: 0 };
-    hitTargetRef.current = null;
-    wobbleStepRef.current = 0;
-    wobbleTimeRef.current = 0;
-
-    if (pokeBallGroupRef.current) {
-      pokeBallGroupRef.current.position.set(0, 0.8, 2.2);
-      pokeBallGroupRef.current.rotation.set(0, 0, 0);
-      pokeBallGroupRef.current.scale.set(1, 1, 1);
-    }
-    if (ballShadowMeshRef.current) {
-      ballShadowMeshRef.current.position.set(0, 0.02, 2.2);
-      ballShadowMeshRef.current.scale.set(1, 1, 1);
-      (ballShadowMeshRef.current.material as THREE.MeshBasicMaterial).opacity = 0.4;
-    }
-    if (buttonCoreMeshRef.current) {
-      (buttonCoreMeshRef.current.material as THREE.MeshStandardMaterial).emissive.setHex(0xffffff);
-      (buttonCoreMeshRef.current.material as THREE.MeshStandardMaterial).emissiveIntensity = 0.8;
-    }
-
-    setIsAiming(true);
-    setGameMessage("AIM & FLICK / DRAG OR PRESS SPACE TO LAUNCH");
-  }, []);
-
-  // Throw ball physics trigger
-  const throwBall = useCallback(
-    (vx: number, vy: number, vz: number) => {
-      if (ballStateRef.current !== "IDLE") return;
-
-      ballStateRef.current = "THROWN";
-      ballVelRef.current = { x: vx, y: vy, z: vz };
-      setIsAiming(false);
-      setGameMessage("POKÉ BALL IN FLIGHT...");
-      chiptune.playThrow();
-    },
-    []
-  );
-
-  // Fire with default keyboard/button power
-  const launchDefault = useCallback(() => {
-    if (ballStateRef.current !== "IDLE") return;
-    const vx = aimAngleRef.current.x * 2.8;
-    const vy = 5.6 + aimAngleRef.current.y * 1.8;
-    const vz = -14.5;
-    throwBall(vx, vy, vz);
-  }, [throwBall]);
-
-  // Spawn particle burst at position
-  const triggerParticles = useCallback((pos: { x: number; y: number; z: number }, colorHex: number) => {
-    const pPos = particlePositionsRef.current;
-    const pVel = particleVelocitiesRef.current;
-    const pts = particlesRef.current;
-    if (!pPos || !pVel || !pts) return;
-
-    (pts.material as THREE.PointsMaterial).color.setHex(colorHex);
-
-    const count = pPos.length / 3;
-    for (let i = 0; i < count; i++) {
-      const idx = i * 3;
-      pPos[idx] = pos.x;
-      pPos[idx + 1] = pos.y;
-      pPos[idx + 2] = pos.z;
-
-      const angle = Math.random() * Math.PI * 2;
-      const speed = 1.5 + Math.random() * 4.5;
-      pVel[idx] = Math.cos(angle) * speed;
-      pVel[idx + 1] = (Math.random() - 0.2) * speed * 1.2;
-      pVel[idx + 2] = Math.sin(angle) * speed;
-    }
-    pts.geometry.attributes.position.needsUpdate = true;
-  }, []);
-
-  // Build Three.js Scene
+  // Update sound synthesizer state
   useEffect(() => {
-    const container = containerRef.current;
+    chiptune.enabled = soundEnabled;
+  }, [soundEnabled]);
+
+  // Create procedural 3D Pokéball mesh
+  const createBallMesh = useCallback((type: BallType) => {
+    const config = BALL_CONFIGS[type];
+    const group = new THREE.Group();
+    const radius = 0.42;
+
+    // Top hemisphere
+    const topGeo = new THREE.SphereGeometry(
+      radius,
+      32,
+      16,
+      0,
+      Math.PI * 2,
+      0,
+      Math.PI / 2
+    );
+    const topMat = new THREE.MeshStandardMaterial({
+      color: config.topColor,
+      metalness: 0.35,
+      roughness: 0.25,
+    });
+    const topMesh = new THREE.Mesh(topGeo, topMat);
+    group.add(topMesh);
+
+    // Accent markings (e.g. Great Ball red fins, Ultra Ball yellow strips)
+    if (config.accentColor) {
+      const accentGeo = new THREE.TorusGeometry(radius * 0.98, 0.04, 16, 32, Math.PI);
+      const accentMat = new THREE.MeshStandardMaterial({
+        color: config.accentColor,
+        metalness: 0.4,
+        roughness: 0.2,
+      });
+      const accentMesh = new THREE.Mesh(accentGeo, accentMat);
+      accentMesh.rotation.x = Math.PI / 2;
+      accentMesh.position.y = 0.12;
+      group.add(accentMesh);
+    }
+
+    // Bottom hemisphere (white porcelain)
+    const btmGeo = new THREE.SphereGeometry(
+      radius,
+      32,
+      16,
+      0,
+      Math.PI * 2,
+      Math.PI / 2,
+      Math.PI / 2
+    );
+    const btmMat = new THREE.MeshStandardMaterial({
+      color: 0xf4f4f5,
+      metalness: 0.15,
+      roughness: 0.3,
+    });
+    const btmMesh = new THREE.Mesh(btmGeo, btmMat);
+    group.add(btmMesh);
+
+    // Dark metallic central equator band
+    const bandGeo = new THREE.CylinderGeometry(radius * 1.01, radius * 1.01, 0.06, 32);
+    const bandMat = new THREE.MeshStandardMaterial({
+      color: 0x18181b,
+      metalness: 0.8,
+      roughness: 0.2,
+    });
+    const bandMesh = new THREE.Mesh(bandGeo, bandMat);
+    group.add(bandMesh);
+
+    // Center release button housing
+    const buttonRingGeo = new THREE.CylinderGeometry(0.12, 0.12, 0.08, 24);
+    const buttonRingMat = new THREE.MeshStandardMaterial({
+      color: 0x18181b,
+      metalness: 0.8,
+      roughness: 0.3,
+    });
+    const buttonRing = new THREE.Mesh(buttonRingGeo, buttonRingMat);
+    buttonRing.rotation.x = Math.PI / 2;
+    buttonRing.position.z = radius * 0.95;
+    group.add(buttonRing);
+
+    // Center illuminated LED trigger button
+    const buttonCenterGeo = new THREE.CylinderGeometry(0.07, 0.07, 0.09, 24);
+    const buttonCenterMat = new THREE.MeshStandardMaterial({
+      color: 0xffffff,
+      emissive: 0xffffff,
+      emissiveIntensity: 0.5,
+      roughness: 0.2,
+    });
+    const buttonCenter = new THREE.Mesh(buttonCenterGeo, buttonCenterMat);
+    buttonCenter.rotation.x = Math.PI / 2;
+    buttonCenter.position.z = radius * 0.97;
+    group.add(buttonCenter);
+
+    return { group, led: buttonCenter };
+  }, []);
+
+  // Initialize Three.js 3D Engine
+  useEffect(() => {
     const canvas = canvasRef.current;
-    if (!container || !canvas) return;
+    const container = containerRef.current;
+    if (!canvas || !container) return;
 
-    const width = container.clientWidth;
-    const height = Math.min(520, Math.max(340, Math.round(width * 0.58)));
+    const width = container.clientWidth || 800;
+    const height = container.clientHeight || 540;
 
-    // 1. Scene & Camera
+    // 1. Scene setup
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(0x090d16);
-    scene.fog = new THREE.FogExp2(0x090d16, 0.035);
-    sceneRef.current = scene;
+    scene.fog = new THREE.FogExp2(0x090d16, 0.028);
 
-    const camera = new THREE.PerspectiveCamera(48, width / height, 0.1, 100);
+    // 2. Camera setup
+    const camera = new THREE.PerspectiveCamera(52, width / height, 0.1, 100);
     camera.position.set(0, 2.2, 4.8);
-    camera.lookAt(0, 2.2, -6);
-    cameraRef.current = camera;
+    camera.lookAt(0, 2.0, -8);
 
-    // 2. Renderer
+    // 3. Renderer with antialiasing
     const renderer = new THREE.WebGLRenderer({
       canvas,
       antialias: true,
@@ -317,691 +329,816 @@ export default function PokedexArcadeGame() {
     });
     renderer.setSize(width, height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    rendererRef.current = renderer;
+    renderer.shadowMap.enabled = true;
 
-    // 3. Lights
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.85);
+    // 4. Studio & Hologram Lighting
+    const ambientLight = new THREE.AmbientLight(0xffffff, 1.2);
     scene.add(ambientLight);
 
-    const dirLight = new THREE.DirectionalLight(0xffffff, 1.4);
-    dirLight.position.set(5, 12, 6);
+    const dirLight = new THREE.DirectionalLight(0xffffff, 1.6);
+    dirLight.position.set(5, 12, 8);
     scene.add(dirLight);
 
-    const cyanLight = new THREE.PointLight(0x06b6d4, 1.5, 25);
-    cyanLight.position.set(0, 1.5, 0);
-    scene.add(cyanLight);
+    // Emerald horizon light for Hoenn theme
+    const fieldLight = new THREE.PointLight(0x10b981, 2.5, 30);
+    fieldLight.position.set(0, 1.5, -12);
+    scene.add(fieldLight);
 
-    // 4. Ground Grid & Cyber Floor
-    const gridHelper = new THREE.GridHelper(50, 50, 0xdc2626, 0x1e293b);
+    // 5. Retro Digital Holographic Grid Floor
+    const gridHelper = new THREE.GridHelper(40, 40, 0x059669, 0x1e293b);
     gridHelper.position.y = 0;
     scene.add(gridHelper);
 
-    const floorGeo = new THREE.PlaneGeometry(50, 50);
-    const floorMat = new THREE.MeshStandardMaterial({
-      color: 0x05070d,
-      roughness: 0.85,
-      metalness: 0.2,
-    });
-    const floor = new THREE.Mesh(floorGeo, floorMat);
-    floor.rotation.x = -Math.PI / 2;
-    floor.position.y = -0.01;
-    scene.add(floor);
-
-    // 5. Starfield Dust Motes
-    const starCount = 350;
-    const starGeo = new THREE.BufferGeometry();
-    const starCoords = new Float32Array(starCount * 3);
-    for (let i = 0; i < starCount; i++) {
-      starCoords[i * 3] = (Math.random() - 0.5) * 45;
-      starCoords[i * 3 + 1] = Math.random() * 16 + 0.5;
-      starCoords[i * 3 + 2] = -Math.random() * 30 - 2;
-    }
-    starGeo.setAttribute("position", new THREE.BufferAttribute(starCoords, 3));
-    const starMat = new THREE.PointsMaterial({
-      color: 0x67e8f9,
-      size: 0.12,
+    // Floor reflector plane
+    const floorGeo = new THREE.PlaneGeometry(40, 40);
+    const floorMat = new THREE.MeshBasicMaterial({
+      color: 0x060911,
       transparent: true,
-      opacity: 0.75,
+      opacity: 0.85,
     });
-    const stars = new THREE.Points(starGeo, starMat);
-    scene.add(stars);
+    const floorMesh = new THREE.Mesh(floorGeo, floorMat);
+    floorMesh.rotation.x = -Math.PI / 2;
+    floorMesh.position.y = -0.01;
+    scene.add(floorMesh);
 
-    // 6. Procedural 3D Pokéball Mesh
-    const ballGroup = new THREE.Group();
-    pokeBallGroupRef.current = ballGroup;
-
-    // Top hemisphere
-    const topGeo = new THREE.SphereGeometry(0.35, 32, 16, 0, Math.PI * 2, 0, Math.PI / 2);
-    const topMat = new THREE.MeshStandardMaterial({
-      color: BALL_CONFIGS[selectedBall].topColor,
-      roughness: 0.25,
-      metalness: 0.15,
-    });
-    const topMesh = new THREE.Mesh(topGeo, topMat);
-    ballTopMeshRef.current = topMesh;
-    ballGroup.add(topMesh);
-
-    // Bottom hemisphere
-    const btmGeo = new THREE.SphereGeometry(0.35, 32, 16, 0, Math.PI * 2, Math.PI / 2, Math.PI / 2);
-    const btmMat = new THREE.MeshStandardMaterial({
-      color: 0xf8fafc,
-      roughness: 0.25,
-      metalness: 0.1,
-    });
-    const btmMesh = new THREE.Mesh(btmGeo, btmMat);
-    ballGroup.add(btmMesh);
-
-    // Middle dark band
-    const bandGeo = new THREE.CylinderGeometry(0.352, 0.352, 0.04, 32);
-    const bandMat = new THREE.MeshStandardMaterial({
-      color: 0x0f172a,
-      roughness: 0.4,
-      metalness: 0.8,
-    });
-    const bandMesh = new THREE.Mesh(bandGeo, bandMat);
-    ballGroup.add(bandMesh);
-
-    // Button Ring
-    const ringGeo = new THREE.CylinderGeometry(0.1, 0.1, 0.05, 24);
-    ringGeo.rotateX(Math.PI / 2);
-    const ringMat = new THREE.MeshStandardMaterial({
-      color: 0x334155,
-      roughness: 0.3,
-      metalness: 0.9,
-    });
-    const ringMesh = new THREE.Mesh(ringGeo, ringMat);
-    ringMesh.position.set(0, 0, 0.34);
-    ballGroup.add(ringMesh);
-
-    // Button Core (illuminated)
-    const coreGeo = new THREE.CylinderGeometry(0.055, 0.055, 0.06, 24);
-    coreGeo.rotateX(Math.PI / 2);
-    const coreMat = new THREE.MeshStandardMaterial({
-      color: 0xffffff,
-      emissive: 0xffffff,
-      emissiveIntensity: 0.9,
-      roughness: 0.1,
-    });
-    const coreMesh = new THREE.Mesh(coreGeo, coreMat);
-    coreMesh.position.set(0, 0, 0.345);
-    buttonCoreMeshRef.current = coreMesh;
-    ballGroup.add(coreMesh);
-
-    ballGroup.position.set(0, 0.8, 2.2);
-    scene.add(ballGroup);
-
-    // Ball Floor Shadow
-    const shadowGeo = new THREE.CircleGeometry(0.36, 24);
-    const shadowMat = new THREE.MeshBasicMaterial({
-      color: 0x000000,
-      transparent: true,
-      opacity: 0.4,
-    });
-    const shadowMesh = new THREE.Mesh(shadowGeo, shadowMat);
-    shadowMesh.rotation.x = -Math.PI / 2;
-    shadowMesh.position.set(0, 0.02, 2.2);
-    ballShadowMeshRef.current = shadowMesh;
-    scene.add(shadowMesh);
-
-    // 7. Holographic 3D Pokémon Targets
-    targetMeshesRef.current = [];
-    TARGETS.forEach((t) => {
-      const group = new THREE.Group();
-
-      // Holographic Orb Core
-      const orbGeo = new THREE.SphereGeometry(t.radius, 24, 24);
-      const orbMat = new THREE.MeshStandardMaterial({
-        color: t.color,
-        emissive: t.color,
-        emissiveIntensity: 0.6,
-        transparent: true,
-        opacity: 0.85,
-        roughness: 0.2,
-      });
-      const orb = new THREE.Mesh(orbGeo, orbMat);
-      group.add(orb);
-
-      // Rotating Aura Ring
-      const torusGeo = new THREE.TorusGeometry(t.radius * 1.35, 0.03, 12, 32);
-      const torusMat = new THREE.MeshBasicMaterial({
-        color: t.ringColor,
-        transparent: true,
-        opacity: 0.9,
-      });
-      const torus = new THREE.Mesh(torusGeo, torusMat);
-      group.add(torus);
-
-      // Outer Ring
-      const torusOuterGeo = new THREE.TorusGeometry(t.radius * 1.6, 0.015, 8, 32);
-      const torusOuter = new THREE.Mesh(torusOuterGeo, torusMat);
-      torusOuter.rotation.x = Math.PI / 3;
-      group.add(torusOuter);
-
-      group.position.set(t.baseX, t.baseY, t.baseZ);
-      scene.add(group);
-
-      targetMeshesRef.current.push({ mesh: group, data: t });
-    });
-
-    // 8. Particle System for Explosions
-    const pCount = 100;
-    const pGeo = new THREE.BufferGeometry();
-    const pPositions = new Float32Array(pCount * 3);
-    const pVelocities = new Float32Array(pCount * 3);
-
-    for (let i = 0; i < pCount; i++) {
-      pPositions[i * 3] = 0;
-      pPositions[i * 3 + 1] = -100; // start hidden
-      pPositions[i * 3 + 2] = 0;
-    }
-    pGeo.setAttribute("position", new THREE.BufferAttribute(pPositions, 3));
-    const pMat = new THREE.PointsMaterial({
+    // 6. Launch platform ring
+    const padGeo = new THREE.RingGeometry(0.7, 0.9, 32);
+    const padMat = new THREE.MeshBasicMaterial({
       color: 0x10b981,
-      size: 0.25,
+      side: THREE.DoubleSide,
+      transparent: true,
+      opacity: 0.7,
+    });
+    const padMesh = new THREE.Mesh(padGeo, padMat);
+    padMesh.rotation.x = -Math.PI / 2;
+    padMesh.position.set(0, 0.02, 1.2);
+    scene.add(padMesh);
+
+    // 7. Aiming Trajectory Line
+    const trajectoryGeo = new THREE.BufferGeometry();
+    const maxPoints = 50;
+    const trajectoryPositions = new Float32Array(maxPoints * 3);
+    trajectoryGeo.setAttribute(
+      "position",
+      new THREE.BufferAttribute(trajectoryPositions, 3)
+    );
+    const trajectoryMat = new THREE.LineDashedMaterial({
+      color: 0xef4444,
+      dashSize: 0.3,
+      gapSize: 0.15,
+      transparent: true,
+      opacity: 0.7,
+    });
+    const trajectoryLine = new THREE.Line(trajectoryGeo, trajectoryMat);
+    scene.add(trajectoryLine);
+
+    // 8. 3D Particle Burst System for Catches and Breakouts
+    const particleCount = 120;
+    const particleGeo = new THREE.BufferGeometry();
+    const particlePositions = new Float32Array(particleCount * 3);
+    const particleVelocities = new Float32Array(particleCount * 3);
+    const particleLife = new Float32Array(particleCount);
+
+    for (let i = 0; i < particleCount; i++) {
+      particlePositions[i * 3 + 1] = -100;
+      particleLife[i] = 0;
+    }
+
+    particleGeo.setAttribute(
+      "position",
+      new THREE.BufferAttribute(particlePositions, 3)
+    );
+
+    const particleMat = new THREE.PointsMaterial({
+      color: 0x34d399,
+      size: 0.18,
       transparent: true,
       opacity: 0.9,
       blending: THREE.AdditiveBlending,
     });
-    const pSystem = new THREE.Points(pGeo, pMat);
-    particlesRef.current = pSystem;
-    particlePositionsRef.current = pPositions;
-    particleVelocitiesRef.current = pVelocities;
-    scene.add(pSystem);
+    const particles = new THREE.Points(particleGeo, particleMat);
+    scene.add(particles);
 
-    // 9. Resize Handling
-    const handleResize = () => {
-      if (!containerRef.current || !rendererRef.current || !cameraRef.current) return;
-      const w = containerRef.current.clientWidth;
-      const h = Math.min(520, Math.max(340, Math.round(w * 0.58)));
-      cameraRef.current.aspect = w / h;
-      cameraRef.current.updateProjectionMatrix();
-      rendererRef.current.setSize(w, h);
+    // 9. Load Real Pokémon Sprites using TextureLoader
+    const textureLoader = new THREE.TextureLoader();
+    const spriteMap = new Map<
+      string,
+      {
+        sprite: THREE.Sprite;
+        pedestal: THREE.Mesh;
+        basePos: THREE.Vector3;
+        speed: number;
+        caught: boolean;
+        data: TargetPokemon;
+      }
+    >();
+
+    TARGETS.forEach((target) => {
+      const tex = textureLoader.load(target.spriteUrl);
+      tex.minFilter = THREE.LinearFilter;
+      tex.magFilter = THREE.LinearFilter;
+
+      const spriteMat = new THREE.SpriteMaterial({
+        map: tex,
+        transparent: true,
+        depthTest: true,
+        depthWrite: false,
+      });
+
+      const sprite = new THREE.Sprite(spriteMat);
+      sprite.scale.set(target.size[0], target.size[1], 1);
+      sprite.position.set(...target.initialPos);
+      scene.add(sprite);
+
+      // Holographic glowing pedestal on the floor under each Pokémon
+      const pedGeo = new THREE.RingGeometry(target.size[0] * 0.35, target.size[0] * 0.48, 24);
+      const pedMat = new THREE.MeshBasicMaterial({
+        color: target.color,
+        side: THREE.DoubleSide,
+        transparent: true,
+        opacity: 0.45,
+      });
+      const pedestal = new THREE.Mesh(pedGeo, pedMat);
+      pedestal.rotation.x = -Math.PI / 2;
+      pedestal.position.set(target.initialPos[0], 0.03, target.initialPos[2]);
+      scene.add(pedestal);
+
+      spriteMap.set(target.id, {
+        sprite,
+        pedestal,
+        basePos: new THREE.Vector3(...target.initialPos),
+        speed: 0.8 + Math.random() * 0.6,
+        caught: false,
+        data: target,
+      });
+    });
+
+    // 10. Create initial Pokéball
+    const { group: ballGroup, led: ballLed } = createBallMesh("poke");
+    ballGroup.position.set(0, 0.42, 1.2);
+    scene.add(ballGroup);
+
+    // Store game instance
+    gameRef.current = {
+      scene,
+      camera,
+      renderer,
+      ballGroup,
+      ballLed,
+      trajectoryLine,
+      sprites: spriteMap,
+      particles,
+      particleGeo,
+      particlePositions,
+      particleVelocities,
+      particleLife,
+      aimTarget: new THREE.Vector2(0, 0),
+      isAiming: false,
+      ballState: "idle",
+      ballVelocity: new THREE.Vector3(),
+      wobbleCount: 0,
+      wobbleTimer: 0,
+      targetCaptured: null,
+      animFrameId: 0,
     };
+
+    // Update trajectory preview
+    const updateTrajectory = () => {
+      const g = gameRef.current;
+      if (!g) return;
+
+      const origin = new THREE.Vector3(0, 0.42, 1.2);
+      const targetX = g.aimTarget.x * 6.5;
+      const targetY = 2.5 + g.aimTarget.y * 3.0;
+      const targetZ = -11;
+
+      // Estimate initial ballistic velocity
+      const dt = 1.0;
+      const vx = (targetX - origin.x) / dt;
+      const vz = (targetZ - origin.z) / dt;
+      const vy = (targetY - origin.y + 0.5 * 9.8 * dt * dt) / dt;
+
+      const posArray = g.trajectoryLine.geometry.attributes.position.array as Float32Array;
+      const steps = 40;
+      const timeStep = dt / steps;
+
+      let cx = origin.x;
+      let cy = origin.y;
+      let cz = origin.z;
+      let cvy = vy;
+
+      for (let i = 0; i < steps; i++) {
+        posArray[i * 3] = cx;
+        posArray[i * 3 + 1] = cy;
+        posArray[i * 3 + 2] = cz;
+
+        cx += vx * timeStep;
+        cz += vz * timeStep;
+        cvy -= 9.8 * timeStep;
+        cy += cvy * timeStep;
+      }
+
+      g.trajectoryLine.geometry.attributes.position.needsUpdate = true;
+      g.trajectoryLine.computeLineDistances();
+    };
+
+    // Resize Handler
+    const handleResize = () => {
+      if (!container || !gameRef.current) return;
+      const w = container.clientWidth;
+      const h = container.clientHeight;
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+      renderer.setSize(w, h);
+    };
+
     window.addEventListener("resize", handleResize);
 
-    // 10. Visibility Observer to Pause Render Loop when out of view
-    const observer = new IntersectionObserver(([entry]) => {
-      isIntersectingRef.current = entry.isIntersecting;
-    }, { threshold: 0.05 });
-    observer.observe(container);
+    // Animation Render Loop (60 FPS)
+    let lastTime = performance.now();
 
-    // 11. Main 60fps Game Loop
-    let clock = new THREE.Clock();
+    const animate = (currentTime: number) => {
+      const g = gameRef.current;
+      if (!g) return;
 
-    const animate = () => {
-      animFrameRef.current = requestAnimationFrame(animate);
+      const delta = Math.min((currentTime - lastTime) / 1000, 0.1);
+      lastTime = currentTime;
 
-      if (!isIntersectingRef.current) return;
-
-      const delta = Math.min(clock.getDelta(), 0.1);
-      const time = clock.getElapsedTime();
-
-      // A. Animate Target Holograms
-      targetMeshesRef.current.forEach(({ mesh, data }) => {
-        mesh.rotation.y += 0.02;
-        mesh.rotation.x += 0.008;
-
-        if (data.pattern === "lissajous") {
-          mesh.position.x = data.baseX + Math.sin(time * data.speed) * 3.6;
-          mesh.position.y = data.baseY + Math.sin(time * data.speed * 2) * 1.0;
-          mesh.position.z = data.baseZ + Math.cos(time * data.speed) * 1.5;
-        } else if (data.pattern === "sine") {
-          mesh.position.y = data.baseY + Math.sin(time * data.speed * 2) * 0.65;
-          mesh.position.x = data.baseX + Math.cos(time * data.speed) * 1.2;
-        } else if (data.pattern === "bounce") {
-          mesh.position.y = data.baseY + Math.abs(Math.sin(time * data.speed * 2.2)) * 1.2;
-        } else if (data.pattern === "circle") {
-          mesh.position.x = data.baseX + Math.cos(time * data.speed) * 1.5;
-          mesh.position.y = data.baseY + Math.sin(time * data.speed) * 0.8;
+      // Animate hovering Pokémon targets
+      g.sprites.forEach((item) => {
+        if (!item.caught) {
+          const t = currentTime * 0.001 * item.speed;
+          item.sprite.position.y = item.basePos.y + Math.sin(t) * 0.35;
+          item.sprite.position.x = item.basePos.x + Math.cos(t * 0.6) * 0.4;
+          item.pedestal.position.x = item.sprite.position.x;
         }
       });
 
-      // B. Animate Particle Bursts
-      if (particlePositionsRef.current && particleVelocitiesRef.current && particlesRef.current) {
-        const pos = particlePositionsRef.current;
-        const vel = particleVelocitiesRef.current;
-        let active = false;
+      // Animate Ball Physics
+      if (g.ballState === "flying") {
+        g.ballGroup.position.addScaledVector(g.ballVelocity, delta);
+        g.ballVelocity.y -= 9.8 * delta; // Gravity
+        g.ballGroup.rotation.x += 12 * delta; // Forward spin
 
-        for (let i = 0; i < pos.length / 3; i++) {
-          const idx = i * 3;
-          if (pos[idx + 1] > -50) {
-            active = true;
-            pos[idx] += vel[idx] * delta;
-            pos[idx + 1] += vel[idx + 1] * delta;
-            pos[idx + 2] += vel[idx + 2] * delta;
-            vel[idx + 1] -= 9.8 * delta; // particle gravity
+        // Collision detection against floating real Pokémon
+        g.sprites.forEach((item) => {
+          if (item.caught || g.ballState !== "flying") return;
 
-            if (pos[idx + 1] < 0) {
-              pos[idx + 1] = -100; // cleanup
-            }
-          }
-        }
-        if (active) {
-          particlesRef.current.geometry.attributes.position.needsUpdate = true;
-        }
-      }
+          const dist = g.ballGroup.position.distanceTo(item.sprite.position);
+          const hitRadius = item.data.size[0] * 0.45;
 
-      // C. Pokéball Physics & Flight Logic
-      const ball = pokeBallGroupRef.current;
-      const shadow = ballShadowMeshRef.current;
+          if (dist < hitRadius) {
+            // Target Hit!
+            chiptune.playHit();
+            g.ballState = "bouncing";
+            g.targetCaptured = item.data;
 
-      if (ball) {
-        if (ballStateRef.current === "IDLE") {
-          // Subtle idle hover breathing
-          ball.position.y = 0.8 + Math.sin(time * 3) * 0.04;
-          ball.rotation.y = time * 0.6;
-          if (shadow) {
-            shadow.position.x = ball.position.x;
-            shadow.position.z = ball.position.z;
-          }
-        } else if (ballStateRef.current === "THROWN") {
-          // Parabolic trajectory integration
-          const vel = ballVelRef.current;
-          const pos = ballPosRef.current;
+            // Trigger absorption animation
+            item.sprite.scale.set(0, 0, 0); // Absorb into ball
+            item.caught = true;
 
-          pos.x += vel.x * delta;
-          pos.y += vel.y * delta;
-          pos.z += vel.z * delta;
-          vel.y -= 15.5 * delta; // Gravity
-
-          ball.position.set(pos.x, pos.y, pos.z);
-          ball.rotation.x += 12 * delta; // Spin
-
-          if (shadow) {
-            shadow.position.set(pos.x, 0.02, pos.z);
-            const heightScale = Math.max(0.2, 1 - (pos.y / 8));
-            shadow.scale.set(heightScale, heightScale, heightScale);
-            (shadow.material as THREE.MeshBasicMaterial).opacity = Math.max(0.05, 0.4 - pos.y * 0.05);
-          }
-
-          // Check Collision with any active target
-          targetMeshesRef.current.forEach(({ mesh, data }) => {
-            if (ballStateRef.current !== "THROWN") return;
-            const dist = ball.position.distanceTo(mesh.position);
-
-            if (dist < data.radius + 0.45) {
-              // HIT TARGET!
-              ballStateRef.current = "HIT";
-              hitTargetRef.current = data;
-              chiptune.playHit();
-              triggerParticles(mesh.position, data.color);
-
-              // Pull ball to target position
-              ballPosRef.current = { x: mesh.position.x, y: mesh.position.y, z: mesh.position.z };
-              ballVelRef.current = { x: 0, y: -2, z: 0 };
-              setGameMessage(`HIT ${data.name.toUpperCase()}! INITIATING CAPTURE MATRIX...`);
-            }
-          });
-
-          // Check Floor Impact
-          if (pos.y <= 0.35) {
-            pos.y = 0.35;
-            if (Math.abs(vel.y) > 2.5) {
-              vel.y = -vel.y * 0.45; // Ground bounce
-              chiptune.playBounce();
-            } else {
-              // Settle on ground
-              ballStateRef.current = "BOUNCING";
-              chiptune.playBounce();
-              setTimeout(() => {
-                if (ballStateRef.current === "BOUNCING") {
-                  setGameMessage("MISSED TARGET. SYSTEM RESETTING...");
-                  setTimeout(resetBall, 900);
-                }
-              }, 400);
-            }
-          }
-
-          // Out of bounds reset
-          if (pos.z < -26 || Math.abs(pos.x) > 10) {
-            setGameMessage("OUT OF BOUNDS. RE-ARMING...");
-            setTimeout(resetBall, 700);
-          }
-        } else if (ballStateRef.current === "HIT") {
-          // Ball drops to ground after absorbing target
-          const pos = ballPosRef.current;
-          const vel = ballVelRef.current;
-
-          pos.y += vel.y * delta;
-          vel.y -= 14 * delta;
-          ball.position.set(pos.x, pos.y, pos.z);
-
-          if (shadow) {
-            shadow.position.set(pos.x, 0.02, pos.z);
-          }
-
-          if (pos.y <= 0.35) {
-            pos.y = 0.35;
-            ball.position.y = 0.35;
-            chiptune.playBounce();
-
-            // Enter Wobble Sequence
-            ballStateRef.current = "WOBBLING";
-            wobbleStepRef.current = 1;
-            wobbleTimeRef.current = 0;
-            setGameMessage("HOLD STILL...");
-          }
-        } else if (ballStateRef.current === "WOBBLING") {
-          wobbleTimeRef.current += delta;
-          const step = wobbleStepRef.current;
-          const stepDuration = 0.65;
-
-          // Wobble tilt math
-          const tilt = Math.sin(wobbleTimeRef.current * 14) * Math.exp(-wobbleTimeRef.current * 3.5) * 0.45;
-          ball.rotation.z = tilt;
-
-          // Flash button core red during tilt
-          if (buttonCoreMeshRef.current) {
-            const isFlashing = Math.sin(wobbleTimeRef.current * 20) > 0;
-            (buttonCoreMeshRef.current.material as THREE.MeshStandardMaterial).emissive.setHex(
-              isFlashing ? 0xef4444 : 0xffffff
+            // Particle burst at hit point
+            triggerParticleBurst(
+              item.sprite.position.x,
+              item.sprite.position.y,
+              item.sprite.position.z,
+              item.data.color
             );
+
+            // Bounce ball downward
+            g.ballVelocity.set(0, -1.8, -0.5);
+            setAnnouncement(`TARGET ACQUIRED: ${item.data.name.toUpperCase()}`);
+            setAnnouncementType("warning");
           }
+        });
 
-          if (wobbleTimeRef.current >= stepDuration) {
-            chiptune.playWobble();
-            wobbleTimeRef.current = 0;
-            wobbleStepRef.current += 1;
+        // Ground collision (floor level is y = 0.42)
+        if (g.ballGroup.position.y <= 0.42) {
+          g.ballGroup.position.y = 0.42;
 
-            if (wobbleStepRef.current > 3) {
-              // RESOLVE CAPTURE
-              ballStateRef.current = "RESULT";
-              const target = hitTargetRef.current;
-              const ballMultiplier = BALL_CONFIGS[selectedBall].multiplier;
-              const finalProb = Math.min(0.99, (target?.catchRate || 0.5) * ballMultiplier);
+          if (g.targetCaptured) {
+            // Transition to Wobble phase
+            chiptune.playBounce();
+            g.ballState = "wobbling";
+            g.ballVelocity.set(0, 0, 0);
+            g.wobbleCount = 0;
+            g.wobbleTimer = 0;
+            setAnnouncement(`TESTING MATRIX LOCK-ON...`);
+          } else {
+            // Missed throw - bounce with friction
+            chiptune.playBounce();
+            g.ballVelocity.y = Math.abs(g.ballVelocity.y) * 0.42;
+            g.ballVelocity.x *= 0.6;
+            g.ballVelocity.z *= 0.6;
 
-              const isSuccess = Math.random() < finalProb;
+            if (g.ballVelocity.y < 0.3) {
+              // Settle on ground and reset
+              g.ballState = "idle";
+              resetBallPosition();
+              setStreak(0);
+              setAnnouncement("TARGET MISSED — RE-CALIBRATING");
+              setAnnouncementType("normal");
+            }
+          }
+        }
+      } else if (g.ballState === "wobbling") {
+        g.wobbleTimer += delta;
 
-              if (isSuccess && target) {
-                // SUCCESSFUL CATCH!
-                chiptune.playCatchSuccess();
-                if (buttonCoreMeshRef.current) {
-                  (buttonCoreMeshRef.current.material as THREE.MeshStandardMaterial).emissive.setHex(0x10b981);
+        // Flash center LED indicator
+        const ledMat = g.ballLed.material as THREE.MeshStandardMaterial;
+        ledMat.emissive.setHex(0xef4444);
+        ledMat.emissiveIntensity = 0.5 + Math.sin(g.wobbleTimer * 14) * 0.5;
+
+        // Physical left/right tilt wobble
+        const wobbleCycle = (g.wobbleTimer % 0.7) / 0.7;
+        if (wobbleCycle < 0.5) {
+          g.ballGroup.rotation.z = Math.sin(wobbleCycle * Math.PI * 2) * 0.35;
+        } else {
+          g.ballGroup.rotation.z = 0;
+        }
+
+        // Each 0.7s, perform one wobble
+        if (g.wobbleTimer >= (g.wobbleCount + 1) * 0.7) {
+          g.wobbleCount++;
+          chiptune.playWobble();
+
+          if (g.wobbleCount >= 3) {
+            // 3 wobbles completed — evaluate capture formula!
+            const target = g.targetCaptured!;
+            const ballMult = BALL_CONFIGS[selectedBall].multiplier;
+            const captureProb = Math.min(target.baseCatchRate * ballMult, 1.0);
+            const roll = Math.random();
+
+            if (roll <= captureProb || selectedBall === "master") {
+              // SUCCESSFUL CATCH!
+              chiptune.playCatchSuccess();
+              g.ballState = "captured";
+              ledMat.emissive.setHex(0x10b981);
+              ledMat.emissiveIntensity = 1.0;
+
+              // Golden star burst
+              triggerParticleBurst(
+                g.ballGroup.position.x,
+                g.ballGroup.position.y + 0.4,
+                g.ballGroup.position.z,
+                0xfacc15
+              );
+
+              // Update scores
+              setScore((prev) => {
+                const newScore = prev + target.points * (streak + 1);
+                setHighScore((oldHigh) => {
+                  const highest = Math.max(oldHigh, newScore);
+                  try {
+                    localStorage.setItem("pokedex_high_score", highest.toString());
+                  } catch { }
+                  return highest;
+                });
+                return newScore;
+              });
+
+              setStreak((prev) => prev + 1);
+
+              setCaughtList((prev) => {
+                if (!prev.includes(target.id)) {
+                  const updated = [...prev, target.id];
+                  try {
+                    localStorage.setItem("pokedex_caught_species", JSON.stringify(updated));
+                  } catch { }
+                  return updated;
                 }
-                triggerParticles(ball.position, 0x10b981);
+                return prev;
+              });
 
-                const streakBonus = streak + 1;
-                const earnedPoints = target.points * streakBonus;
-                updateScore(earnedPoints);
-                setStreak(streakBonus);
+              setAnnouncement(`${target.name.toUpperCase()} REGISTERED IN DEX!`);
+              setAnnouncementType("success");
 
-                setCaughtList((prev) => (prev.includes(target.id) ? prev : [...prev, target.id]));
-                setGameMessage(`GOTCHA! ${target.name.toUpperCase()} WAS CAUGHT! (+${earnedPoints} PTS)`);
+              setTimeout(() => {
+                resetBallPosition();
+                respawnTarget(target.id);
+              }, 2200);
+            } else {
+              // BREAKOUT!
+              chiptune.playBreakout();
+              g.ballState = "breakout";
+              ledMat.emissive.setHex(0x3f3f46);
 
-                setTimeout(resetBall, 2600);
-              } else {
-                // BREAKOUT!
-                chiptune.playBreakout();
-                if (buttonCoreMeshRef.current) {
-                  (buttonCoreMeshRef.current.material as THREE.MeshStandardMaterial).emissive.setHex(0xef4444);
-                }
-                setStreak(0);
-                setGameMessage(`OH NO! ${target?.name.toUpperCase() || "POKÉMON"} BROKE FREE!`);
-                setTimeout(resetBall, 1600);
-              }
+              // Red puff particle burst
+              triggerParticleBurst(
+                g.ballGroup.position.x,
+                g.ballGroup.position.y + 0.3,
+                g.ballGroup.position.z,
+                0xef4444
+              );
+
+              // Respawn Pokémon target
+              respawnTarget(target.id);
+              setStreak(0);
+              setAnnouncement(`${target.name.toUpperCase()} BROKE FREE!`);
+              setAnnouncementType("warning");
+
+              setTimeout(() => {
+                resetBallPosition();
+              }, 1400);
             }
           }
         }
       }
 
+      // Update Particle Physics
+      const pPos = g.particlePositions;
+      const pVel = g.particleVelocities;
+      const pLife = g.particleLife;
+
+      for (let i = 0; i < particleCount; i++) {
+        if (pLife[i] > 0) {
+          pLife[i] -= delta * 1.5;
+          pPos[i * 3] += pVel[i * 3] * delta;
+          pPos[i * 3 + 1] += pVel[i * 3 + 1] * delta;
+          pPos[i * 3 + 2] += pVel[i * 3 + 2] * delta;
+          pVel[i * 3 + 1] -= 3.5 * delta; // particle gravity
+        } else {
+          pPos[i * 3 + 1] = -100;
+        }
+      }
+      g.particleGeo.attributes.position.needsUpdate = true;
+
+      // Render
       renderer.render(scene, camera);
+      g.animFrameId = requestAnimationFrame(animate);
     };
 
-    animate();
+    // Helper: Trigger 3D Particle Burst
+    const triggerParticleBurst = (x: number, y: number, z: number, colorHex: number) => {
+      const g = gameRef.current;
+      if (!g) return;
+
+      const pPos = g.particlePositions;
+      const pVel = g.particleVelocities;
+      const pLife = g.particleLife;
+
+      (g.particles.material as THREE.PointsMaterial).color.setHex(colorHex);
+
+      for (let i = 0; i < 40; i++) {
+        pPos[i * 3] = x;
+        pPos[i * 3 + 1] = y;
+        pPos[i * 3 + 2] = z;
+
+        pLife[i] = 1.0;
+        const theta = Math.random() * Math.PI * 2;
+        const phi = Math.random() * Math.PI;
+        const speed = 2.5 + Math.random() * 3.5;
+
+        pVel[i * 3] = Math.sin(phi) * Math.cos(theta) * speed;
+        pVel[i * 3 + 1] = Math.cos(phi) * speed + 1.2;
+        pVel[i * 3 + 2] = Math.sin(phi) * Math.sin(theta) * speed;
+      }
+      g.particleGeo.attributes.position.needsUpdate = true;
+    };
+
+    // Helper: Reset Ball to Launch Pad
+    const resetBallPosition = () => {
+      const g = gameRef.current;
+      if (!g) return;
+      g.ballGroup.position.set(0, 0.42, 1.2);
+      g.ballGroup.rotation.set(0, 0, 0);
+      g.ballVelocity.set(0, 0, 0);
+      g.ballState = "idle";
+      g.targetCaptured = null;
+      (g.ballLed.material as THREE.MeshStandardMaterial).emissive.setHex(0xffffff);
+      (g.ballLed.material as THREE.MeshStandardMaterial).emissiveIntensity = 0.5;
+    };
+
+    // Helper: Respawn Pokémon target sprite
+    const respawnTarget = (id: string) => {
+      const g = gameRef.current;
+      if (!g) return;
+      const item = g.sprites.get(id);
+      if (item) {
+        item.caught = false;
+        item.sprite.scale.set(item.data.size[0], item.data.size[1], 1);
+        item.sprite.position.copy(item.basePos);
+      }
+    };
+
+    updateTrajectory();
+    if (gameRef.current) {
+      gameRef.current.animFrameId = requestAnimationFrame(animate);
+    }
 
     return () => {
       window.removeEventListener("resize", handleResize);
-      observer.disconnect();
-      if (animFrameRef.current) {
-        cancelAnimationFrame(animFrameRef.current);
+      if (gameRef.current) {
+        cancelAnimationFrame(gameRef.current.animFrameId);
+        renderer.dispose();
       }
-      renderer.dispose();
-      scene.clear();
     };
-  }, [selectedBall, updateScore, resetBall, triggerParticles, streak]);
+  }, [createBallMesh, selectedBall, streak]);
 
-  // Update top mesh color when ball type changes
-  useEffect(() => {
-    if (ballTopMeshRef.current) {
-      (ballTopMeshRef.current.material as THREE.MeshStandardMaterial).color.setHex(
-        BALL_CONFIGS[selectedBall].topColor
-      );
-    }
+  // Handle Ball Type Switch
+  const handleSelectBall = (type: BallType) => {
+    setSelectedBall(type);
+    const g = gameRef.current;
+    if (!g || g.ballState !== "idle") return;
+
+    g.scene.remove(g.ballGroup);
+    const { group: newGroup, led: newLed } = createBallMesh(type);
+    newGroup.position.copy(g.ballGroup.position);
+    g.scene.add(newGroup);
+    g.ballGroup = newGroup;
+    g.ballLed = newLed;
+  };
+
+  // Launch the Pokéball
+  const launchBall = useCallback(() => {
+    const g = gameRef.current;
+    if (!g || g.ballState !== "idle") return;
+
+    chiptune.playThrow();
+
+    const origin = g.ballGroup.position;
+    const targetX = g.aimTarget.x * 6.5;
+    const targetY = 2.5 + g.aimTarget.y * 3.0;
+    const targetZ = -11;
+
+    const dt = 1.0;
+    const vx = (targetX - origin.x) / dt;
+    const vz = (targetZ - origin.z) / dt;
+    const vy = (targetY - origin.y + 0.5 * 9.8 * dt * dt) / dt;
+
+    g.ballVelocity.set(vx, vy, vz);
+    g.ballState = "flying";
+    setAnnouncement(`LAUNCHED ${BALL_CONFIGS[selectedBall].name.toUpperCase()}!`);
+    setAnnouncementType("normal");
   }, [selectedBall]);
 
-  // Mouse / Touch Drag Throw Handlers
-  const handlePointerDown = (e: React.PointerEvent) => {
-    if (ballStateRef.current !== "IDLE") return;
-    dragStartRef.current = {
-      x: e.clientX,
-      y: e.clientY,
-      time: performance.now(),
-    };
-  };
+  // Pointer / Touch Aiming
+  const handlePointerMove = (e: React.PointerEvent<HTMLCanvasElement>) => {
+    const rect = canvasRef.current?.getBoundingClientRect();
+    const g = gameRef.current;
+    if (!rect || !g) return;
 
-  const handlePointerMove = (e: React.PointerEvent) => {
-    if (!containerRef.current) return;
-    const rect = containerRef.current.getBoundingClientRect();
-    const nx = (e.clientX - rect.left) / rect.width - 0.5; // -0.5 to 0.5
-    const ny = (e.clientY - rect.top) / rect.height - 0.5;
-    aimAngleRef.current = { x: nx * 2, y: -ny * 2 };
-  };
+    const clientX = e.clientX - rect.left;
+    const clientY = e.clientY - rect.top;
 
-  const handlePointerUp = (e: React.PointerEvent) => {
-    if (!dragStartRef.current || ballStateRef.current !== "IDLE") return;
+    const nx = (clientX / rect.width) * 2 - 1;
+    const ny = -((clientY / rect.height) * 2 - 1);
 
-    const dx = e.clientX - dragStartRef.current.x;
-    const dy = e.clientY - dragStartRef.current.y;
-    const dt = Math.max(50, performance.now() - dragStartRef.current.time);
+    g.aimTarget.set(nx, Math.max(-0.4, Math.min(ny, 0.8)));
 
-    dragStartRef.current = null;
+    // Recalculate trajectory arc
+    const origin = new THREE.Vector3(0, 0.42, 1.2);
+    const targetX = g.aimTarget.x * 6.5;
+    const targetY = 2.5 + g.aimTarget.y * 3.0;
+    const targetZ = -11;
 
-    // Upward drag / swipe flick
-    if (dy < -20) {
-      const speedY = Math.min(9.5, Math.max(4.2, (-dy / dt) * 14));
-      const speedX = (dx / dt) * 12;
-      const speedZ = -Math.min(22, Math.max(12, (-dy / dt) * 26));
+    const dt = 1.0;
+    const vx = (targetX - origin.x) / dt;
+    const vz = (targetZ - origin.z) / dt;
+    const vy = (targetY - origin.y + 0.5 * 9.8 * dt * dt) / dt;
 
-      throwBall(speedX, speedY, speedZ);
-    } else {
-      // Tap or short click -> launch toward mouse cursor
-      launchDefault();
+    const posArray = g.trajectoryLine.geometry.attributes.position.array as Float32Array;
+    const steps = 40;
+    const timeStep = dt / steps;
+
+    let cx = origin.x;
+    let cy = origin.y;
+    let cz = origin.z;
+    let cvy = vy;
+
+    for (let i = 0; i < steps; i++) {
+      posArray[i * 3] = cx;
+      posArray[i * 3 + 1] = cy;
+      posArray[i * 3 + 2] = cz;
+
+      cx += vx * timeStep;
+      cz += vz * timeStep;
+      cvy -= 9.8 * timeStep;
+      cy += cvy * timeStep;
     }
+
+    g.trajectoryLine.geometry.attributes.position.needsUpdate = true;
+    g.trajectoryLine.computeLineDistances();
   };
 
-  // Keyboard controls
+  // Keyboard Spacebar Trigger
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.code === "Space" && ballStateRef.current === "IDLE") {
+      if (e.code === "Space") {
         e.preventDefault();
-        launchDefault();
-      } else if (e.key === "r" || e.key === "R") {
-        resetBall();
-      } else if (e.key === "ArrowLeft") {
-        aimAngleRef.current.x = Math.max(-1, aimAngleRef.current.x - 0.2);
-      } else if (e.key === "ArrowRight") {
-        aimAngleRef.current.x = Math.min(1, aimAngleRef.current.x + 0.2);
+        launchBall();
+      } else if (e.code === "Escape" && onClose) {
+        onClose();
       }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [launchDefault, resetBall]);
+  }, [launchBall, onClose]);
+
+  const handleResetGame = () => {
+    setScore(0);
+    setStreak(0);
+    const g = gameRef.current;
+    if (!g) return;
+
+    g.sprites.forEach((item) => {
+      item.caught = false;
+      item.sprite.scale.set(item.data.size[0], item.data.size[1], 1);
+      item.sprite.position.copy(item.basePos);
+    });
+
+    g.ballGroup.position.set(0, 0.42, 1.2);
+    g.ballGroup.rotation.set(0, 0, 0);
+    g.ballVelocity.set(0, 0, 0);
+    g.ballState = "idle";
+    g.targetCaptured = null;
+    setAnnouncement("SIMULATION MATRIX RESET");
+    setAnnouncementType("normal");
+  };
 
   return (
-    <div className="relative w-full rounded-2xl bg-zinc-950 border-2 border-red-900/80 shadow-2xl overflow-hidden font-mono select-none">
-      {/* Top Arcade Hardware Header */}
-      <div className="flex flex-wrap items-center justify-between px-4 py-2.5 bg-zinc-900/90 border-b border-zinc-800 text-xs">
+    <div className="w-full flex flex-col rounded-2xl bg-zinc-950 border border-zinc-800 shadow-2xl overflow-hidden text-zinc-100 font-mono select-none">
+      {/* Top Telemetry HUD */}
+      <div className="flex flex-wrap items-center justify-between px-4 py-3 bg-zinc-900/95 border-b border-zinc-800 text-xs gap-3">
         <div className="flex items-center gap-2">
           <span className="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-pulse shadow-[0_0_8px_rgba(6,182,212,0.8)]" />
-          <span className="font-bold tracking-wider text-zinc-200">
-            DEVON CORP. FIELD LAB // 3D CATCH SIMULATOR
+          <span className="font-bold text-zinc-200">DEVON CORP. // 3D CATCH LAB</span>
+          <span className="hidden sm:inline-block px-2 py-0.5 rounded bg-zinc-800 text-emerald-400 text-[10px]">
+            REAL POKÉMON FIELD TEST
           </span>
         </div>
 
-        {/* Score & Multiplier Readouts */}
-        <div className="flex items-center gap-4 text-xs font-mono">
-          <div className="flex items-center gap-1.5 bg-zinc-950/80 px-2.5 py-1 rounded border border-zinc-800">
-            <Trophy className="w-3.5 h-3.5 text-amber-400" />
-            <span className="text-zinc-400">SCORE:</span>
-            <span className="font-bold text-white tabular-nums">{score}</span>
+        <div className="flex items-center gap-3">
+          {/* Score & Streak */}
+          <div className="flex items-center gap-3 px-3 py-1 rounded bg-zinc-950 border border-zinc-800 text-xs">
+            <span className="flex items-center gap-1 text-amber-400">
+              <Trophy className="w-3.5 h-3.5" />
+              <span>{score}</span>
+            </span>
+            <span className="text-zinc-600">|</span>
+            <span className="flex items-center gap-1 text-cyan-400">
+              <Zap className="w-3.5 h-3.5" />
+              <span>x{streak}</span>
+            </span>
+            <span className="hidden md:inline-block text-zinc-500 text-[10px]">
+              BEST: {highScore}
+            </span>
           </div>
 
-          <div className="hidden sm:flex items-center gap-1.5 bg-zinc-950/80 px-2.5 py-1 rounded border border-zinc-800">
-            <Zap className="w-3.5 h-3.5 text-emerald-400" />
-            <span className="text-zinc-400">STREAK:</span>
-            <span className="font-bold text-emerald-400 tabular-nums">x{streak}</span>
-          </div>
-
-          <div className="hidden md:flex items-center gap-1 text-[11px] text-zinc-400">
-            <span>HIGH:</span>
-            <span className="text-zinc-200 font-bold tabular-nums">{highScore}</span>
-          </div>
-
-          {/* Sound Mute Toggle */}
+          {/* Sound Toggle */}
           <button
             type="button"
-            onClick={() => {
-              const next = !soundEnabled;
-              setSoundEnabled(next);
-              chiptune.enabled = next;
-            }}
-            className="p-1 rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-300 transition-colors"
-            title={soundEnabled ? "Mute Game Sound" : "Enable Game Sound"}
-            aria-label="Toggle Game Sound"
+            onClick={() => setSoundEnabled((prev) => !prev)}
+            className="p-1.5 rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-300 transition-colors cursor-pointer"
+            title={soundEnabled ? "Mute chiptune synthesizer" : "Enable sound"}
           >
-            {soundEnabled ? <Volume2 className="w-4 h-4 text-cyan-400" /> : <VolumeX className="w-4 h-4 text-zinc-500" />}
+            {soundEnabled ? (
+              <Volume2 className="w-3.5 h-3.5 text-emerald-400" />
+            ) : (
+              <VolumeX className="w-3.5 h-3.5 text-zinc-500" />
+            )}
           </button>
+
+          {/* Reset Button */}
+          <button
+            type="button"
+            onClick={handleResetGame}
+            className="p-1.5 rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-300 transition-colors cursor-pointer"
+            title="Reset Simulation"
+          >
+            <RotateCcw className="w-3.5 h-3.5" />
+          </button>
+
+          {/* Close Modal Button */}
+          {onClose && (
+            <button
+              type="button"
+              onClick={onClose}
+              className="px-2.5 py-1 rounded bg-red-950/80 hover:bg-red-900 text-red-200 border border-red-800 text-[11px] font-bold transition-colors flex items-center gap-1 cursor-pointer"
+              title="Close Simulation Chamber"
+            >
+              <X className="w-3.5 h-3.5" />
+              <span>Close</span>
+            </button>
+          )}
         </div>
       </div>
 
-      {/* Main 3D Interactive Canvas Viewport */}
+      {/* 3D WebGL Canvas Viewport */}
       <div
         ref={containerRef}
-        onPointerDown={handlePointerDown}
-        onPointerMove={handlePointerMove}
-        onPointerUp={handlePointerUp}
-        className="relative w-full h-[360px] sm:h-[440px] md:h-[500px] cursor-grab active:cursor-grabbing touch-none overflow-hidden"
+        className="relative w-full h-[420px] sm:h-[500px] md:h-[560px] bg-[#090d16] overflow-hidden cursor-crosshair"
       >
-        <canvas ref={canvasRef} className="w-full h-full block" />
+        <canvas
+          ref={canvasRef}
+          onPointerMove={handlePointerMove}
+          onClick={launchBall}
+          className="w-full h-full block"
+        />
 
-        {/* HUD Crosshair Reticle when Aiming */}
-        {isAiming && (
-          <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
-            <div className="w-12 h-12 rounded-full border border-cyan-400/40 flex items-center justify-center animate-pulse">
-              <div className="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_6px_cyan]" />
-            </div>
+        {/* Dynamic Holographic Announcement Banner */}
+        <div className="absolute top-4 left-1/2 -translate-x-1/2 pointer-events-none z-10 text-center">
+          <div
+            className={`px-4 py-1.5 rounded-full text-xs font-bold tracking-wider backdrop-blur-md border shadow-lg transition-all ${
+              announcementType === "success"
+                ? "bg-emerald-950/90 text-emerald-300 border-emerald-500 animate-bounce"
+                : announcementType === "warning"
+                ? "bg-amber-950/90 text-amber-300 border-amber-500"
+                : "bg-zinc-900/80 text-zinc-300 border-zinc-700/80"
+            }`}
+          >
+            {announcement}
           </div>
-        )}
-
-        {/* Dynamic Game Notification Toast */}
-        <div className="absolute top-3 left-1/2 -translate-x-1/2 px-4 py-1.5 rounded-full bg-zinc-950/85 backdrop-blur-md border border-zinc-700/80 text-[11px] sm:text-xs font-bold text-zinc-200 shadow-xl pointer-events-none text-center whitespace-nowrap">
-          {gameMessage}
         </div>
 
-        {/* Floating Reset Button */}
+        {/* Central Aiming Reticle Hint */}
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 pointer-events-none z-10 flex items-center gap-1.5 px-3 py-1 rounded-full bg-zinc-950/80 backdrop-blur-md border border-zinc-800 text-[11px] text-zinc-400">
+          <Crosshair className="w-3 h-3 text-emerald-400 animate-spin duration-3000" />
+          <span>Click viewport or press Space to launch</span>
+        </div>
+      </div>
+
+      {/* Tactical Controller Footer */}
+      <div className="p-4 bg-zinc-900/95 border-t border-zinc-800 flex flex-col md:flex-row items-center justify-between gap-4">
+        {/* Ball Selection Tabs */}
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="text-[11px] text-zinc-500 font-bold uppercase mr-1 hidden sm:inline">
+            BALLISTICS:
+          </span>
+          {(Object.keys(BALL_CONFIGS) as BallType[]).map((type) => {
+            const isSelected = selectedBall === type;
+            const cfg = BALL_CONFIGS[type];
+            return (
+              <button
+                key={type}
+                type="button"
+                onClick={() => handleSelectBall(type)}
+                className={`px-3 py-1.5 rounded-md text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer border ${
+                  isSelected
+                    ? "bg-zinc-100 text-zinc-950 border-white shadow-sm"
+                    : "bg-zinc-800/80 hover:bg-zinc-800 text-zinc-300 border-zinc-700"
+                }`}
+              >
+                <span
+                  className="w-2.5 h-2.5 rounded-full"
+                  style={{ backgroundColor: `#${cfg.topColor.toString(16).padStart(6, "0")}` }}
+                />
+                <span>{cfg.name}</span>
+                <span className="text-[10px] opacity-75">
+                  {type === "master" ? "100%" : `${cfg.multiplier}x`}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Big Launch Button */}
         <button
           type="button"
-          onClick={resetBall}
-          className="absolute bottom-3 right-3 px-3 py-1.5 rounded-md bg-zinc-900/90 hover:bg-zinc-800 border border-zinc-700 text-zinc-300 hover:text-white text-xs font-mono font-bold flex items-center gap-1.5 shadow-lg transition-colors cursor-pointer"
-          title="Reset Poké Ball Position (R)"
+          onClick={launchBall}
+          className="w-full md:w-auto px-6 py-2 rounded-md bg-[#dc2626] hover:bg-[#b91c1c] active:scale-95 text-white font-bold text-xs shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
         >
-          <RotateCcw className="w-3.5 h-3.5" />
-          <span className="hidden sm:inline">RESET</span>
+          <Sparkles className="w-3.5 h-3.5" />
+          <span>FIRE POKÉ BALL [SPACE]</span>
         </button>
       </div>
 
-      {/* Arcade Dashboard & Ball Casing Selector */}
-      <div className="p-4 bg-zinc-900/95 border-t border-zinc-800 space-y-3">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-          {/* Ball Selector Buttons */}
-          <div className="space-y-1">
-            <div className="text-[10px] text-zinc-400 uppercase tracking-wider font-bold flex items-center gap-1">
-              <Target className="w-3 h-3 text-cyan-400" />
-              <span>Select Capture Ballistics</span>
-            </div>
-            <div className="flex flex-wrap gap-1.5">
-              {(Object.keys(BALL_CONFIGS) as BallType[]).map((type) => {
-                const cfg = BALL_CONFIGS[type];
-                const active = selectedBall === type;
-                return (
-                  <button
-                    key={type}
-                    type="button"
-                    onClick={() => {
-                      setSelectedBall(type);
-                      resetBall();
-                    }}
-                    className={`px-3 py-1.5 rounded-md text-xs font-mono font-bold transition-all flex items-center gap-1.5 cursor-pointer min-h-[36px] ${active
-                        ? "bg-zinc-100 text-zinc-950 shadow-md ring-2 ring-cyan-400 font-black"
-                        : "bg-zinc-800 hover:bg-zinc-750 text-zinc-300 hover:text-white border border-zinc-700"
-                      }`}
-                  >
-                    <span
-                      className="w-2.5 h-2.5 rounded-full border border-zinc-400"
-                      style={{ backgroundColor: `#${cfg.topColor.toString(16).padStart(6, "0")}` }}
-                    />
-                    <span>{cfg.name}</span>
-                    <span className="text-[10px] text-zinc-500">
-                      {cfg.multiplier > 10 ? "100%" : `${cfg.multiplier}x`}
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Big Launch Trigger Button */}
-          <div className="flex items-center gap-2 self-stretch sm:self-auto">
-            <button
-              type="button"
-              onClick={launchDefault}
-              disabled={!isAiming}
-              className={`w-full sm:w-auto px-5 py-2.5 rounded-md font-mono text-xs font-black tracking-wider transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer ${isAiming
-                  ? "bg-[#dc2626] hover:bg-[#b91c1c] text-white border border-red-400 animate-pulse hover:animate-none"
-                  : "bg-zinc-800 text-zinc-500 border border-zinc-750 cursor-not-allowed"
-                }`}
-            >
-              <Sparkles className="w-4 h-4" />
-              <span>FIRE POKÉ BALL [SPACE]</span>
-            </button>
+      {/* Real Pokémon Roster Strip */}
+      <div className="px-4 py-2.5 bg-zinc-950 border-t border-zinc-850 flex flex-wrap items-center justify-between text-[11px] text-zinc-400 gap-2">
+        <div className="flex items-center gap-2">
+          <span className="font-bold text-zinc-300">REGISTERED TARGETS:</span>
+          <div className="flex flex-wrap items-center gap-2">
+            {TARGETS.map((t) => {
+              const isCaught = caughtList.includes(t.id);
+              return (
+                <span
+                  key={t.id}
+                  className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded border transition-colors ${
+                    isCaught
+                      ? "bg-emerald-950/60 border-emerald-700 text-emerald-300 font-bold"
+                      : "bg-zinc-900 border-zinc-800 text-zinc-500"
+                  }`}
+                >
+                  <Image
+                    src={t.thumbUrl}
+                    alt=""
+                    width={18}
+                    height={18}
+                    className="w-4 h-4 object-contain pixelated"
+                    unoptimized
+                  />
+                  <span>{t.name}</span>
+                  {isCaught && <CheckCircle2 className="w-3 h-3 text-emerald-400" />}
+                </span>
+              );
+            })}
           </div>
         </div>
 
-        {/* Captured Pokédex Field Roster */}
-        <div className="pt-2 border-t border-zinc-800/80 flex flex-wrap items-center justify-between gap-2 text-xs">
-          <div className="flex items-center gap-2">
-            <span className="text-zinc-400 font-bold text-[11px]">REGISTERED SPECIES:</span>
-            <div className="flex items-center gap-1.5">
-              {TARGETS.map((t) => {
-                const caught = caughtList.includes(t.id);
-                return (
-                  <span
-                    key={t.id}
-                    className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-mono border transition-all ${caught
-                        ? "bg-emerald-950/80 border-emerald-500 text-emerald-300 font-bold"
-                        : "bg-zinc-950 border-zinc-800 text-zinc-600"
-                      }`}
-                    title={`#${t.dexNumber} ${t.name} (${t.points} pts)`}
-                  >
-                    {caught ? (
-                      <CheckCircle2 className="w-3 h-3 text-emerald-400" />
-                    ) : (
-                      <span className="w-1.5 h-1.5 rounded-full bg-zinc-700" />
-                    )}
-                    <span>{t.name}</span>
-                  </span>
-                );
-              })}
-            </div>
-          </div>
-
-          <div className="text-[10px] text-zinc-500 font-mono flex items-center gap-1">
-            <Info className="w-3 h-3 text-zinc-500" />
-            <span>Flick or swipe up on screen · Aim with mouse/arrows</span>
-          </div>
+        <div className="text-[10px] text-zinc-500">
+          Aim with cursor · Space to throw · Esc to close
         </div>
       </div>
     </div>
   );
 }
-
