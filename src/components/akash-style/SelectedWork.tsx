@@ -22,43 +22,43 @@ const caseStudies: CaseStudy[] = [
   {
     id: "slm",
     tmNumber: "TM-01",
-    category: "Machine Learning & NLP",
-    title: "SLM (Text Intent Classifier)",
+    category: "Machine Learning & PyTorch",
+    title: "SLM (Character-Level Intent Model)",
     description:
-      "A lightweight NLP model in Python that classifies user queries quickly. Optimized to run on regular CPU hardware without needing a GPU.",
+      "A lightweight character-level intent model built from scratch in Python, using self-attention and REINFORCE to map text inputs to discrete actions.",
     bullets: [
-      "Trained a supervised text classification model on real user queries in Python.",
-      "Reduced inference latency down to 12ms so it runs smoothly on laptops and small devices.",
-      "Built data cleaning, training, and evaluation scripts to test model accuracy.",
+      "Built a character-level tokenizer and attention-based policy network in PyTorch.",
+      "Trained the model using REINFORCE with reward-based intent selection.",
+      "Designed the project to run locally on CPU without pretrained language-model weights.",
     ],
-    tags: ["PYTHON", "MACHINE LEARNING", "NLP", "LATENCY"],
+    tags: ["PYTHON", "PYTORCH", "REINFORCE", "ATTENTION", "CPU INFERENCE"],
     metrics: [
-      { value: "12ms", label: "Inference Latency" },
-      { value: "94%+", label: "Test Accuracy" },
-      { value: "Python", label: "Training Pipeline" },
+      { value: "CPU", label: "Local Inference" },
+      { value: "REINFORCE", label: "Policy Gradient" },
+      { value: "PyTorch", label: "From-Scratch Arch" },
     ],
     githubUrl: "https://github.com/Aadrit555/DIDsomethin_SLM",
   },
   {
     id: "hemlock",
     tmNumber: "TM-02",
-    category: "Firmware Security & C",
-    title: "Hemlock (Firmware Memory Protection)",
-    awardBadge: "FOSS United JUST A HACKATHON Recognized",
+    category: "C Systems & Cryptography",
+    title: "Hemlock (Adversarial Image Defense & Provenance)",
+    awardBadge: "FOSS United JUST A HACKATHON Winner · 2024",
     description:
-      "Low-level defense written in C to protect data in microcontrollers and embedded devices from unauthorized access and memory tampering.",
+      "A C-based image protection and verification system combining perceptual hashing, RSA signatures, and adversarial pixel perturbation to detect modification and establish file provenance.",
     bullets: [
-      "Wrote bare-metal C guards to protect memory boundaries from being modified.",
-      "Added cryptographic checks to detect altered data packets immediately.",
-      "Recognized at the FOSS United Hackathon for hardware security innovation.",
+      "Wrote core C modules for perceptual hashing and RSA signature verification.",
+      "Applied subtle adversarial pixel perturbations to defend visual assets against automated alteration.",
+      "Recognized as a winning project at FOSS United JUST A HACKATHON 2024.",
     ],
-    tags: ["C LANGUAGE", "CRYPTOGRAPHY", "FIRMWARE DEFENSE", "FOSS UNITED"],
+    tags: ["C LANGUAGE", "CRYPTOGRAPHY", "IMAGE PROVENANCE", "PERCEPTUAL HASH", "FOSS UNITED"],
     metrics: [
       { value: "Winner", label: "FOSS United Hackathon" },
-      { value: "C Lang", label: "Low-Level Security" },
-      { value: "Verified", label: "Tamper Checks" },
+      { value: "C Lang", label: "Core Algorithms" },
+      { value: "RSA + pHash", label: "Tamper Detection" },
     ],
-    githubUrl: "https://github.com/Aadrit555/HemlockV2",
+    githubUrl: "https://github.com/Aadrit555/Hemlock",
   },
   {
     id: "chimera",
@@ -70,7 +70,7 @@ const caseStudies: CaseStudy[] = [
     bullets: [
       "Built a turn-based simulation environment in Python to test competing agent behaviors.",
       "Implemented learning loops so defender agents adapt and raise their win rate over time.",
-      "Created clean experiment scripts to run and log tests automatically.",
+      "Built experiment scripts for repeatable simulation runs and result logging.",
     ],
     tags: ["PYTHON", "MULTI-AGENT", "SIMULATION", "EXPERIMENTS"],
     metrics: [
@@ -82,18 +82,18 @@ const caseStudies: CaseStudy[] = [
   {
     id: "superrag",
     tmNumber: "TM-04",
-    category: "FastAPI & Search Systems",
-    title: "SuperRAG (Document Search Engine)",
+    category: "Search Systems & FastAPI",
+    title: "SuperRAG (Modular Multi-Phase RAG Pipeline)",
     description:
-      "A fast search tool that helps users query and retrieve information across different document formats using hybrid keyword and vector search.",
+      "A modular multi-phase RAG system combining semantic retrieval, knowledge graphs, multimodal inputs, reranking, and structured answer synthesis.",
     bullets: [
-      "Built with FastAPI and Python to process PDFs, text, and markdown files.",
-      "Combined keyword matching with semantic vector search for accurate answers.",
-      "Designed clean REST API endpoints for easy integration with frontend tools.",
+      "Built with FastAPI and Python to process multi-format inputs across PDFs, text, and structured data.",
+      "Integrated semantic vector search with knowledge-graph entity linking and cross-encoder reranking.",
+      "Designed modular pipeline stages for document parsing, visual retrieval, and structured response generation.",
     ],
-    tags: ["FASTAPI", "VECTOR SEARCH", "PYTHON", "DOCUMENT RETRIEVAL"],
+    tags: ["FASTAPI", "VECTOR SEARCH", "KNOWLEDGE GRAPH", "RAG PIPELINE"],
     metrics: [
-      { value: "Hybrid", label: "Keyword + Vector Search" },
+      { value: "Multi-Phase", label: "Vector + Graph + Rerank" },
       { value: "Multi-Doc", label: "PDF, Text & Markdown" },
       { value: "FastAPI", label: "Async API Service" },
     ],
@@ -113,11 +113,11 @@ export default function SelectedWork() {
               <span>Pokédex Memory Bank // Technical Machines (TMs)</span>
             </div>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-normal tracking-tight text-zinc-950 font-sans">
-              Proven results, <span className="font-serif italic font-normal text-zinc-600">working systems</span>
+              Selected systems <span className="font-serif italic font-normal text-zinc-600">& experiments</span>
             </h2>
           </div>
           <div className="text-xs font-mono text-zinc-500">
-            Registered Moves <span className="text-zinc-950 font-bold font-mono">04 TMs</span>
+            04 <span className="text-zinc-950 font-bold font-mono">PROJECTS</span>
           </div>
         </div>
 

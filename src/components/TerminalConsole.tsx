@@ -15,7 +15,7 @@ export default function TerminalConsole() {
       command: "welcome",
       output: [
         "DEVON CORP. HOENN POKÉDEX DIAGNOSTICS [v3.0-emerald]",
-        "Aadrit :: Systems & AI/ML Engineer Register",
+        "Aadrit :: Systems & AI/ML Developer Register",
         "Type 'help' to inspect system commands or click quick actions below.",
       ],
     },
@@ -45,15 +45,14 @@ export default function TerminalConsole() {
     switch (cmd) {
       case "help":
         output = [
-          "Available system commands:",
-          "  whoami       - Display identity and academic credentials",
-          "  projects     - List active and completed engineering builds",
-          "  skills       - Print verified technical toolsets",
-          "  experience   - Display engineering work history",
-          "  security     - Inspect active server security protocols",
-          "  contact      - Show direct contact coordinates",
-          "  clear        - Clear console buffer",
-          "  sudo         - Elevate user privileges",
+          "Available commands:",
+          "  whoami       - Display profile information",
+          "  projects     - List selected projects",
+          "  skills       - Display technical focus areas",
+          "  experience   - Display roles and activities",
+          "  security     - Display implemented security controls",
+          "  contact      - Show contact links",
+          "  clear        - Clear console",
         ];
         break;
 
@@ -61,8 +60,7 @@ export default function TerminalConsole() {
         output = [
           "NAME:     Aadrit",
           "ROLE:     AI/ML & Systems Developer",
-          "SCHOOL:   SRM University AP (B.Tech Computer Science & Engineering)",
-          "LOCATION: Lucknow, Uttar Pradesh, India",
+          "SCHOOL:   SRM University AP (B.Tech Computer Science & Engineering, 2025-2029)",
           "FOCUS:    Machine learning in Python and systems software in C",
         ];
         break;
@@ -70,47 +68,44 @@ export default function TerminalConsole() {
       case "projects":
         output = [
           "PROJECTS:",
-          "  1. SLM - Lightweight text classification model in Python",
+          "  1. SLM - Character-level intent model in PyTorch using self-attention and REINFORCE",
           "     Repo: github.com/Aadrit555/DIDsomethin_SLM",
-          "  2. Hemlock - Embedded microcontroller memory protection in C (FOSS United Hackathon recognized)",
-          "     Repo: github.com/Aadrit555/HemlockV2",
+          "  2. Hemlock - C-based image defense & provenance with perceptual hashing and RSA signatures",
+          "     Recognition: FOSS United JUST A HACKATHON Winner · 2024",
+          "     Repo: github.com/Aadrit555/Hemlock",
           "  3. Chimera - Multi-agent simulation testing learning strategies in Python",
-          "  4. SuperRAG - Fast document search combining keyword and vector search",
+          "  4. SuperRAG - Modular multi-phase RAG combining vector search, knowledge graphs, and reranking",
           "     Repo: github.com/Aadrit555/SuperRAG",
-          "  5. HemlockV2 - Low-level CPU cache and memory speed benchmark tool",
         ];
         break;
 
       case "skills":
         output = [
-          "CORE TOOLSETS:",
-          "  Languages:  Python, C, SQL, Bash",
-          "  ML/Data:    Supervised Learning, Model Training & Eval, Data Pipelines, RAG",
-          "  Systems:    Git, REST APIs, JSON, Arduino, Memory/Cache Architecture",
+          "CORE FOCUS AREAS:",
+          "  Systems:   C, Memory Management, Microcontrollers, Perceptual Hashing",
+          "  ML/NLP:    Python, PyTorch, Attention Policies, REINFORCE, RAG",
+          "  Tools:     Git, Linux, Bash, FastAPI, REST APIs",
         ];
         break;
 
       case "experience":
         output = [
           "MEMBER :: Next Tech Lab (ntlap)",
-          "  - Trained and evaluated machine learning models in Python",
+          "  - Machine learning models and evaluation in Python",
           "  - Automated dataset preprocessing pipelines for ML experiments",
           "CO-LEAD :: FOSS SRMAP",
-          "  - Leading open-source community initiatives and developer sprints",
+          "  - Leading campus open-source community initiatives and sprints",
           "  - Organizing hackathons and student mentorship in open source",
         ];
         break;
 
       case "security":
         output = [
-          "SERVER SECURITY STATUS:",
-          "  - Content-Security-Policy (CSP): STRICT",
-          "  - Frame Protection: X-Frame-Options DENY",
-          "  - MIME Sniffing: nosniff",
-          "  - Transport Security: HSTS max-age=63072000",
-          "  - Rate Limiter: In-memory sliding window active",
-          "  - Admin Route Protection: PBKDF2-HMAC-SHA256 salted session tokens",
-          "  - Form Input: Server-side Zod validation & XSS sanitization",
+          "IMPLEMENTED SECURITY CONTROLS:",
+          "  - Server-side input validation (Zod schema enforcement)",
+          "  - Signed admin session tokens (HMAC-SHA256)",
+          "  - Security response headers (CSP, HSTS, X-Frame-Options, nosniff)",
+          "  - Request rate limiting on contact and authentication endpoints",
         ];
         break;
 
@@ -130,8 +125,7 @@ export default function TerminalConsole() {
 
       case "sudo":
         output = [
-          "aadrit@workstation: Permission denied. User is not in the sudoers file.",
-          "This security violation will be logged in /data/audit.log.",
+          "Permission denied. Nice try, trainer.",
         ];
         break;
 
@@ -202,7 +196,7 @@ export default function TerminalConsole() {
             System & <span className="font-serif italic font-normal text-zinc-600">command console</span>
           </h2>
           <p className="text-xs text-zinc-600 font-mono mt-2 mb-4">
-            Inspect hardware configurations, registered moves, and server security parameters directly.
+            Inspect selected projects, focus areas, and implemented security controls directly.
           </p>
 
           {/* Quick Action Command Buttons */}

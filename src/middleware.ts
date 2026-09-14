@@ -1,30 +1,10 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-// In-memory IP hit counter for middleware rate limiting
-const ipHits = new Map<string, { count: number; expiresAt: number }>();
-
-function isRateLimited(ip: string, maxHits: number = 15, windowMs: number = 60000): boolean {
-  const now = Date.now();
-  const hit = ipHits.get(ip);
-
-  if (!hit || now > hit.expiresAt) {
-    ipHits.set(ip, { count: 1, expiresAt: now + windowMs });
-    return false;
-  }
-
-  hit.count += 1;
-  return hit.count > maxHits;
-}
-
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  const ip =
-    request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
-    request.headers.get("x-real-ip") ||
-    "127.0.0.1";
 
-  // 1. Path Traversal & Malicious Probing Defense
+  // 1. Path Traversal & Probing Defense
   if (
     pathname.includes("..") ||
     pathname.includes(".env") ||
@@ -38,7 +18,7 @@ export function middleware(request: NextRequest) {
   // 2. Route Protection for Admin UI (/admin except /admin/login)
   if (pathname.startsWith("/admin") && pathname !== "/admin/login") {
     const sessionCookie = request.cookies.get("session_token");
-    if (!sessionCookie || !sessionCookie.value) {
+    if (!sessionCookie?.value) {
       const loginUrl = new URL("/admin/login", request.url);
       loginUrl.searchParams.set("redirect", pathname);
       return NextResponse.redirect(loginUrl);
@@ -48,24 +28,8 @@ export function middleware(request: NextRequest) {
   // 3. API Protection for Admin Endpoints (/api/admin/*)
   if (pathname.startsWith("/api/admin")) {
     const sessionCookie = request.cookies.get("session_token");
-    const authHeader = request.headers.get("authorization");
-    if (!sessionCookie?.value && !authHeader) {
+    if (!sessionCookie?.value) {
       return NextResponse.json({ error: "Unauthorized access. Valid credentials required." }, { status: 401 });
-    }
-  }
-
-  // 4. Rate Limiting on sensitive endpoints
-  if (pathname.startsWith("/api/contact") || pathname.startsWith("/api/auth")) {
-    if (isRateLimited(ip, 12, 60000)) {
-      return NextResponse.json(
-        { error: "Too many requests. Please wait a minute before retrying." },
-        {
-          status: 429,
-          headers: {
-            "Retry-After": "60",
-          },
-        }
-      );
     }
   }
 

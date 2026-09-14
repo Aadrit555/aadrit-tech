@@ -5,7 +5,6 @@ import Image from "next/image";
 
 export default function PokemonBackground() {
   const [mounted, setMounted] = useState(false);
-  const [scrollY, setScrollY] = useState(0);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -13,31 +12,12 @@ export default function PokemonBackground() {
     if (videoRef.current) {
       videoRef.current.play().catch(() => { });
     }
-
-    let ticking = false;
-    const handleScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          setScrollY(window.scrollY);
-          ticking = false;
-        });
-        ticking = true;
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
     <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden select-none">
-      {/* 1. Pokemon Emerald Title Screen Live Wallpaper Video - Fully Vibrant with Subtle Parallax */}
-      <div
-        className="absolute inset-0 z-0 will-change-transform"
-        style={{
-          transform: `translate3d(0, -${Math.min(90, Math.round(scrollY * 0.04))}px, 0)`,
-        }}
-      >
+      {/* 1. Pokemon Emerald Title Screen Live Wallpaper Video - Fixed Edge-to-Edge Background */}
+      <div className="absolute inset-0 z-0">
         {/* Fallback image behind video */}
         <Image
           src="/images/pokemon_scenery.jpg"

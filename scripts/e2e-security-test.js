@@ -85,13 +85,18 @@ async function runE2ETests() {
     const unauthApiAdmin = await request("http://localhost:3000/api/admin/messages");
     assert(unauthApiAdmin.statusCode === 401, "Unauthenticated /api/admin/messages returns 401 Unauthorized");
 
+    const fakeAuthAdmin = await request("http://localhost:3000/api/admin/messages", {
+      headers: { Authorization: "Bearer arbitrary_bogus_token_12345" },
+    });
+    assert(fakeAuthAdmin.statusCode === 401, "Unverified Authorization header rejected with 401 Unauthorized");
+
     // 4. Contact Form API & Sanitization
     console.log("\n4. Testing Contact Form API & XSS Sanitization");
     const contactPayload = {
-      name: "Research Recruiter",
+      name: "Dr. O'Brien & Co.",
       email: "recruiter@university.edu",
-      subject: "AI Systems Engineering Role",
-      message: "Hello Aadrit, <script>alert('xss')</script> We reviewed your SLM and Hemlock projects.",
+      subject: "AI Systems Role",
+      message: "Hello Aadrit, <script>alert('xss')</script> We reviewed your SLM and Hemlock projects. Don't hesitate to reach out.",
     };
 
     const contactRes = await request("http://localhost:3000/api/contact", {
@@ -110,6 +115,10 @@ async function runE2ETests() {
       const lastMsg = messages[0];
       assert(!lastMsg.message.includes("<script>"), "Script tag was completely stripped from saved message");
       assert(lastMsg.message.includes("We reviewed your SLM"), "Legitimate message content preserved");
+      assert(!lastMsg.message.includes("&#x27;"), "Apostrophe not double-escaped as &#x27;");
+      assert(lastMsg.message.includes("Don't hesitate"), "Apostrophe preserved cleanly in stored message");
+      assert(!lastMsg.name.includes("&amp;"), "Ampersand not double-escaped as &amp;");
+      assert(lastMsg.name.includes("O'Brien & Co."), "Name with apostrophe and ampersand preserved cleanly");
     }
 
     // 5. Rate Limiting Test

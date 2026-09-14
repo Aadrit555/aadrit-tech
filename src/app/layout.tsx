@@ -21,12 +21,12 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Aadrit | AI/ML & Systems Engineer",
+  title: "Aadrit | AI/ML & Systems Developer",
   description:
-    "Portfolio of Aadrit. Computer Science undergraduate at SRM University AP building lightweight NLP models, adversarial AI simulation frameworks, and firmware-level cryptographic security in C and Python.",
+    "Portfolio of Aadrit. Computer Science undergraduate at SRM University AP building lightweight machine learning systems in Python and systems software in C.",
   keywords: [
     "Aadrit",
-    "Systems Engineer",
+    "Systems Developer",
     "Machine Learning",
     "SRM University AP",
     "SLM",
@@ -37,9 +37,9 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Aadrit" }],
   creator: "Aadrit",
-  metadataBase: new URL("https://aadrit.dev"),
+  metadataBase: new URL("https://aadrit.tech"),
   alternates: {
-    canonical: "https://aadrit.dev",
+    canonical: "https://aadrit.tech",
   },
   icons: {
     icon: "/favicon.svg",
@@ -47,10 +47,10 @@ export const metadata: Metadata = {
     apple: "/favicon.svg",
   },
   openGraph: {
-    title: "Aadrit | AI/ML & Systems Engineer",
+    title: "Aadrit | AI/ML & Systems Developer",
     description:
-      "Computer Science undergraduate at SRM University AP building lightweight NLP models, adversarial AI simulations, and firmware-level security in C and Python.",
-    url: "https://aadrit.dev",
+      "Computer Science undergraduate at SRM University AP building lightweight machine learning systems in Python and systems software in C.",
+    url: "https://aadrit.tech",
     siteName: "Aadrit Portfolio",
     images: [
       {
@@ -97,13 +97,13 @@ export default function RootLayout({
               </span>
             </Link>
 
-            {/* Pokédex Section Navigation */}
+            {/* Conventional Section Navigation */}
             <nav className="flex items-center gap-1 sm:gap-2 text-xs font-mono">
               <Link
                 href="/#work"
                 className="px-2 py-1 text-zinc-300 hover:text-white hover:bg-zinc-800/80 rounded transition-colors font-medium"
               >
-                Moves
+                Work
               </Link>
               <Link
                 href="/#experience"
@@ -115,7 +115,7 @@ export default function RootLayout({
                 href="/#about"
                 className="px-2 py-1 text-zinc-300 hover:text-white hover:bg-zinc-800/80 rounded transition-colors font-medium"
               >
-                Trainer
+                About
               </Link>
               <Link
                 href="/#terminal"
@@ -123,13 +123,13 @@ export default function RootLayout({
                 title="Pokédex System Terminal"
               >
                 <Terminal className="w-3.5 h-3.5 text-accent-emerald" />
-                <span>REPL</span>
+                <span>Terminal</span>
               </Link>
               <Link
                 href="/#contact"
                 className="ml-1 px-3 py-1 rounded-md bg-[#dc2626] hover:bg-[#b91c1c] text-white font-bold transition-all shadow-sm border border-red-400"
               >
-                Transmit
+                Contact
               </Link>
             </nav>
           </div>

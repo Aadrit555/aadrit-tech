@@ -3,7 +3,7 @@ import { ArrowLeft, FileText, Check, AlertTriangle, ShieldCheck } from "lucide-r
 
 export const metadata = {
   title: "Terms of Use | Aadrit",
-  description: "Terms and conditions of use for aadrit.dev",
+  description: "Terms and conditions of use for aadrit.tech",
 };
 
 export default function TermsPage() {
@@ -22,7 +22,7 @@ export default function TermsPage() {
         {/* Document Header */}
         <div className="pb-6 border-b border-border-dim mb-8">
           <div className="text-xs font-mono text-[#f9452d] tracking-wider uppercase mb-1 font-semibold">
-            [LEGAL_FRAMEWORK]
+            [TERMS]
           </div>
           <h1 className="text-3xl sm:text-4xl font-normal tracking-tight text-zinc-950 font-sans">
             Terms of Use
@@ -40,9 +40,8 @@ export default function TermsPage() {
               <span>1. Agreement & Acceptance</span>
             </h2>
             <p>
-              By accessing and using this website (<span className="font-mono text-zinc-900 font-medium">aadrit.dev</span>),
-              you agree to adhere to these Terms of Use and all applicable laws and regulations. If you do not
-              agree with any of these terms, you are prohibited from accessing this site.
+              By accessing and using this website (<span className="font-mono text-zinc-900 font-medium">aadrit.tech</span>),
+              you agree to these Terms of Use and applicable regulations.
             </p>
           </section>
 
@@ -53,28 +52,22 @@ export default function TermsPage() {
             </h2>
             <p>
               The source code of the individual open-source repositories linked from this website (such as SLM,
-              Hemlock, SuperRAG) is governed by their respective repository licenses (e.g., MIT, Apache 2.0, or FOSS licenses)
-              hosted on GitHub.
+              Hemlock, SuperRAG) is governed by their respective open-source licenses on GitHub.
             </p>
             <p>
-              The original written articles, personal branding, and portfolio layouts are the property of Aadrit.
-              Uncredited reproduction or verbatim imitation for commercial misrepresentation is strictly prohibited.
+              The portfolio design, original written content, and branding are provided for personal viewing unless otherwise stated.
             </p>
           </section>
 
           <section className="space-y-3">
             <h2 className="text-base font-bold text-zinc-950 font-mono flex items-center gap-2">
               <AlertTriangle className="w-4 h-4 text-amber-500" />
-              <span>3. Acceptable Use & Security Boundaries</span>
+              <span>3. Acceptable Use</span>
             </h2>
             <p>
-              Users agree not to engage in malicious activities directed toward this server infrastructure:
+              Users agree not to disrupt the availability of this website, abuse API endpoints with rapid automated requests,
+              or attempt unauthorized access to administrative routes.
             </p>
-            <ul className="list-disc list-inside space-y-1.5 pl-2 text-zinc-600 font-mono text-xs">
-              <li>Denial of Service (DoS/DDoS) or high-frequency automated scraping designed to exhaust resources.</li>
-              <li>Attempting to bypass authentication mechanisms or inject unauthorized payloads into API endpoints.</li>
-              <li>Unauthorized vulnerability probing or exploitation without explicit prior written authorization.</li>
-            </ul>
           </section>
 
           <section className="space-y-3">
@@ -83,9 +76,8 @@ export default function TermsPage() {
               <span>4. Disclaimer & Limitation of Liability</span>
             </h2>
             <p>
-              The materials and research code on this site are provided on an &quot;as is&quot; basis without warranties of
-              any kind, either expressed or implied. Aadrit shall not be held liable for any damages arising
-              from the use or inability to use the research materials or demonstrations.
+              The materials and project demonstrations on this site are provided on an &quot;as is&quot; basis without warranties of
+              any kind, either expressed or implied.
             </p>
           </section>
         </div>

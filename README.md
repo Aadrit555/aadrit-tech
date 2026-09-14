@@ -1,8 +1,7 @@
 # aadrit.tech
 
-> Personal portfolio and interactive Pokédex-inspired technical dossier for **Aadrit** — AI/ML & Systems Engineering Undergrad at SRM University AP.
+> Personal portfolio and interactive Pokédex-inspired technical dossier for **Aadrit** — Computer Science Undergraduate at SRM University AP.
 
-[![Security Audit](https://img.shields.io/badge/Security%20Audit-33%2F33%20Passed-emerald.svg)](scripts/security-audit.js)
 [![Next.js](https://img.shields.io/badge/Next.js-14-black.svg)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.7-blue.svg)](https://www.typescriptlang.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.4-38bdf8.svg)](https://tailwindcss.com/)
@@ -11,19 +10,19 @@
 
 ## Overview
 
-A modern, tactile, and highly responsive personal engineering portfolio featuring:
-- **Pokédex Console Interface**: Hoenn Devon Corp. OS design system with glassmorphic cards, custom Pokeball cursors, and authentic 8-bit Pokédex audio synthesis.
-- **Minimal Scroll Dynamics**: Lightweight, hardware-accelerated scroll reveal (`IntersectionObserver`) with subtle depth parallax and real-time telemetry scroll tracking.
-- **Interactive Terminal REPL**: Client-side command shell with built-in commands (`$whoami`, `$projects`, `$skills`, `$security`, `$contact`).
-- **Cryptographic Security Hardening**: PBKDF2 password hashing, HMAC-SHA256 tamper-proof signed session tokens, strict XSS sanitization, and automated anti-vibecoder audit suite (33/33 tests).
+A responsive personal engineering portfolio featuring:
+- **Pokédex Interface**: Hoenn Devon Corp. OS design system with glassmorphic cards, custom Pokeball cursor, and interactive sound synthesis.
+- **Selected Systems & Experiments**: Detailed writeups of machine learning intent models (SLM), C image defense and provenance (Hemlock), multi-agent simulations (Chimera), and modular search pipelines (SuperRAG).
+- **Interactive Terminal Console**: Client-side command shell with built-in commands (`whoami`, `projects`, `skills`, `experience`, `security`, `contact`).
+- **Implemented Security Controls**: Server-side input validation via Zod, HMAC-SHA256 signed session tokens, security response headers (CSP, HSTS, X-Frame-Options, nosniff), and request rate limiting.
 
 ---
 
 ## Tech Stack
 
-- **Framework**: [Next.js](https://nextjs.org/) (App Router, Turbopack)
+- **Framework**: [Next.js](https://nextjs.org/) 14 (App Router, Turbopack)
 - **Language**: [TypeScript](https://www.typescriptlang.org/)
-- **Styling**: [Tailwind CSS](https://tailwindcss.com/) with custom Devon Corp / Emerald color palette
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
 - **Icons**: [Lucide React](https://lucide.dev/)
 - **Validation**: [Zod](https://zod.dev/)
 
@@ -62,14 +61,14 @@ Open [http://localhost:3000](http://localhost:3000) to view the application in y
 
 | Script | Description |
 | :--- | :--- |
-| `npm run dev` | Starts local Next.js development server |
+| `npm run dev` | Starts local Next.js development server with Turbopack |
 | `npm run build` | Builds optimized production bundle |
 | `npm run start` | Runs production server |
-| `npm run audit:security` | Executes full 33-point security and anti-vibecoder test suite |
+| `npm run test:security` | Executes cryptographic and security unit test suite |
+| `npm run test:e2e` | Runs live end-to-end security and endpoint verification |
 
 ---
 
 ## License
 
 MIT © [Aadrit](https://github.com/Aadrit555)
-

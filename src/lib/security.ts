@@ -1,8 +1,9 @@
 import crypto from "crypto";
 
 /**
- * Sanitizes raw string input to eliminate XSS injection vectors,
- * stripping null bytes, script tags, event handlers, and escaping HTML entities.
+ * Sanitizes input by stripping dangerous constructs such as null bytes,
+ * script tags, inline event handlers, and script pseudo-protocols.
+ * Output-context escaping is handled by React at render time.
  */
 export function sanitizeInput(input: string): string {
   if (typeof input !== "string") return "";
@@ -17,18 +18,9 @@ export function sanitizeInput(input: string): string {
   clean = clean.replace(/on\w+\s*=\s*(['"]).*?\1/gi, "");
   clean = clean.replace(/on\w+\s*=\s*[^>\s]+/gi, "");
 
-  // Remove javascript: and data: URIs
+  // Remove javascript: and vbscript: URIs
   clean = clean.replace(/javascript:/gi, "");
   clean = clean.replace(/vbscript:/gi, "");
-
-  // Escape HTML entities
-  clean = clean
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#x27;")
-    .replace(/\//g, "&#x2F;");
 
   return clean.trim();
 }

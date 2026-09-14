@@ -26,7 +26,7 @@ const leadershipRoles: LeadershipRole[] = [
     period: "Nov 2024 - Present",
     website: "https://www.ntlap.in",
     logoUrl: "/images/ntl.png",
-    actionText: "LEARN ABOUT THE NTLAP through www.ntlap.in",
+    actionText: "Visit Next Tech Lab",
     description:
       "Student-led technology lab at SRM University AP working on practical machine learning and systems engineering.",
     bullets: [
@@ -43,7 +43,7 @@ const leadershipRoles: LeadershipRole[] = [
     period: "2024 - Present",
     website: "https://fossunited.org",
     logoUrl: "/images/foss.png",
-    actionText: "EXPLORE FOSS UNITED through fossunited.org",
+    actionText: "Visit FOSS United",
     description:
       "Student open-source chapter at SRM University AP affiliated with the FOSS United Foundation.",
     bullets: [
@@ -73,7 +73,7 @@ const academicAndHonors = [
       "Awarded by the Department of Science and Technology for innovative applied engineering.",
   },
   {
-    category: "Hackathon Victory",
+    category: "Hackathon",
     title: "JUST A HACKATHON Winner",
     role: "FOSS United",
     period: "2024",
@@ -93,7 +93,7 @@ export default function WorkHistory() {
             <span>Experience // Activity Record</span>
           </div>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-normal tracking-tight text-zinc-950 font-sans">
-            Work & <span className="font-serif italic font-normal text-zinc-600">experience.</span>
+            Experience
           </h2>
         </div>
 

@@ -185,20 +185,20 @@ export default function HeroSection() {
                   <span className="px-2 py-0.5 rounded bg-zinc-100 border border-zinc-300 font-semibold text-zinc-700">
                     SPECIALTY: AI & SYSTEMS
                   </span>
-                  <span className="text-zinc-500 hidden sm:inline">SRM University AP · Lucknow, India</span>
+                  <span className="text-zinc-500 hidden sm:inline">SRM University AP · B.Tech CSE · 2025–2029</span>
                 </div>
               </div>
 
               {/* Main Content Grid: Identity Readout + Scanner Viewport */}
               <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start mb-8">
-                {/* Left Column: Engineer Profile & Base Stats */}
+                {/* Left Column: Developer Profile & Focus Areas */}
                 <div className="md:col-span-7 space-y-4">
                   <div>
                     <h1 className="text-3xl sm:text-5xl md:text-6xl font-normal tracking-tight text-zinc-950 font-sans leading-none">
                       Aadrit<span className="text-[#dc2626] font-serif italic">*</span>
                     </h1>
                     <div className="text-lg sm:text-xl md:text-2xl text-zinc-600 font-serif italic font-normal mt-1">
-                      AI/ML & Systems Engineer
+                      AI/ML & Systems Developer
                     </div>
                   </div>
 
@@ -220,60 +220,32 @@ export default function HeroSection() {
                     <div className="text-[10px] font-mono font-bold uppercase tracking-wider text-zinc-500 mb-1">
                       Pokédex Entry // Profile
                     </div>
-                    Computer Science student at SRM University AP building machine learning tools in Python and systems software in C.
+                    Computer Science undergraduate at SRM University AP building lightweight machine learning systems in Python and systems software in C.
                   </div>
 
-                  {/* Pokédex Base Stats / Attribute Gauge */}
+                  {/* Core Focus Areas */}
                   <div className="space-y-2 pt-2">
                     <div className="text-[11px] font-mono font-bold text-zinc-600 uppercase tracking-wider flex items-center gap-1.5">
                       <Zap className="w-3 h-3 text-amber-500" />
-                      <span>Core Technical Skills</span>
+                      <span>Core Focus Areas</span>
                     </div>
 
-                    <div className="space-y-1.5 font-mono text-[11px]">
-                      {/* SYS */}
-                      <div className="flex items-center gap-2">
-                        <span className="w-12 text-zinc-600 font-semibold">SYS</span>
-                        <div className="flex-1 h-2 bg-zinc-200 rounded-sm overflow-hidden p-0.5">
-                          <div className="h-full bg-emerald-500 rounded-xs" style={{ width: "92%" }} />
-                        </div>
-                        <span className="w-8 text-right font-bold text-zinc-800">92</span>
+                    <div className="grid grid-cols-2 gap-2 font-mono text-[11px]">
+                      <div className="p-2 rounded bg-zinc-100/90 border border-zinc-200/80">
+                        <span className="text-emerald-700 font-bold block">Systems</span>
+                        <span className="text-zinc-600 text-[10px]">C · Embedded · Memory</span>
                       </div>
-
-                      {/* ML / NLP */}
-                      <div className="flex items-center gap-2">
-                        <span className="w-12 text-zinc-600 font-semibold">ML</span>
-                        <div className="flex-1 h-2 bg-zinc-200 rounded-sm overflow-hidden p-0.5">
-                          <div className="h-full bg-cyan-500 rounded-xs" style={{ width: "94%" }} />
-                        </div>
-                        <span className="w-8 text-right font-bold text-zinc-800">94</span>
+                      <div className="p-2 rounded bg-zinc-100/90 border border-zinc-200/80">
+                        <span className="text-cyan-700 font-bold block">Machine Learning</span>
+                        <span className="text-zinc-600 text-[10px]">Python · NLP · Attention Policies</span>
                       </div>
-
-                      {/* SEC / CRYPTO */}
-                      <div className="flex items-center gap-2">
-                        <span className="w-12 text-zinc-600 font-semibold">SEC</span>
-                        <div className="flex-1 h-2 bg-zinc-200 rounded-sm overflow-hidden p-0.5">
-                          <div className="h-full bg-amber-500 rounded-xs" style={{ width: "88%" }} />
-                        </div>
-                        <span className="w-8 text-right font-bold text-zinc-800">88</span>
+                      <div className="p-2 rounded bg-zinc-100/90 border border-zinc-200/80">
+                        <span className="text-amber-700 font-bold block">Security</span>
+                        <span className="text-zinc-600 text-[10px]">Perceptual Hash · Signatures · Integrity</span>
                       </div>
-
-                      {/* OSS */}
-                      <div className="flex items-center gap-2">
-                        <span className="w-12 text-zinc-600 font-semibold">OSS</span>
-                        <div className="flex-1 h-2 bg-zinc-200 rounded-sm overflow-hidden p-0.5">
-                          <div className="h-full bg-emerald-600 rounded-xs" style={{ width: "96%" }} />
-                        </div>
-                        <span className="w-8 text-right font-bold text-zinc-800">96</span>
-                      </div>
-
-                      {/* LAT */}
-                      <div className="flex items-center gap-2">
-                        <span className="w-12 text-zinc-600 font-semibold">LAT</span>
-                        <div className="flex-1 h-2 bg-zinc-200 rounded-sm overflow-hidden p-0.5">
-                          <div className="h-full bg-blue-500 rounded-xs" style={{ width: "90%" }} />
-                        </div>
-                        <span className="w-8 text-right font-bold text-zinc-800">90</span>
+                      <div className="p-2 rounded bg-zinc-100/90 border border-zinc-200/80">
+                        <span className="text-zinc-700 font-bold block">Open Source</span>
+                        <span className="text-zinc-600 text-[10px]">FOSS SRMAP · Next Tech Lab</span>
                       </div>
                     </div>
                   </div>
@@ -312,12 +284,6 @@ export default function HeroSection() {
                           sizes="(max-width: 768px) 176px, 192px"
                           className="object-cover object-top"
                         />
-                      </div>
-
-                      {/* Active Status Badge */}
-                      <div className="absolute -bottom-2.5 right-2 bg-zinc-950 text-emerald-400 text-[10px] font-mono px-2 py-0.5 rounded border border-emerald-500/60 shadow-sm flex items-center gap-1.5">
-                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                        <span>ACTIVE SPEC</span>
                       </div>
                     </div>
 
@@ -371,7 +337,7 @@ export default function HeroSection() {
                             ? "bg-emerald-600 text-white border-emerald-400 font-bold"
                             : "bg-zinc-900 hover:bg-zinc-800 text-emerald-400 border border-emerald-500/50"
                             }`}
-                          title="Play authentic synthesized Pokédex voice entry"
+                          title="Play Pokédex voice entry"
                         >
                           {audioMode === "voice" ? (
                             <VolumeX className="w-3.5 h-3.5 text-white flex-shrink-0" />
@@ -387,7 +353,7 @@ export default function HeroSection() {
                             ? "bg-amber-600 text-white border-amber-400 font-bold"
                             : "bg-zinc-900 hover:bg-zinc-800 text-amber-400 border border-amber-500/50"
                             }`}
-                          title="Play authentic Rayquaza cry (No. 384)"
+                          title="Play Rayquaza cry (No. 384)"
                         >
                           {audioMode === "cry" ? (
                             <VolumeX className="w-3.5 h-3.5 text-white flex-shrink-0" />
@@ -435,7 +401,7 @@ export default function HeroSection() {
                   className="pokedex-btn-action bg-zinc-950 text-white hover:bg-zinc-800 border border-zinc-900 flex items-center gap-2 group"
                 >
                   <span className="text-red-400 font-mono font-bold">A</span>
-                  <span>Registered Moves & Builds</span>
+                  <span>Selected Work // TMs</span>
                   <ArrowDown className="w-3.5 h-3.5 transition-transform group-hover:translate-y-0.5 text-emerald-400" />
                 </a>
 
@@ -454,7 +420,7 @@ export default function HeroSection() {
                   className="pokedex-btn-action bg-zinc-100 text-zinc-800 hover:bg-zinc-200 border border-zinc-300 flex items-center gap-1.5"
                 >
                   <Github className="w-3.5 h-3.5 text-zinc-700" />
-                  <span>START: GitHub</span>
+                  <span>GitHub</span>
                   <ArrowUpRight className="w-3 h-3 text-zinc-400" />
                 </a>
 
@@ -465,7 +431,7 @@ export default function HeroSection() {
                   className="pokedex-btn-action bg-zinc-100 text-zinc-800 hover:bg-zinc-200 border border-zinc-300 flex items-center gap-1.5"
                 >
                   <Linkedin className="w-3.5 h-3.5 text-cyan-600" />
-                  <span>SELECT: LinkedIn</span>
+                  <span>LinkedIn</span>
                   <ArrowUpRight className="w-3 h-3 text-zinc-400" />
                 </a>
               </div>

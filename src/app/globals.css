@@ -40,7 +40,14 @@ body {
   cursor: url('/images/pokeball_cursor.png') 16 16, auto;
 }
 
-a, button, [role="button"], input, select, textarea, .cursor-pointer, summary {
+a,
+button,
+[role="button"],
+input,
+select,
+textarea,
+.cursor-pointer,
+summary {
   cursor: url('/images/pokeball_pointer.png') 16 16, pointer !important;
 }
 
@@ -88,7 +95,7 @@ a, button, [role="button"], input, select, textarea, .cursor-pointer, summary {
   background: #a1a1aa;
 }
 
-/* Strict Anti-Vibecoder Button & Card Styles */
+/* Button & Interactive Component Styles */
 .btn-primary {
   @apply inline-flex items-center justify-center px-4 py-2.5 rounded-md bg-zinc-900 text-white hover:bg-zinc-800 text-xs font-mono font-medium transition-colors border border-zinc-950 cursor-pointer shadow-sm;
 }

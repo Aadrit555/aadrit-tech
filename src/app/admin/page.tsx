@@ -119,7 +119,7 @@ export default function AdminDashboardPage() {
 
             {loading && messages.length === 0 ? (
               <div className="p-8 border border-border-dim bg-zinc-50 rounded-md text-center font-mono text-xs text-zinc-500">
-                Loading encrypted records...
+                Loading records...
               </div>
             ) : messages.length === 0 ? (
               <div className="p-8 border border-border-dim bg-zinc-50 rounded-md text-center font-mono text-xs text-zinc-500 space-y-2">

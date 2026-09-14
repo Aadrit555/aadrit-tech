@@ -1,6 +1,6 @@
 "use client";
 
-import { ShieldCheck, Cpu, Terminal, Shield, Network } from "lucide-react";
+import { Cpu, Terminal, Shield, Network } from "lucide-react";
 import SpotlightCard from "@/components/animations/SpotlightCard";
 import ScrollReveal from "@/components/animations/ScrollReveal";
 
@@ -25,7 +25,7 @@ export default function AboutSection() {
           <div className="lg:col-span-5">
             <ScrollReveal delay={0}>
               <SpotlightCard className="p-6 shadow-md border border-white/70 bg-white/85 backdrop-blur-md">
-                <div className="flex items-center justify-between pb-4 mb-4 border-b border-border-dim">
+                <div className="pb-4 mb-4 border-b border-border-dim flex items-start justify-between">
                   <div>
                     <div className="text-[10px] font-mono text-zinc-400 uppercase tracking-wider">
                       TRAINER CARD // NO. 0384
@@ -33,9 +33,8 @@ export default function AboutSection() {
                     <div className="font-mono font-bold text-zinc-950 text-base">Aadrit</div>
                     <div className="text-xs font-mono text-zinc-500">AI/ML & Systems Undergrad</div>
                   </div>
-                  <span className="text-[#dc2626] flex items-center gap-1 text-[11px] font-mono font-bold px-2 py-0.5 rounded bg-red-50 border border-red-200">
-                    <ShieldCheck className="w-3.5 h-3.5 text-red-600" />
-                    <span>VERIFIED</span>
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-zinc-100 border border-zinc-200 text-zinc-600 font-bold">
+                    PROFILE
                   </span>
                 </div>
 
@@ -85,13 +84,10 @@ export default function AboutSection() {
           <div className="lg:col-span-7">
             <ScrollReveal delay={120}>
               <SpotlightCard className="p-6 sm:p-8 shadow-md border border-white/70 bg-white/85 backdrop-blur-md space-y-6">
-                <div className="flex items-center justify-between pb-3 border-b border-border-dim">
+                <div className="pb-3 border-b border-border-dim">
                   <div className="text-xs font-mono text-zinc-400 uppercase tracking-wider">
                     ENGINEERING DOSSIER // ABOUT
                   </div>
-                  <span className="text-xs font-mono text-emerald-600 font-semibold">
-                    STATUS: ACTIVE
-                  </span>
                 </div>
 
                 <div className="space-y-4 text-sm sm:text-base text-zinc-700 leading-relaxed font-sans">
@@ -99,10 +95,10 @@ export default function AboutSection() {
                     I am a Computer Science student at <strong className="text-zinc-950 font-medium">SRM University AP</strong>, a member at <strong className="text-zinc-950 font-medium">Next Tech Lab (ntlap)</strong>, and co-lead at <strong className="text-zinc-950 font-medium">FOSS SRMAP</strong>.
                   </p>
                   <p>
-                    I like writing clean, secure C for microcontrollers and embedded systems, and using Python to build lightweight machine learning models that run quickly on regular devices.
+                    I work with C for microcontrollers and embedded systems, and Python for lightweight machine learning models that run on standard devices.
                   </p>
                   <p className="text-zinc-600">
-                    Recipient of the national <strong className="text-zinc-950 font-medium">Manak Inspire Award</strong> by DST and recognized at <strong className="text-zinc-950 font-medium">FOSS United JUST A HACKATHON</strong>.
+                    Recipient of the national <strong className="text-zinc-950 font-medium">MANAK Inspire Award</strong> by DST and recognized at <strong className="text-zinc-950 font-medium">FOSS United JUST A HACKATHON</strong>.
                   </p>
                 </div>
 
@@ -114,7 +110,7 @@ export default function AboutSection() {
                       <span>Machine Learning</span>
                     </div>
                     <p className="text-xs text-zinc-600 leading-relaxed font-sans">
-                      Small, fast text classification models in Python that run quickly on standard CPU devices.
+                      Character-level policy and intent models in PyTorch that run locally on standard CPU hardware.
                     </p>
                   </div>
 
@@ -124,7 +120,7 @@ export default function AboutSection() {
                       <span>Systems & Security</span>
                     </div>
                     <p className="text-xs text-zinc-600 leading-relaxed font-sans">
-                      Low-level C code to protect device memory, prevent tampering, and verify data safely.
+                      Low-level C code for perceptual hashing, cryptographic verification, and memory safety.
                     </p>
                   </div>
 
@@ -134,7 +130,7 @@ export default function AboutSection() {
                       <span>Agent Simulations</span>
                     </div>
                     <p className="text-xs text-zinc-600 leading-relaxed font-sans">
-                      Python simulations where competing AI agents learn and improve strategies across rounds.
+                      Turn-based Python simulations where competing AI agents learn and adapt policies across rounds.
                     </p>
                   </div>
 
@@ -144,7 +140,7 @@ export default function AboutSection() {
                       <span>Search & Retrieval</span>
                     </div>
                     <p className="text-xs text-zinc-600 leading-relaxed font-sans">
-                      Fast document search combining keyword filtering and vector search using Python and FastAPI.
+                      Modular multi-phase RAG combining semantic vector search, knowledge graphs, and cross-encoder reranking.
                     </p>
                   </div>
                 </div>

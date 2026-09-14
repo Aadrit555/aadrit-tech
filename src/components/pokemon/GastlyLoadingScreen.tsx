@@ -11,7 +11,7 @@ export default function GastlyLoadingScreen({ onComplete }: GastlyLoadingScreenP
   const [loading, setLoading] = useState(true);
   const [isFading, setIsFading] = useState(false);
   const [progress, setProgress] = useState(0);
-  const [statusText, setStatusText] = useState("INITIALIZING HOENN OS...");
+  const [statusText, setStatusText] = useState("AADRIT.TECH INITIALIZING...");
 
   const finishLoading = useCallback(() => {
     setIsFading(true);
@@ -34,27 +34,23 @@ export default function GastlyLoadingScreen({ onComplete }: GastlyLoadingScreenP
 
   useEffect(() => {
     const startTime = Date.now();
-    const duration = 1800; // 1.8 seconds total duration
+    const duration = 1600;
 
     const updateInterval = setInterval(() => {
       const elapsed = Date.now() - startTime;
       const pct = Math.min(100, Math.round((elapsed / duration) * 100));
       setProgress(pct);
 
-      if (pct < 30) {
-        setStatusText("INITIALIZING DEVON CORP. OS...");
-      } else if (pct < 65) {
-        setStatusText("CALIBRATING OPTICAL SENSORS...");
+      if (pct < 45) {
+        setStatusText("AADRIT.TECH INITIALIZING...");
       } else if (pct < 90) {
-        setStatusText("SYNCING DEX REGISTER #0384...");
-      } else if (pct < 100) {
-        setStatusText("ESTABLISHING NEURAL LINK...");
+        setStatusText("LOADING PORTFOLIO...");
       } else {
-        setStatusText("POKÉDEX READY.");
+        setStatusText("PORTFOLIO READY");
         clearInterval(updateInterval);
         setTimeout(() => {
           finishLoading();
-        }, 250);
+        }, 200);
       }
     }, 30);
 
@@ -65,7 +61,7 @@ export default function GastlyLoadingScreen({ onComplete }: GastlyLoadingScreenP
 
   return (
     <aside
-      aria-label="Loading Pokédex System"
+      aria-label="Loading Portfolio"
       aria-busy={!isFading}
       role="status"
       onClick={finishLoading}
@@ -75,7 +71,7 @@ export default function GastlyLoadingScreen({ onComplete }: GastlyLoadingScreenP
       {/* Top Telemetry Header */}
       <div className="absolute top-4 left-4 sm:top-6 sm:left-6 flex items-center gap-2 font-mono text-xs text-[#2e2154]">
         <span className="w-2 h-2 rounded-full bg-[#2e2154] animate-ping" />
-        <span className="font-bold tracking-wider">DEVON CORP. // HOENN REGION</span>
+        <span className="font-bold tracking-wider">AADRIT.TECH // DEVON CORP.</span>
       </div>
 
       {/* Skip Button */}
@@ -91,7 +87,7 @@ export default function GastlyLoadingScreen({ onComplete }: GastlyLoadingScreenP
         SKIP [ESC]
       </button>
 
-      {/* Centerpiece: Authentic Dribbble Gastly Animation */}
+      {/* Gastly Animation */}
       <div className="flex flex-col items-center justify-center max-w-sm px-4">
         <div className="relative w-64 h-52 sm:w-80 sm:h-64 flex items-center justify-center">
           <Image
@@ -123,9 +119,9 @@ export default function GastlyLoadingScreen({ onComplete }: GastlyLoadingScreenP
 
           {/* Footer Metadata */}
           <div className="flex items-center justify-between text-[10px] text-[#4a377d] pt-0.5">
-            <span>PKMN SPEC #0092: GASTLY</span>
+            <span>GASTLY // NO. 0092</span>
             <span className="hidden sm:inline">TYPE: GHOST / POISON</span>
-            <span>OS v3.0</span>
+            <span>DEVON OS v3.0</span>
           </div>
         </div>
       </div>
