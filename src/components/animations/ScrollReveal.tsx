@@ -55,9 +55,9 @@ export default function ScrollReveal({
       style={{
         transitionDelay: `${delay}ms`,
       }}
-      className={`transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${isVisible
+      className={`transition-all duration-350 ease-out ${isVisible
           ? "opacity-100 translate-y-0"
-          : "opacity-0 translate-y-3.5"
+          : "opacity-0 translate-y-2"
         } ${className}`}
     >
       {children}

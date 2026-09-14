@@ -30,10 +30,10 @@ export default function SelectedWork() {
         <div className="space-y-10">
           {projects.map((project) => (
             <ScrollReveal key={project.id}>
-              <SpotlightCard className="p-6 sm:p-10 border border-white/70 bg-white/85 backdrop-blur-md shadow-md">
-                <div className="space-y-6">
-                  {/* Category, TM Badge, Tags & Award */}
-                  <div className="flex flex-wrap items-center justify-between gap-3">
+              <SpotlightCard className="p-6 sm:p-9 border border-white/70 bg-white/85 backdrop-blur-md shadow-md">
+                <div className="space-y-5">
+                  {/* Top Line: TM Badge, Category & Award */}
+                  <div className="flex flex-wrap items-center justify-between gap-2">
                     <div className="flex items-center gap-2">
                       <span className="px-2 py-0.5 rounded bg-zinc-900 text-emerald-400 font-mono text-xs font-bold border border-zinc-950">
                         {project.tmNumber}
@@ -41,37 +41,19 @@ export default function SelectedWork() {
                       <span className="text-xs font-mono text-[#dc2626] tracking-wider uppercase font-bold">
                         {project.category}
                       </span>
-                      {project.awardBadge && (
-                        <ShinyBadge dotColor="bg-amber-500" className="text-[10px]">
-                          {project.awardBadge}
-                        </ShinyBadge>
-                      )}
                     </div>
 
-                    <div className="flex flex-wrap items-center gap-2">
-                      {project.tags.map((tag, idx) => (
-                        <span key={idx} className="code-badge text-[10px]">
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
+                    {project.awardBadge && (
+                      <ShinyBadge dotColor="bg-amber-500" className="text-[10px]">
+                        {project.awardBadge}
+                      </ShinyBadge>
+                    )}
                   </div>
 
-                  {/* Project Title & Overview */}
+                  {/* Project Title & Overview - Arrives Immediately */}
                   <div>
-                    <h3 className="text-2xl sm:text-3xl font-medium text-zinc-950 font-sans mb-3 flex items-center justify-between">
-                      <span>{project.title}</span>
-                      {project.githubUrl && (
-                        <a
-                          href={project.githubUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-zinc-400 hover:text-zinc-950 transition-colors"
-                          title="View GitHub Repository"
-                        >
-                          <ArrowUpRight className="w-5 h-5" />
-                        </a>
-                      )}
+                    <h3 className="text-2xl sm:text-3xl font-medium text-zinc-950 font-sans mb-2">
+                      {project.title}
                     </h3>
                     <p className="text-sm sm:text-base text-zinc-600 leading-relaxed font-sans max-w-3xl">
                       {project.description}
@@ -79,7 +61,7 @@ export default function SelectedWork() {
                   </div>
 
                   {/* Implementation Highlights */}
-                  <ul className="space-y-2 text-xs sm:text-sm text-zinc-600 font-sans list-disc list-inside">
+                  <ul className="space-y-1.5 text-xs sm:text-sm text-zinc-600 font-sans list-disc list-inside">
                     {project.bullets.map((bullet, idx) => (
                       <li key={idx} className="leading-relaxed">
                         <span>{bullet}</span>
@@ -87,35 +69,59 @@ export default function SelectedWork() {
                     ))}
                   </ul>
 
-                  {/* Technical Details */}
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-6 border-t border-border-dim">
+                  {/* Clean 3-4 Project Tags */}
+                  <div className="flex flex-wrap items-center gap-1.5 pt-1">
+                    {project.tags.map((tag, idx) => (
+                      <span key={idx} className="code-badge text-[10px]">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+
+                  {/* Grounded Technical Details: Label + Value format */}
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-5 border-t border-zinc-200">
                     {project.technicalDetails.map((detail, idx) => (
-                      <div key={idx} className="p-4 rounded bg-white/60 border border-white/80 space-y-1 shadow-xs">
-                        <div className="text-2xl sm:text-3xl font-normal text-zinc-950 font-sans">
-                          {detail.value}
-                        </div>
-                        <div className="text-xs font-mono text-zinc-500 flex items-center gap-1">
-                          <Zap className="w-3 h-3 text-amber-500" />
+                      <div
+                        key={idx}
+                        className="p-3 rounded-md bg-zinc-50/90 border border-zinc-200/80 space-y-0.5 shadow-2xs"
+                      >
+                        <div className="text-[10px] font-mono text-zinc-500 uppercase tracking-wider flex items-center gap-1">
+                          <Zap className="w-3 h-3 text-amber-500 flex-shrink-0" />
                           <span>{detail.label}</span>
+                        </div>
+                        <div className="text-sm font-semibold text-zinc-900 font-sans">
+                          {detail.value}
                         </div>
                       </div>
                     ))}
                   </div>
 
-                  {/* GitHub Action Link */}
-                  {project.githubUrl && (
-                    <div className="pt-2">
+                  {/* Action Links (Live Demo + GitHub) */}
+                  <div className="flex flex-wrap items-center gap-2.5 pt-1">
+                    {project.demoUrl && (
+                      <a
+                        href={project.demoUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="pokedex-btn-action bg-[#dc2626] hover:bg-[#b91c1c] text-white border border-red-500 inline-flex items-center gap-1.5 font-mono text-xs font-bold shadow-xs"
+                      >
+                        <span>Live Demo</span>
+                        <ArrowUpRight className="w-3.5 h-3.5" />
+                      </a>
+                    )}
+                    {project.githubUrl && (
                       <a
                         href={project.githubUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="pokedex-btn-action bg-white text-zinc-900 hover:bg-zinc-100 border border-zinc-300 inline-flex items-center gap-2"
+                        className="pokedex-btn-action bg-white text-zinc-900 hover:bg-zinc-100 border border-zinc-300 inline-flex items-center gap-1.5 font-mono text-xs font-medium shadow-2xs"
                       >
                         <GitBranch className="w-3.5 h-3.5 text-zinc-700" />
-                        <span>Explore Source Code on GitHub</span>
+                        <span>View on GitHub</span>
+                        <ArrowUpRight className="w-3 h-3 text-zinc-400" />
                       </a>
-                    </div>
-                  )}
+                    )}
+                  </div>
                 </div>
               </SpotlightCard>
             </ScrollReveal>

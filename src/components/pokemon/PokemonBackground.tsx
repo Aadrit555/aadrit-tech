@@ -45,33 +45,6 @@ export default function PokemonBackground() {
         <div className="absolute inset-0 bg-sky-950/10" />
       </div>
 
-      {/* 2. Drifting Pixel Clouds Layer */}
-      {mounted && (
-        <div className="absolute inset-0 z-[1] overflow-hidden opacity-50">
-          <div
-            className="absolute top-10 -left-48 w-44 h-16 bg-white/85 rounded-sm blur-[0.3px] animate-pixel-cloud-slow"
-            style={{
-              boxShadow: "0 4px 12px rgba(0, 0, 0, 0.05), inset 0 -4px 0 rgba(220, 235, 252, 0.9)",
-              imageRendering: "pixelated",
-            }}
-          >
-            <div className="absolute -top-6 left-6 w-20 h-10 bg-white/90 rounded-sm" />
-            <div className="absolute -top-3 left-20 w-14 h-8 bg-white/85 rounded-sm" />
-          </div>
-
-          <div
-            className="absolute top-28 -left-64 w-60 h-20 bg-white/80 rounded-sm blur-[0.3px] animate-pixel-cloud-mid"
-            style={{
-              boxShadow: "0 6px 14px rgba(0, 0, 0, 0.04), inset 0 -5px 0 rgba(220, 235, 252, 0.9)",
-              imageRendering: "pixelated",
-            }}
-          >
-            <div className="absolute -top-8 left-10 w-28 h-12 bg-white/85 rounded-sm" />
-            <div className="absolute -top-5 left-32 w-20 h-10 bg-white/80 rounded-sm" />
-          </div>
-        </div>
-      )}
-
       {/* 3. Subtle Ambient Emerald Ozone Motes */}
       <div className="absolute inset-0 z-[2] pointer-events-none opacity-60">
         <div className="absolute top-1/4 left-1/4 w-1.5 h-1.5 bg-emerald-400 animate-ping duration-1000" />

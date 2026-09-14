@@ -8,6 +8,8 @@ import PokemonBackground from "@/components/pokemon/PokemonBackground";
 import GastlyLoadingScreen from "@/components/pokemon/GastlyLoadingScreen";
 import ScrollProgressBar from "@/components/animations/ScrollProgressBar";
 
+import Header from "@/components/navigation/Header";
+
 const instrumentSerif = Instrument_Serif({
   weight: "400",
   subsets: ["latin"],
@@ -75,66 +77,7 @@ export default function RootLayout({
       <body className="bg-transparent text-text-primary min-h-screen flex flex-col font-sans selection:bg-[#f9452d]/15 selection:text-zinc-900 antialiased relative">
         <GastlyLoadingScreen />
         <PokemonBackground />
-        {/* Pokédex Top Hardware Status & Header */}
-        <header className="sticky top-0 z-40 w-full border-b-2 border-red-800/80 bg-zinc-950/90 text-zinc-100 backdrop-blur-md shadow-md relative">
-          <ScrollProgressBar />
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-            {/* Pokédex Brand & Sensor Array */}
-            <Link
-              href="/"
-              className="flex items-center gap-1 sm:gap-2 text-zinc-100 font-mono text-xs sm:text-base tracking-tight font-bold hover:opacity-90 transition-opacity flex-shrink-0"
-            >
-              <div className="flex items-center gap-1">
-                <span className="w-3 h-3 sm:w-3.5 sm:h-3.5 rounded-full bg-cyan-400 border border-white shadow-[0_0_8px_rgba(6,182,212,0.8)] animate-pulse" />
-                <span className="w-1.5 h-1.5 rounded-full bg-red-500 hidden sm:inline-block" />
-                <span className="w-1.5 h-1.5 rounded-full bg-amber-400 hidden sm:inline-block" />
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 hidden sm:inline-block" />
-              </div>
-              <span className="text-white font-mono tracking-wider text-xs sm:text-sm">POKÉDEX</span>
-              <span className="text-[#f9452d] text-base sm:text-lg -ml-1 font-sans">*</span>
-              <span className="text-[10px] font-mono text-zinc-400 hidden md:inline px-1.5 py-0.5 rounded bg-zinc-800 border border-zinc-700">
-                HOENN v3.0
-              </span>
-            </Link>
-
-            {/* Conventional Section Navigation */}
-            <nav className="flex items-center gap-0.5 sm:gap-1.5 text-[11px] sm:text-xs font-mono">
-              <Link
-                href="/#work"
-                className="px-1.5 sm:px-2 py-1 text-zinc-300 hover:text-white hover:bg-zinc-800/80 rounded transition-colors font-medium"
-              >
-                Work
-              </Link>
-              <Link
-                href="/#experience"
-                className="px-1.5 sm:px-2 py-1 text-zinc-300 hover:text-white hover:bg-zinc-800/80 rounded transition-colors font-medium"
-              >
-                <span className="hidden sm:inline">Experience</span>
-                <span className="sm:hidden">Exp</span>
-              </Link>
-              <Link
-                href="/#about"
-                className="px-1.5 sm:px-2 py-1 text-zinc-300 hover:text-white hover:bg-zinc-800/80 rounded transition-colors font-medium"
-              >
-                About
-              </Link>
-              <Link
-                href="/#terminal"
-                className="px-2 py-1 text-zinc-300 hover:text-white hover:bg-zinc-800/80 rounded transition-colors hidden md:inline-flex items-center gap-1"
-                title="Pokédex System Terminal"
-              >
-                <Terminal className="w-3.5 h-3.5 text-accent-emerald" />
-                <span>Terminal</span>
-              </Link>
-              <Link
-                href="/#contact"
-                className="ml-0.5 sm:ml-1 px-2.5 sm:px-3 py-1 rounded-md bg-[#dc2626] hover:bg-[#b91c1c] text-white font-bold transition-all shadow-sm border border-red-400 text-[11px] sm:text-xs"
-              >
-                Contact
-              </Link>
-            </nav>
-          </div>
-        </header>
+        <Header />
 
         {/* Main Content Area */}
         <main className="flex-1 relative z-10">{children}</main>

@@ -39,14 +39,14 @@ export default function AboutSection() {
                   </span>
                 </div>
 
-                <div className="space-y-3 font-mono text-xs text-zinc-600">
-                  <div className="flex items-center justify-between pb-1.5 border-b border-zinc-100">
-                    <span className="text-zinc-400">Affiliation</span>
-                    <span className="text-zinc-900 font-medium">{profile.university}</span>
+                <div className="space-y-3 font-mono text-xs text-zinc-700">
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between pb-2 sm:pb-1.5 border-b border-zinc-100 gap-0.5 sm:gap-2">
+                    <span className="text-zinc-500 text-[11px]">Affiliation</span>
+                    <span className="text-zinc-950 font-bold">{profile.university}</span>
                   </div>
 
-                  <div className="flex items-center justify-between pb-1.5 border-b border-zinc-100">
-                    <span className="text-zinc-400">Lab</span>
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between pb-2 sm:pb-1.5 border-b border-zinc-100 gap-0.5 sm:gap-2">
+                    <span className="text-zinc-500 text-[11px]">Lab</span>
                     <a
                       href="https://www.ntlap.in"
                       target="_blank"
@@ -57,23 +57,23 @@ export default function AboutSection() {
                     </a>
                   </div>
 
-                  <div className="flex items-center justify-between pb-1.5 border-b border-zinc-100">
-                    <span className="text-zinc-400">Community</span>
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between pb-2 sm:pb-1.5 border-b border-zinc-100 gap-0.5 sm:gap-2">
+                    <span className="text-zinc-500 text-[11px]">Community</span>
                     <span className="text-zinc-900 font-medium">FOSS SRMAP (Co-Lead)</span>
                   </div>
 
-                  <div className="flex items-center justify-between pb-1.5 border-b border-zinc-100">
-                    <span className="text-zinc-400">Degree Focus</span>
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between pb-2 sm:pb-1.5 border-b border-zinc-100 gap-0.5 sm:gap-2">
+                    <span className="text-zinc-500 text-[11px]">Degree Focus</span>
                     <span className="text-zinc-900 font-medium">{profile.degree} ({profile.period})</span>
                   </div>
 
-                  <div className="flex items-center justify-between pb-1.5 border-b border-zinc-100">
-                    <span className="text-zinc-400">Base Location</span>
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between pb-2 sm:pb-1.5 border-b border-zinc-100 gap-0.5 sm:gap-2">
+                    <span className="text-zinc-500 text-[11px]">Base Location</span>
                     <span className="text-zinc-900 font-medium">{profile.location}</span>
                   </div>
 
-                  <div className="flex items-center justify-between">
-                    <span className="text-zinc-400">Pokédex Region</span>
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-0.5 sm:gap-2">
+                    <span className="text-zinc-500 text-[11px]">Pokédex Region</span>
                     <span className="text-emerald-700 font-bold">{profile.region} // No. {profile.dexNumber}</span>
                   </div>
                 </div>
@@ -86,49 +86,54 @@ export default function AboutSection() {
             <ScrollReveal delay={120}>
               <SpotlightCard className="p-6 sm:p-8 shadow-md border border-white/70 bg-white/85 backdrop-blur-md space-y-6">
                 <div className="pb-3 border-b border-border-dim">
-                  <div className="text-xs font-mono text-zinc-400 uppercase tracking-wider">
+                  <div className="text-xs font-mono text-zinc-500 uppercase tracking-wider font-bold">
                     ENGINEERING DOSSIER // ABOUT
                   </div>
                 </div>
 
                 <div className="space-y-4 text-sm sm:text-base text-zinc-700 leading-relaxed font-sans">
                   <p>
-                    I am a Computer Science student at <strong className="text-zinc-950 font-medium">{profile.university}</strong>, a member at <strong className="text-zinc-950 font-medium">Next Tech Lab (ntlap)</strong>, and co-lead at <strong className="text-zinc-950 font-medium">FOSS SRMAP</strong>.
+                    I am a Computer Science student at <strong className="text-zinc-950 font-semibold">{profile.university}</strong>, a member at <strong className="text-zinc-950 font-semibold">Next Tech Lab (ntlap)</strong>, and co-lead at <strong className="text-zinc-950 font-semibold">FOSS SRMAP</strong>.
                   </p>
                   <p>
                     I work with C for microcontrollers and embedded systems, and Python for lightweight machine learning models designed to run on standard hardware.
                   </p>
                   <p className="text-zinc-600">
-                    Recipient of the national <strong className="text-zinc-950 font-medium">MANAK Inspire Award</strong> by DST and recognized as a winning project at <strong className="text-zinc-950 font-medium">FOSS United JUST A HACKATHON</strong>.
+                    Recipient of the national <strong className="text-zinc-950 font-semibold">MANAK Inspire Award</strong> by DST and recognized as a winning project at <strong className="text-zinc-950 font-semibold">FOSS United JUST A HACKATHON</strong>.
                   </p>
                 </div>
 
-                {/* Core Focus Areas */}
-                <div className="pt-4 border-t border-border-dim grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  {focusAreas.map((area) => {
-                    const icon =
-                      area.id === "systems" ? (
-                        <Shield className="w-3.5 h-3.5 text-emerald-600" />
-                      ) : area.id === "ml" ? (
-                        <Cpu className="w-3.5 h-3.5 text-[#dc2626]" />
-                      ) : area.id === "security" ? (
-                        <Terminal className="w-3.5 h-3.5 text-amber-600" />
-                      ) : (
-                        <Network className="w-3.5 h-3.5 text-cyan-600" />
-                      );
+                {/* Technical Focus - Clean Unboxed Layout to Prevent Card Fatigue */}
+                <div className="pt-4 border-t border-border-dim space-y-3">
+                  <div className="text-xs font-mono font-bold text-zinc-600 uppercase tracking-wider">
+                    Technical Focus & Scope
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {focusAreas.map((area) => {
+                      const icon =
+                        area.id === "systems" ? (
+                          <Shield className="w-3.5 h-3.5 text-emerald-600" />
+                        ) : area.id === "ml" ? (
+                          <Cpu className="w-3.5 h-3.5 text-[#dc2626]" />
+                        ) : area.id === "security" ? (
+                          <Terminal className="w-3.5 h-3.5 text-amber-600" />
+                        ) : (
+                          <Network className="w-3.5 h-3.5 text-cyan-600" />
+                        );
 
-                    return (
-                      <div key={area.id} className="p-3 rounded bg-white/60 border border-white/80 space-y-1 shadow-xs">
-                        <div className="text-xs font-mono font-bold text-zinc-900 flex items-center gap-1.5">
-                          {icon}
-                          <span>{area.title}</span>
+                      return (
+                        <div key={area.id} className="space-y-1">
+                          <div className="text-xs font-mono font-bold text-zinc-900 flex items-center gap-1.5">
+                            {icon}
+                            <span>{area.title}</span>
+                          </div>
+                          <p className="text-xs text-zinc-600 leading-relaxed font-sans">
+                            {area.description}
+                          </p>
                         </div>
-                        <p className="text-xs text-zinc-600 leading-relaxed font-sans">
-                          {area.description}
-                        </p>
-                      </div>
-                    );
-                  })}
+                      );
+                    })}
+                  </div>
                 </div>
               </SpotlightCard>
             </ScrollReveal>

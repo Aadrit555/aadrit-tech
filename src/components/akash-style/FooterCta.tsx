@@ -5,12 +5,17 @@ import Link from "next/link";
 import { Mail, Copy, Check, Shield, ArrowUpRight, Github, Linkedin, MapPin } from "lucide-react";
 
 export default function FooterCta() {
-  const [copiedEmail, setCopiedEmail] = useState(false);
+  const [copyStatus, setCopyStatus] = useState<"idle" | "copied" | "error">("idle");
 
-  const copyEmail = () => {
-    navigator.clipboard.writeText("aadrit.yks@gmail.com");
-    setCopiedEmail(true);
-    setTimeout(() => setCopiedEmail(false), 2000);
+  const copyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText("aadrit.yks@gmail.com");
+      setCopyStatus("copied");
+      setTimeout(() => setCopyStatus("idle"), 2000);
+    } catch {
+      setCopyStatus("error");
+      setTimeout(() => setCopyStatus("idle"), 2000);
+    }
   };
 
   return (
@@ -41,12 +46,23 @@ export default function FooterCta() {
                   <span>Email</span>
                 </span>
                 <button
+                  type="button"
                   onClick={copyEmail}
-                  className="inline-flex items-center gap-1 text-[11px] font-mono text-zinc-600 hover:text-zinc-950 transition-colors px-2 py-0.5 rounded bg-white hover:bg-zinc-100 border border-zinc-200 cursor-pointer"
+                  className="inline-flex items-center gap-1 text-[11px] font-mono text-zinc-600 hover:text-zinc-950 transition-colors px-2.5 py-1 rounded bg-white hover:bg-zinc-100 border border-zinc-200 cursor-pointer min-h-[32px]"
                   title="Copy Email"
                 >
-                  {copiedEmail ? <Check className="w-3 h-3 text-accent-emerald" /> : <Copy className="w-3 h-3" />}
-                  <span>{copiedEmail ? "Copied" : "Copy"}</span>
+                  {copyStatus === "copied" ? (
+                    <Check className="w-3 h-3 text-accent-emerald" />
+                  ) : (
+                    <Copy className="w-3 h-3" />
+                  )}
+                  <span>
+                    {copyStatus === "copied"
+                      ? "Copied ✓"
+                      : copyStatus === "error"
+                        ? "Unable to copy"
+                        : "Copy"}
+                  </span>
                 </button>
               </div>
               <a
@@ -114,7 +130,7 @@ export default function FooterCta() {
               <span>/</span>
               <Link href="/admin/login" className="hover:text-zinc-950 transition-colors flex items-center gap-1">
                 <Shield className="w-3 h-3" />
-                <span>Console</span>
+                <span>Admin</span>
               </Link>
             </div>
 

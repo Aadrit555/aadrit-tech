@@ -13,6 +13,7 @@ export interface Project {
   tags: string[];
   technicalDetails: TechnicalDetail[];
   githubUrl?: string;
+  demoUrl?: string;
   awardBadge?: string;
 }
 
@@ -110,7 +111,7 @@ export const projects: Project[] = [
       "Trained the model using REINFORCE with reward-based intent selection.",
       "Designed the project to run locally on CPU without pretrained language-model weights.",
     ],
-    tags: ["PYTHON", "PYTORCH", "REINFORCE", "ATTENTION", "CPU INFERENCE"],
+    tags: ["Python", "PyTorch", "REINFORCE", "Attention"],
     technicalDetails: [
       { value: "CPU", label: "Local Inference" },
       { value: "REINFORCE", label: "Policy Gradient" },
@@ -131,7 +132,7 @@ export const projects: Project[] = [
       "Applied subtle adversarial pixel perturbations to defend visual assets against automated alteration.",
       "Recognized as a winning project at FOSS United JUST A HACKATHON 2024.",
     ],
-    tags: ["C LANGUAGE", "CRYPTOGRAPHY", "IMAGE PROVENANCE", "PERCEPTUAL HASH", "FOSS UNITED"],
+    tags: ["C Language", "ECDSA", "Perceptual Hash", "FOSS United"],
     technicalDetails: [
       { value: "Winner", label: "FOSS United Hackathon" },
       { value: "C Lang", label: "Core Algorithms" },
@@ -151,7 +152,7 @@ export const projects: Project[] = [
       "Implemented learning loops so defender agents adapt and raise their win rate over time.",
       "Built repeatable experiment scripts for automated runs and result logging.",
     ],
-    tags: ["PYTHON", "MULTI-AGENT", "SIMULATION", "EXPERIMENTS"],
+    tags: ["Python", "Multi-Agent", "Simulation", "Experiments"],
     technicalDetails: [
       { value: "Adaptive", label: "Attacker vs Defender" },
       { value: "Python", label: "Simulation Engine" },
@@ -170,7 +171,7 @@ export const projects: Project[] = [
       "Integrated semantic vector search with knowledge-graph entity linking and cross-encoder reranking.",
       "Designed modular pipeline stages for document parsing, visual retrieval, and structured response generation.",
     ],
-    tags: ["FASTAPI", "VECTOR SEARCH", "KNOWLEDGE GRAPH", "RAG PIPELINE"],
+    tags: ["FastAPI", "Vector Search", "Knowledge Graph", "Reranking"],
     technicalDetails: [
       { value: "Multi-Phase", label: "Vector + Graph + Rerank" },
       { value: "Multi-Doc", label: "PDF, Text & Markdown" },
@@ -188,7 +189,7 @@ export const leadershipRoles: LeadershipRole[] = [
     period: "Nov 2024 - Present",
     website: "https://www.ntlap.in",
     logoUrl: "/images/ntl.png",
-    actionText: "Visit Next Tech Lab",
+    actionText: "Visit website",
     description:
       "Student-led technology lab at SRM University AP working on practical machine learning and systems engineering.",
     bullets: [
@@ -205,7 +206,7 @@ export const leadershipRoles: LeadershipRole[] = [
     period: "2024 - Present",
     website: "https://fossunited.org",
     logoUrl: "/images/foss.png",
-    actionText: "Visit FOSS United",
+    actionText: "Visit website",
     description:
       "Student open-source chapter at SRM University AP affiliated with the FOSS United Foundation.",
     bullets: [

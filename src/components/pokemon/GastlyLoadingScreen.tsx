@@ -14,6 +14,11 @@ export default function GastlyLoadingScreen({ onComplete }: GastlyLoadingScreenP
   const [statusText, setStatusText] = useState("AADRIT.TECH INITIALIZING...");
 
   const finishLoading = useCallback(() => {
+    try {
+      sessionStorage.setItem("hasSeenIntro", "true");
+    } catch {
+      // Ignore storage errors in restricted private contexts
+    }
     setIsFading(true);
     const fadeTimer = setTimeout(() => {
       setLoading(false);
@@ -22,9 +27,34 @@ export default function GastlyLoadingScreen({ onComplete }: GastlyLoadingScreenP
     return () => clearTimeout(fadeTimer);
   }, [onComplete]);
 
+  // Check session memory and prefers-reduced-motion on mount
+  useEffect(() => {
+    try {
+      if (sessionStorage.getItem("hasSeenIntro") === "true") {
+        setLoading(false);
+        if (onComplete) onComplete();
+        return;
+      }
+    } catch {
+      // Continue if sessionStorage is not accessible
+    }
+
+    if (
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ) {
+      try {
+        sessionStorage.setItem("hasSeenIntro", "true");
+      } catch {}
+      setLoading(false);
+      if (onComplete) onComplete();
+      return;
+    }
+  }, [onComplete]);
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
+      if (e.key === "Escape" || e.key === "Enter") {
         finishLoading();
       }
     };
@@ -33,6 +63,8 @@ export default function GastlyLoadingScreen({ onComplete }: GastlyLoadingScreenP
   }, [finishLoading]);
 
   useEffect(() => {
+    if (!loading) return;
+
     const startTime = Date.now();
     const duration = 850;
 
@@ -55,7 +87,7 @@ export default function GastlyLoadingScreen({ onComplete }: GastlyLoadingScreenP
     }, 20);
 
     return () => clearInterval(updateInterval);
-  }, [finishLoading]);
+  }, [loading, finishLoading]);
 
   if (!loading) return null;
 
@@ -65,8 +97,9 @@ export default function GastlyLoadingScreen({ onComplete }: GastlyLoadingScreenP
       aria-busy={!isFading}
       role="status"
       onClick={finishLoading}
-      className={`fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#c5b6f2] select-none transition-opacity duration-700 ease-out cursor-pointer ${isFading ? "opacity-0 pointer-events-none" : "opacity-100"
-        }`}
+      className={`fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#c5b6f2] select-none transition-opacity duration-500 ease-out cursor-pointer ${
+        isFading ? "opacity-0 pointer-events-none" : "opacity-100"
+      }`}
     >
       {/* Top Telemetry Header */}
       <div className="absolute top-4 left-4 sm:top-6 sm:left-6 flex items-center gap-2 font-mono text-xs text-[#2e2154]">
@@ -126,9 +159,21 @@ export default function GastlyLoadingScreen({ onComplete }: GastlyLoadingScreenP
         </div>
       </div>
 
-      {/* Bottom Hint */}
-      <div className="absolute bottom-4 sm:bottom-6 text-[10px] font-mono text-[#5b4694] tracking-widest uppercase">
-        CLICK ANYWHERE OR PRESS ESC TO PROCEED
+      {/* Explicit Discoverable Enter Action */}
+      <div className="absolute bottom-4 sm:bottom-6 flex flex-col items-center gap-1.5 z-10">
+        <button
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation();
+            finishLoading();
+          }}
+          className="font-mono text-xs font-bold px-4 py-2 bg-[#2e2154] text-white rounded hover:bg-[#1a1233] transition-colors shadow-md flex items-center gap-1.5 cursor-pointer"
+        >
+          <span>[ ENTER DEX ↵ ]</span>
+        </button>
+        <span className="text-[10px] font-mono text-[#5b4694] tracking-wider">
+          Press Esc or click anywhere to skip
+        </span>
       </div>
     </aside>
   );
