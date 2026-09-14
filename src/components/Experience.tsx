@@ -1,23 +1,27 @@
-import { Award, Briefcase, GraduationCap, CheckCircle2 } from "lucide-react";
+"use client";
+
+import { Award, Briefcase, GraduationCap } from "lucide-react";
+import SpotlightCard from "@/components/animations/SpotlightCard";
+import ShinyBadge from "@/components/animations/ShinyBadge";
 
 export default function Experience() {
   return (
-    <section id="experience" className="py-16 md:py-24 border-b border-border-dim bg-tech-grid">
+    <section id="experience" className="py-16 md:py-24 border-b border-border-dim bg-tech-grid relative z-10">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
           {/* Left Column: Experience */}
-          <div className="lg:col-span-7 space-y-8">
+          <div className="lg:col-span-7 space-y-6">
             <div>
               <div className="text-xs font-mono text-accent-emerald tracking-wider uppercase mb-1">
-                [02. WORK_HISTORY]
+                ENGINEERING EXPERIENCE
               </div>
               <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-white font-sans">
-                Engineering Experience
+                Professional Background
               </h2>
             </div>
 
-            {/* Next Tech Lab Role */}
-            <div className="tech-card p-6 border-l-4 border-l-accent-emerald bg-surface">
+            {/* Next Tech Lab Role inside SpotlightCard */}
+            <SpotlightCard className="p-6 border-l-4 border-l-accent-emerald">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-2">
                 <h3 className="text-lg font-bold text-white font-mono flex items-center gap-2">
                   <Briefcase className="w-4 h-4 text-accent-emerald" />
@@ -56,14 +60,14 @@ export default function Experience() {
                   </span>
                 </li>
               </ul>
-            </div>
+            </SpotlightCard>
           </div>
 
           {/* Right Column: Education & National Awards */}
-          <div className="lg:col-span-5 space-y-8">
+          <div className="lg:col-span-5 space-y-6">
             <div>
               <div className="text-xs font-mono text-accent-cyan tracking-wider uppercase mb-1">
-                [03. ACADEMICS_AND_HONORS]
+                ACADEMICS & RECOGNITION
               </div>
               <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-white font-sans">
                 Education & Honors
@@ -71,7 +75,7 @@ export default function Experience() {
             </div>
 
             {/* Education Card */}
-            <div className="tech-card p-6 bg-surface">
+            <SpotlightCard className="p-6">
               <div className="flex items-center gap-2 mb-2">
                 <GraduationCap className="w-4 h-4 text-accent-cyan" />
                 <h3 className="text-base font-bold text-white font-mono">
@@ -100,15 +104,17 @@ export default function Experience() {
                   ))}
                 </div>
               </div>
-            </div>
+            </SpotlightCard>
 
             {/* Awards & Achievements Card */}
-            <div className="tech-card p-6 bg-surface space-y-4">
-              <div className="flex items-center gap-2">
-                <Award className="w-4 h-4 text-amber-400" />
-                <h3 className="text-base font-bold text-white font-mono">
-                  Awards & Achievements
-                </h3>
+            <SpotlightCard className="p-6 space-y-4">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <Award className="w-4 h-4 text-amber-400" />
+                  <h3 className="text-base font-bold text-white font-mono">
+                    Honors & Achievements
+                  </h3>
+                </div>
               </div>
 
               <div className="space-y-4 pt-2 border-t border-border-dim">
@@ -116,7 +122,9 @@ export default function Experience() {
                 <div className="space-y-1">
                   <div className="text-xs font-semibold text-text-primary font-mono flex items-center justify-between">
                     <span>Manak Inspire Award</span>
-                    <span className="text-[10px] text-amber-400 font-mono">NATIONAL HONORS</span>
+                    <ShinyBadge dotColor="bg-amber-400" className="px-1.5 py-0 text-[9px]">
+                      NATIONAL HONORS
+                    </ShinyBadge>
                   </div>
                   <div className="text-[11px] font-mono text-text-muted">
                     National Department of Science & Technology
@@ -130,7 +138,9 @@ export default function Experience() {
                 <div className="space-y-1 pt-3 border-t border-border-dim">
                   <div className="text-xs font-semibold text-text-primary font-mono flex items-center justify-between">
                     <span>FOSS United JUST A HACKATHON</span>
-                    <span className="text-[10px] text-accent-emerald font-mono">RECOGNIZED</span>
+                    <ShinyBadge dotColor="bg-accent-emerald" className="px-1.5 py-0 text-[9px]">
+                      RECOGNIZED
+                    </ShinyBadge>
                   </div>
                   <div className="text-[11px] font-mono text-text-muted">
                     National Open Source Security Competition
@@ -140,11 +150,10 @@ export default function Experience() {
                   </p>
                 </div>
               </div>
-            </div>
+            </SpotlightCard>
           </div>
         </div>
       </div>
     </section>
   );
 }
-

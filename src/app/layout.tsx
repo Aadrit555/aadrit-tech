@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Link from "next/link";
 import { Terminal, Shield, FileText, Github, Linkedin, Mail } from "lucide-react";
+import InteractiveGrid from "@/components/animations/InteractiveGrid";
 
 export const metadata: Metadata = {
   title: "Aadrit Srivastava | AI/ML & Systems Engineer",
@@ -56,7 +57,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="dark">
-      <body className="bg-background text-text-primary min-h-screen flex flex-col font-sans selection:bg-emerald-900/40 selection:text-emerald-200 antialiased">
+      <body className="bg-background text-text-primary min-h-screen flex flex-col font-sans selection:bg-emerald-900/40 selection:text-emerald-200 antialiased relative">
+        <InteractiveGrid />
         {/* Top Operational Status & Header */}
         <header className="sticky top-0 z-40 w-full border-b border-border-dim bg-background/90 backdrop-blur-md">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">

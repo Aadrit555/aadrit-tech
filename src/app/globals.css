@@ -58,6 +58,12 @@ body {
   color: #f8fafc;
 }
 
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
 /* Crisp Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;

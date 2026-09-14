@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
-import { Terminal as TerminalIcon, CornerDownLeft, RotateCcw } from "lucide-react";
+import { useState, useRef, useEffect, KeyboardEvent } from "react";
+import { Terminal as TerminalIcon, CornerDownLeft, RotateCcw, Copy, Check } from "lucide-react";
 
 interface HistoryEntry {
   command: string;
@@ -14,11 +14,14 @@ export default function TerminalConsole() {
     {
       command: "welcome",
       output: [
-        "Aadrit Srivastava :: Systems & AI/ML Workstation [v1.0.4-secure]",
-        "Type 'help' to inspect available system commands or 'projects' to view build specs.",
+        "Aadrit Srivastava :: Systems & AI/ML Workstation [v1.1.0-revamped]",
+        "Type 'help' to inspect system commands or click quick actions below.",
       ],
     },
   ]);
+  const [cmdHistory, setCmdHistory] = useState<string[]>([]);
+  const [historyIndex, setHistoryIndex] = useState<number>(-1);
+  const [copied, setCopied] = useState(false);
 
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -27,10 +30,12 @@ export default function TerminalConsole() {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [history]);
 
-  const handleCommand = (e: React.FormEvent) => {
-    e.preventDefault();
-    const cmd = input.trim().toLowerCase();
+  const executeCommand = (cmdText: string) => {
+    const cmd = cmdText.trim().toLowerCase();
     if (!cmd) return;
+
+    setCmdHistory((prev) => [...prev, cmdText]);
+    setHistoryIndex(-1);
 
     let output: string[] = [];
 
@@ -133,24 +138,70 @@ export default function TerminalConsole() {
         break;
     }
 
-    setHistory((prev) => [...prev, { command: input, output }]);
+    setHistory((prev) => [...prev, { command: cmdText, output }]);
     setInput("");
   };
 
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "ArrowUp") {
+      e.preventDefault();
+      if (cmdHistory.length === 0) return;
+      const nextIndex = historyIndex === -1 ? cmdHistory.length - 1 : Math.max(0, historyIndex - 1);
+      setHistoryIndex(nextIndex);
+      setInput(cmdHistory[nextIndex]);
+    } else if (e.key === "ArrowDown") {
+      e.preventDefault();
+      if (historyIndex === -1) return;
+      const nextIndex = historyIndex + 1;
+      if (nextIndex >= cmdHistory.length) {
+        setHistoryIndex(-1);
+        setInput("");
+      } else {
+        setHistoryIndex(nextIndex);
+        setInput(cmdHistory[nextIndex]);
+      }
+    }
+  };
+
+  const copyLog = () => {
+    const text = history
+      .map((h) => `> ${h.command}\n${h.output.join("\n")}`)
+      .join("\n\n");
+    navigator.clipboard.writeText(text);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  const quickCommands = ["whoami", "projects", "skills", "security", "contact"];
+
   return (
-    <section id="terminal" className="py-16 md:py-24 border-b border-border-dim bg-tech-grid-dense">
+    <section id="terminal" className="py-16 md:py-24 border-b border-border-dim bg-tech-grid-dense relative z-10">
       <div className="max-w-4xl mx-auto px-4 sm:px-6">
-        {/* Header */}
-        <div className="text-center mb-8">
+        {/* Header without numberings */}
+        <div className="text-center mb-6">
           <div className="text-xs font-mono text-accent-emerald tracking-wider uppercase mb-1">
-            [05. INTERACTIVE_REPL]
+            INTERACTIVE REPL
           </div>
           <h2 className="text-2xl font-bold tracking-tight text-white font-sans">
             Interactive System Console
           </h2>
           <p className="text-xs text-text-secondary font-mono mt-1">
-            Inspect system configurations, research projects, and runtime security parameters directly.
+            Inspect configurations, projects, and runtime security parameters directly.
           </p>
+        </div>
+
+        {/* Quick Action Command Buttons */}
+        <div className="flex flex-wrap items-center justify-center gap-2 mb-4">
+          <span className="text-[11px] font-mono text-text-muted">Quick run:</span>
+          {quickCommands.map((cmd) => (
+            <button
+              key={cmd}
+              onClick={() => executeCommand(cmd)}
+              className="px-2.5 py-1 rounded bg-surface hover:bg-surface-raised border border-border-dim text-[11px] font-mono text-text-secondary hover:text-white transition-colors cursor-pointer"
+            >
+              ${cmd}
+            </button>
+          ))}
         </div>
 
         {/* Terminal Window */}
@@ -163,18 +214,29 @@ export default function TerminalConsole() {
               <span className="w-2.5 h-2.5 rounded-full bg-zinc-700"></span>
               <span className="text-text-muted ml-2 flex items-center gap-1.5">
                 <TerminalIcon className="w-3.5 h-3.5 text-accent-emerald" />
-                <span>guest@aadrit-system:~</span>
+                <span>guest@aadrit-workstation:~</span>
               </span>
             </div>
 
-            <button
-              onClick={() => setHistory([])}
-              className="text-text-muted hover:text-white transition-colors flex items-center gap-1 text-[11px]"
-              title="Clear Terminal"
-            >
-              <RotateCcw className="w-3 h-3" />
-              <span>clear</span>
-            </button>
+            <div className="flex items-center gap-3">
+              <button
+                onClick={copyLog}
+                className="text-text-muted hover:text-white transition-colors flex items-center gap-1 text-[11px]"
+                title="Copy Terminal History"
+              >
+                {copied ? <Check className="w-3 h-3 text-accent-emerald" /> : <Copy className="w-3 h-3" />}
+                <span>{copied ? "copied" : "copy"}</span>
+              </button>
+
+              <button
+                onClick={() => setHistory([])}
+                className="text-text-muted hover:text-white transition-colors flex items-center gap-1 text-[11px]"
+                title="Clear Terminal"
+              >
+                <RotateCcw className="w-3 h-3" />
+                <span>clear</span>
+              </button>
+            </div>
           </div>
 
           {/* Terminal Body */}
@@ -199,14 +261,21 @@ export default function TerminalConsole() {
             ))}
 
             {/* Current Input Prompt */}
-            <form onSubmit={handleCommand} className="flex items-center gap-2 text-text-primary pt-1">
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                executeCommand(input);
+              }}
+              className="flex items-center gap-2 text-text-primary pt-1"
+            >
               <span className="text-accent-emerald font-semibold">&gt;</span>
               <input
                 ref={inputRef}
                 type="text"
                 value={input}
+                onKeyDown={handleKeyDown}
                 onChange={(e) => setInput(e.target.value)}
-                placeholder="type 'help' or 'projects'..."
+                placeholder="type command (use up/down arrows for history)..."
                 className="flex-1 bg-transparent border-none outline-none text-text-primary font-mono text-xs placeholder:text-zinc-700"
                 autoComplete="off"
                 spellCheck="false"
@@ -222,4 +291,3 @@ export default function TerminalConsole() {
     </section>
   );
 }
-

@@ -1,4 +1,7 @@
-import { Code2, Cpu, Database, Wrench, Shield, Layers } from "lucide-react";
+"use client";
+
+import { Code2, Cpu, Database } from "lucide-react";
+import SpotlightCard from "@/components/animations/SpotlightCard";
 
 interface SkillCategory {
   title: string;
@@ -41,13 +44,13 @@ const skillCategories: SkillCategory[] = [
 
 export default function Skills() {
   return (
-    <section id="skills" className="py-16 md:py-24 border-b border-border-dim bg-background">
+    <section id="skills" className="py-16 md:py-24 border-b border-border-dim bg-background relative z-10">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        {/* Section Title */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 pb-4 border-b border-border-dim gap-4">
+        {/* Section Title without numberings */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 pb-4 border-b border-border-dim gap-4">
           <div>
             <div className="text-xs font-mono text-accent-emerald tracking-wider uppercase mb-1">
-              [04. TECHNICAL_CAPABILITIES]
+              TECHNICAL CAPABILITIES
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-white font-sans">
               Technical Arsenal
@@ -58,14 +61,14 @@ export default function Skills() {
           </p>
         </div>
 
-        {/* 3-Column Skills Grid */}
+        {/* 3-Column Skills Grid with SpotlightCards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {skillCategories.map((category, idx) => {
             const Icon = category.icon;
             return (
-              <div
+              <SpotlightCard
                 key={idx}
-                className="tech-card p-6 bg-surface/60 border border-border-dim hover:border-border-bright flex flex-col justify-between"
+                className="p-6 bg-surface/60 flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-center gap-2 mb-4 pb-3 border-b border-border-dim">
@@ -77,8 +80,8 @@ export default function Skills() {
 
                   <div className="space-y-3">
                     {category.items.map((skill, sIdx) => (
-                      <div key={sIdx} className="space-y-0.5">
-                        <div className="text-xs font-mono font-semibold text-text-primary flex items-center justify-between">
+                      <div key={sIdx} className="space-y-0.5 group">
+                        <div className="text-xs font-mono font-semibold text-text-primary flex items-center justify-between group-hover:text-accent-cyan transition-colors">
                           <span>{skill.name}</span>
                           <span className="text-[10px] text-text-muted font-mono">VERIFIED</span>
                         </div>
@@ -91,10 +94,9 @@ export default function Skills() {
                 </div>
 
                 <div className="mt-6 pt-3 border-t border-border-dim flex items-center justify-between text-[11px] font-mono text-text-muted">
-                  <span>Category: {idx + 1} of 3</span>
                   <span className="text-accent-emerald font-mono">100% Course & Project Proven</span>
                 </div>
-              </div>
+              </SpotlightCard>
             );
           })}
         </div>
@@ -102,4 +104,3 @@ export default function Skills() {
     </section>
   );
 }
-

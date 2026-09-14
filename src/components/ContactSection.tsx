@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { Mail, Phone, MapPin, Send, CheckCircle2, AlertCircle, ShieldAlert } from "lucide-react";
+import { Mail, Phone, MapPin, Send, CheckCircle2, AlertCircle, ShieldAlert, Copy, Check } from "lucide-react";
+import SpotlightCard from "@/components/animations/SpotlightCard";
 
 export default function ContactSection() {
   const [formData, setFormData] = useState({
@@ -13,6 +14,13 @@ export default function ContactSection() {
 
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [responseMsg, setResponseMsg] = useState("");
+  const [copiedEmail, setCopiedEmail] = useState(false);
+
+  const copyEmail = () => {
+    navigator.clipboard.writeText("aadrit.yks@gmail.com");
+    setCopiedEmail(true);
+    setTimeout(() => setCopiedEmail(false), 2000);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -46,14 +54,14 @@ export default function ContactSection() {
   };
 
   return (
-    <section id="contact" className="py-16 md:py-24 border-b border-border-dim bg-background">
+    <section id="contact" className="py-16 md:py-24 border-b border-border-dim bg-background relative z-10">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
           {/* Left Column: Direct Coordinates & Security Notice */}
           <div className="lg:col-span-5 space-y-6">
             <div>
               <div className="text-xs font-mono text-accent-emerald tracking-wider uppercase mb-1">
-                [06. SECURE_CHANNELS]
+                SECURE CHANNELS
               </div>
               <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-white font-sans">
                 Contact & Inquiries
@@ -68,14 +76,30 @@ export default function ContactSection() {
             <div className="space-y-4 pt-4 border-t border-border-dim text-xs font-mono">
               <div className="flex items-start gap-3 text-text-secondary">
                 <Mail className="w-4 h-4 text-accent-emerald mt-0.5" />
-                <div>
+                <div className="flex-1">
                   <span className="text-text-muted block text-[11px]">Direct Electronic Mail</span>
-                  <a
-                    href="mailto:aadrit.yks@gmail.com"
-                    className="text-text-primary hover:text-white transition-colors"
-                  >
-                    aadrit.yks@gmail.com
-                  </a>
+                  <div className="flex items-center gap-2 mt-0.5">
+                    <a
+                      href="mailto:aadrit.yks@gmail.com"
+                      className="text-text-primary hover:text-white transition-colors"
+                    >
+                      aadrit.yks@gmail.com
+                    </a>
+                    <button
+                      onClick={copyEmail}
+                      className="p-1 rounded bg-surface hover:bg-surface-raised border border-border-dim text-text-muted hover:text-white transition-colors"
+                      title="Copy email to clipboard"
+                    >
+                      {copiedEmail ? (
+                        <Check className="w-3 h-3 text-accent-emerald" />
+                      ) : (
+                        <Copy className="w-3 h-3" />
+                      )}
+                    </button>
+                    {copiedEmail && (
+                      <span className="text-[10px] text-accent-emerald font-mono">COPIED</span>
+                    )}
+                  </div>
                 </div>
               </div>
 
@@ -108,9 +132,9 @@ export default function ContactSection() {
             </div>
           </div>
 
-          {/* Right Column: Sanitized Contact Form */}
+          {/* Right Column: Sanitized Contact Form inside SpotlightCard */}
           <div className="lg:col-span-7">
-            <div className="tech-card p-6 sm:p-8 bg-surface">
+            <SpotlightCard className="p-6 sm:p-8">
               <h3 className="text-base font-bold text-white font-mono mb-4">
                 Transmit Secure Message
               </h3>
@@ -209,11 +233,10 @@ export default function ContactSection() {
                   </span>
                 </button>
               </form>
-            </div>
+            </SpotlightCard>
           </div>
         </div>
       </div>
     </section>
   );
 }
-
