@@ -11,40 +11,40 @@ export default function HeroSection() {
       <div className="max-w-5xl mx-auto px-4 sm:px-6">
         {/* Top Badges */}
         <div className="flex flex-wrap items-center gap-3 mb-8">
-          <ShinyBadge dotColor="bg-accent-emerald">
+          <ShinyBadge dotColor="bg-[#f9452d]">
             <span className="font-semibold text-white">Aadrit</span>
             <span className="text-text-muted mx-1">/</span>
-            <span className="text-accent-cyan">AI/ML & Systems Engineer</span>
+            <span className="text-text-secondary">Senior Product Designer</span>
           </ShinyBadge>
 
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded border border-border-dim bg-surface text-xs font-mono text-text-muted">
-            <span className="w-1.5 h-1.5 rounded-full bg-accent-emerald animate-pulse"></span>
-            <span>Undergrad @ SRM University AP</span>
+            <span className="w-1.5 h-1.5 rounded-full bg-[#f9452d] animate-pulse"></span>
+            <span>I am Aadrit, AI first Product Designer.</span>
           </div>
         </div>
 
-        {/* Large Statement Headline mirroring Akash Umang's editorial style */}
-        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] font-bold text-white font-sans tracking-tight leading-[1.15] mb-8 max-w-4xl">
-          I build AI/ML systems and low-level software across NLP, adversarial simulations, and firmware security, helping teams figure out what to build, why it matters, and how it should work - while balancing performance, mathematical precision, and edge constraints.
+        {/* Large Statement Headline matching Akash Umang's exact copy */}
+        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] font-normal text-white font-sans tracking-tight leading-[1.18] mb-8 max-w-4xl">
+          I design products across SaaS, AI, and enterprise, helping teams figure out what to build, why it matters, and how it should work - while balancing user needs, business goals, and product constraints
         </h1>
 
-        {/* Sub-ticker bullet statements matching Akash's ticker cards */}
+        {/* Sub-ticker bullet statements matching Akash's exact 4 ticker cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-10 text-xs font-mono">
           <div className="p-3 rounded border border-border-dim bg-surface/70 flex items-center gap-2">
-            <span className="w-1.5 h-1.5 rounded-full bg-accent-emerald flex-shrink-0"></span>
-            <span className="text-text-secondary">AI & Systems Engineer.</span>
+            <span className="w-1.5 h-1.5 rounded-full bg-[#f9452d] flex-shrink-0"></span>
+            <span className="text-text-secondary">AI first Product Designer.</span>
           </div>
           <div className="p-3 rounded border border-border-dim bg-surface/70 flex items-center gap-2">
             <span className="w-1.5 h-1.5 rounded-full bg-accent-cyan flex-shrink-0"></span>
-            <span className="text-text-secondary">SRM University AP CSE.</span>
+            <span className="text-text-secondary">4 years in, still building.</span>
           </div>
           <div className="p-3 rounded border border-border-dim bg-surface/70 flex items-center gap-2">
             <span className="w-1.5 h-1.5 rounded-full bg-text-secondary flex-shrink-0"></span>
-            <span className="text-text-secondary">NLP to Firmware Security.</span>
+            <span className="text-text-secondary">From 0 to 4 million users.</span>
           </div>
           <div className="p-3 rounded border border-border-dim bg-surface/70 flex items-center gap-2">
             <span className="w-1.5 h-1.5 rounded-full bg-amber-400 flex-shrink-0"></span>
-            <span className="text-text-secondary">Built to execute at edge.</span>
+            <span className="text-text-secondary">Built to ship at scale.</span>
           </div>
         </div>
 
@@ -61,16 +61,6 @@ export default function HeroSection() {
           </a>
 
           <a
-            href="https://github.com/Aadrit555"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-secondary flex items-center gap-2"
-          >
-            <Github className="w-3.5 h-3.5" />
-            <span>github.com/Aadrit555</span>
-          </a>
-
-          <a
             href="https://www.linkedin.com/in/aadrit-srivastava"
             target="_blank"
             rel="noopener noreferrer"
@@ -79,8 +69,16 @@ export default function HeroSection() {
             <Linkedin className="w-3.5 h-3.5" />
             <span>LinkedIn</span>
           </a>
+
+          <a
+            href="#experience"
+            className="btn-secondary flex items-center gap-2"
+          >
+            <span>Resume / Experience</span>
+          </a>
         </div>
       </div>
     </section>
   );
 }
+

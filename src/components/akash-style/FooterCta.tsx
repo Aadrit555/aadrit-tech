@@ -57,14 +57,14 @@ export default function FooterCta() {
       <div className="max-w-5xl mx-auto px-4 sm:px-6">
         {/* Massive Typographic Headline mirroring Akash Umang's "Stay connected" */}
         <div className="mb-14 pb-10 border-b border-border-dim">
-          <div className="text-xs font-mono text-accent-emerald tracking-wider uppercase mb-3">
+          <div className="text-xs font-mono text-[#f9452d] tracking-wider uppercase mb-3">
             Contact
           </div>
-          <h2 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-white tracking-tight font-sans leading-none">
-            Stay <span className="text-text-muted">connected</span>
+          <h2 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-normal text-white tracking-tight font-sans leading-none">
+            Stay <span className="font-serif italic font-normal text-text-muted">connected</span>
           </h2>
           <p className="text-sm sm:text-base text-text-secondary font-sans mt-4 max-w-xl">
-            Whether it is an AI/ML systems research discussion, engineering role, or low-level cryptographic security inquiry, I am always open to connecting.
+            Whether it’s a new project or a quick question, we’re here to connect.
           </p>
         </div>
 
@@ -74,7 +74,7 @@ export default function FooterCta() {
           <div className="lg:col-span-5 space-y-6">
             <div className="text-2xl font-bold text-white font-mono flex items-center gap-2">
               <span>Aadrit</span>
-              <span className="text-accent-emerald">*</span>
+              <span className="text-[#f9452d] text-3xl leading-none">*</span>
             </div>
 
             <div className="space-y-4 text-xs sm:text-sm font-mono text-text-secondary">
@@ -268,3 +268,4 @@ export default function FooterCta() {
     </footer>
   );
 }
+

@@ -1,27 +1,39 @@
 import type { Metadata } from "next";
+import { Instrument_Serif, Inter } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
-import { Terminal, Shield, FileText, Github, Linkedin, Mail } from "lucide-react";
+import { Terminal } from "lucide-react";
 import InteractiveGrid from "@/components/animations/InteractiveGrid";
 
+const instrumentSerif = Instrument_Serif({
+  weight: "400",
+  subsets: ["latin"],
+  style: ["normal", "italic"],
+  variable: "--font-serif",
+});
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-sans",
+});
+
 export const metadata: Metadata = {
-  title: "Aadrit Srivastava | AI/ML & Systems Engineer",
+  title: "Aadrit | Sr. Product Designer",
   description:
-    "Portfolio of Aadrit Srivastava. Undergrad at SRM University AP building lightweight NLP models, adversarial AI simulation frameworks, and firmware-level cryptographic security in C and Python.",
+    "Senior Product Designer with 4 year experience in designing fintech and SaaS products focused on simplifying complex workflows, improving usability, and building scalable user experiences that balance business and user needs.",
   keywords: [
-    "Aadrit Srivastava",
-    "Systems Engineer",
-    "Machine Learning",
-    "NLP",
-    "Firmware Security",
-    "Python",
-    "C",
-    "SRM University AP",
-    "DIDsomethin_SLM",
-    "Hemlock",
+    "Aadrit",
+    "Senior Product Designer",
+    "Product Design",
+    "Fintech",
+    "SaaS",
+    "UX Research",
+    "Design Systems",
+    "Mastercard",
+    "Devnagri AI",
   ],
-  authors: [{ name: "Aadrit Srivastava" }],
-  creator: "Aadrit Srivastava",
+  authors: [{ name: "Aadrit" }],
+  creator: "Aadrit",
   metadataBase: new URL("https://aadrit.dev"),
   alternates: {
     canonical: "https://aadrit.dev",
@@ -32,17 +44,17 @@ export const metadata: Metadata = {
     apple: "/favicon.svg",
   },
   openGraph: {
-    title: "Aadrit Srivastava | AI/ML & Systems Engineer",
+    title: "Aadrit | Sr. Product Designer",
     description:
-      "Engineering lightweight NLP models, adversarial AI simulation frameworks, and firmware-level cryptographic security defenses.",
+      "Senior Product Designer with 4 year experience in designing fintech and SaaS products focused on simplifying complex workflows, improving usability, and building scalable user experiences that balance business and user needs.",
     url: "https://aadrit.dev",
-    siteName: "Aadrit Srivastava Portfolio",
+    siteName: "Aadrit Portfolio",
     images: [
       {
         url: "/images/aadrit.png",
         width: 600,
         height: 600,
-        alt: "Aadrit Srivastava",
+        alt: "Aadrit",
       },
     ],
     locale: "en_US",
@@ -56,8 +68,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="dark">
-      <body className="bg-background text-text-primary min-h-screen flex flex-col font-sans selection:bg-emerald-900/40 selection:text-emerald-200 antialiased relative">
+    <html lang="en" className={`dark ${instrumentSerif.variable} ${inter.variable}`}>
+      <body className="bg-background text-text-primary min-h-screen flex flex-col font-sans selection:bg-[#f9452d]/20 selection:text-white antialiased relative">
         <InteractiveGrid />
         {/* Top Operational Status & Header */}
         <header className="sticky top-0 z-40 w-full border-b border-border-dim bg-background/90 backdrop-blur-md">
@@ -65,14 +77,14 @@ export default function RootLayout({
             {/* Brand Logo matching Akash* */}
             <Link
               href="/"
-              className="flex items-center text-white font-mono text-base tracking-tight font-bold hover:text-accent-emerald transition-colors"
+              className="flex items-center text-white font-mono text-base tracking-tight font-bold hover:opacity-80 transition-opacity"
             >
               <span>Aadrit</span>
-              <span className="text-accent-emerald text-lg ml-0.5">*</span>
+              <span className="text-[#f9452d] text-lg ml-0.5 font-sans">*</span>
             </Link>
 
             {/* Navigation Links matching Akash's menu */}
-            <nav className="flex items-center gap-1 sm:gap-4 text-xs font-mono">
+            <nav className="flex items-center gap-1 sm:gap-3 text-xs font-mono">
               <Link
                 href="/#work"
                 className="px-2.5 py-1.5 text-text-secondary hover:text-white transition-colors"
@@ -92,11 +104,17 @@ export default function RootLayout({
                 Experience
               </Link>
               <Link
+                href="/#contact"
+                className="px-2.5 py-1.5 text-text-secondary hover:text-white transition-colors hidden sm:inline-block"
+              >
+                Contact me
+              </Link>
+              <Link
                 href="/#terminal"
-                className="px-2.5 py-1.5 text-text-secondary hover:text-white transition-colors hidden sm:inline-flex items-center gap-1"
+                className="px-2 py-1.5 text-text-secondary hover:text-white transition-colors hidden md:inline-flex items-center gap-1"
+                title="Interactive Console"
               >
                 <Terminal className="w-3.5 h-3.5" />
-                <span>Terminal</span>
               </Link>
               <Link
                 href="/#contact"

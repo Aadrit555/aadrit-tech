@@ -10,18 +10,20 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "#080b11",
-        surface: "#0e131d",
-        "surface-raised": "#141b27",
-        "border-dim": "#1e293b",
-        "border-bright": "#334155",
+        background: "#0c0c0c",
+        surface: "#141414",
+        "surface-raised": "#1c1c1c",
+        "border-dim": "#262626",
+        "border-bright": "#383838",
         "accent-emerald": "#10b981",
         "accent-cyan": "#06b6d4",
+        "accent-orange": "#f9452d",
         "text-primary": "#f8fafc",
-        "text-secondary": "#94a3b8",
-        "text-muted": "#64748b",
+        "text-secondary": "#a1a1aa",
+        "text-muted": "#71717a",
       },
       fontFamily: {
+        serif: ["var(--font-serif)", "Instrument Serif", "Georgia", "serif"],
         mono: [
           "ui-monospace",
           "SFMono-Regular",
@@ -33,6 +35,7 @@ const config: Config = {
           "monospace",
         ],
         sans: [
+          "var(--font-sans)",
           "-apple-system",
           "BlinkMacSystemFont",
           "Segoe UI",

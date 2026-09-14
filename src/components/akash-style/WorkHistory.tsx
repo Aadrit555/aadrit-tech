@@ -1,8 +1,7 @@
 "use client";
 
-import { Award, Briefcase, GraduationCap, ArrowUpRight } from "lucide-react";
+import { Award, Briefcase, GraduationCap, ArrowUpRight, CheckCircle2 } from "lucide-react";
 import SpotlightCard from "@/components/animations/SpotlightCard";
-import ShinyBadge from "@/components/animations/ShinyBadge";
 
 interface HistoryEntry {
   role: string;
@@ -13,25 +12,46 @@ interface HistoryEntry {
 
 const historyEntries: HistoryEntry[] = [
   {
-    role: "Associate",
-    organization: "Next Tech Lab",
+    role: "Sr. Product Designer",
+    organization: "CloudPrism Solutions",
     description:
-      "Trained and evaluated machine learning models in Python, tuning features and hyperparameters to improve classification performance. Cleaned and processed datasets to support ongoing ML experiments, cutting manual preprocessing effort by streamlining the pipeline. Identified and fixed bugs across live projects, improving pipeline reliability and delivering project milestones on schedule.",
-    period: "2024 - Present",
+      "Worked with Mastercard, Zennify & Plumto to design scalable fintech, banking & CRM products.",
+    period: "March 2026 - Present",
   },
   {
-    role: "B.Tech Computer Science",
-    organization: "SRM University AP",
+    role: "UI/UX Designer",
+    organization: "Digital Products Portfolio",
     description:
-      "Undergraduate engineering coursework covering Data Structures & Algorithms, Object-Oriented Programming, Database Management Systems, and Machine Learning Fundamentals. Leading research on low-latency edge inference and low-level firmware defenses.",
-    period: "2023 - 2027",
+      "Designed 20+ digital products across B2B SaaS, CRM, banking & consumer platforms.",
+    period: "Nov 2022 - March 2026",
+  },
+];
+
+const certifications = [
+  {
+    title: "Design Psychology: Master the Art and Science of UX Design",
+    year: "2026",
+    issuer: "Credential",
   },
   {
-    role: "Systems & AI Developer",
-    organization: "Open Source / Independent Builds",
-    description:
-      "Engineered and maintained open-source systems repositories including SLM (lightweight NLP intent model), Hemlock (firmware-level cryptographic validation in C), Chimera (adversarial AI simulation), and SuperRAG on GitHub.",
-    period: "2024 - Present",
+    title: "The AI-Driven Product Designer",
+    year: "2026",
+    issuer: "Specialization",
+  },
+  {
+    title: "Systems Thinking for Product Designers",
+    year: "2025",
+    issuer: "Professional Certificate",
+  },
+  {
+    title: "Foundations of User Experience (UX) Design",
+    year: "2025",
+    issuer: "Google",
+  },
+  {
+    title: "Visual Elements of User Interface Design",
+    year: "2025",
+    issuer: "California Institute of the Arts",
   },
 ];
 
@@ -41,21 +61,21 @@ export default function WorkHistory() {
       <div className="max-w-5xl mx-auto px-4 sm:px-6">
         {/* Section Header */}
         <div className="mb-14 pb-6 border-b border-border-dim">
-          <div className="text-xs font-mono text-accent-emerald tracking-wider uppercase mb-2">
-            Work history
+          <div className="text-xs font-mono text-[#f9452d] tracking-wider uppercase mb-2">
+            Experience
           </div>
-          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white font-sans">
-            Professional track record & research
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight text-white font-sans">
+            Work <span className="font-serif italic font-normal text-text-primary">history</span>
           </h2>
         </div>
 
         {/* Tabular Work History matching Akash Umang's table layout */}
-        <div className="border border-border-dim rounded-md bg-surface overflow-hidden shadow-xl mb-14">
+        <div className="border border-border-dim rounded-md bg-surface overflow-hidden shadow-xl mb-16">
           {/* Table Header */}
           <div className="hidden md:grid grid-cols-12 gap-4 px-6 py-4 bg-surface-raised border-b border-border-dim text-xs font-mono text-text-muted uppercase tracking-wider font-semibold">
-            <div className="col-span-3">Role & Organization</div>
-            <div className="col-span-7">Description</div>
-            <div className="col-span-2 text-right">Period</div>
+            <div className="col-span-4">Work</div>
+            <div className="col-span-6">Description</div>
+            <div className="col-span-2 text-right">Year</div>
           </div>
 
           {/* Table Rows */}
@@ -63,13 +83,13 @@ export default function WorkHistory() {
             {historyEntries.map((entry, idx) => (
               <div
                 key={idx}
-                className="grid grid-cols-1 md:grid-cols-12 gap-4 p-6 hover:bg-surface-raised/50 transition-colors"
+                className="grid grid-cols-1 md:grid-cols-12 gap-4 p-6 hover:bg-surface-raised/50 transition-colors items-baseline"
               >
-                <div className="md:col-span-3 space-y-1">
-                  <div className="text-base font-bold text-white font-mono">
+                <div className="md:col-span-4 space-y-1">
+                  <div className="text-base font-medium text-white font-sans">
                     {entry.role}
                   </div>
-                  <div className="text-xs font-mono text-accent-cyan">
+                  <div className="text-xs font-mono text-text-muted">
                     {entry.organization}
                   </div>
                   <div className="text-xs font-mono text-text-muted md:hidden pt-1">
@@ -77,7 +97,7 @@ export default function WorkHistory() {
                   </div>
                 </div>
 
-                <div className="md:col-span-7 text-xs sm:text-sm text-text-secondary leading-relaxed font-sans">
+                <div className="md:col-span-6 text-xs sm:text-sm text-text-secondary leading-relaxed font-sans">
                   {entry.description}
                 </div>
 
@@ -89,51 +109,43 @@ export default function WorkHistory() {
           </div>
         </div>
 
-        {/* Honors & Awards Section matching Akash Umang's credentials/certifications */}
+        {/* Certifications Section matching Akash Umang's certifications */}
         <div className="space-y-6">
-          <h3 className="text-xl font-bold text-white font-sans">
-            National Recognitions & Honors
-          </h3>
+          <div className="flex items-center justify-between">
+            <h3 className="text-2xl sm:text-3xl font-medium text-white font-sans">
+              Certifications
+            </h3>
+            <a
+              href="https://www.linkedin.com/in/aadrit-srivastava"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs font-mono text-text-muted hover:text-white flex items-center gap-1 transition-colors"
+            >
+              <span>View on LinkedIn</span>
+              <ArrowUpRight className="w-3.5 h-3.5" />
+            </a>
+          </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <SpotlightCard className="p-6">
-              <div className="flex items-center justify-between mb-2">
-                <div className="text-base font-bold text-white font-mono flex items-center gap-2">
-                  <Award className="w-4 h-4 text-amber-400" />
-                  <span>Manak Inspire Award</span>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {certifications.map((cert, idx) => (
+              <SpotlightCard key={idx} className="p-5 border border-border-dim bg-surface">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-[11px] font-mono text-[#f9452d] uppercase">
+                    {cert.issuer}
+                  </span>
+                  <span className="text-xs font-mono text-text-muted">
+                    {cert.year}
+                  </span>
                 </div>
-                <ShinyBadge dotColor="bg-amber-400" className="text-[10px]">
-                  NATIONAL HONORS
-                </ShinyBadge>
-              </div>
-              <div className="text-xs font-mono text-text-muted mb-2">
-                National Department of Science & Technology
-              </div>
-              <p className="text-xs text-text-secondary leading-relaxed font-sans">
-                Awarded for the Smart Garbage Management System engineering architecture and sensor telemetry design.
-              </p>
-            </SpotlightCard>
-
-            <SpotlightCard className="p-6">
-              <div className="flex items-center justify-between mb-2">
-                <div className="text-base font-bold text-white font-mono flex items-center gap-2">
-                  <Award className="w-4 h-4 text-accent-emerald" />
-                  <span>FOSS United JUST A HACKATHON</span>
+                <div className="text-sm font-medium text-white font-sans leading-snug">
+                  {cert.title}
                 </div>
-                <ShinyBadge dotColor="bg-accent-emerald" className="text-[10px]">
-                  WINNER
-                </ShinyBadge>
-              </div>
-              <div className="text-xs font-mono text-text-muted mb-2">
-                National Open Source Security Competition
-              </div>
-              <p className="text-xs text-text-secondary leading-relaxed font-sans">
-                Recognized for Hemlock: firmware-level defenses in C protecting AI data pipelines from tampering and side-channel leakage.
-              </p>
-            </SpotlightCard>
+              </SpotlightCard>
+            ))}
           </div>
         </div>
       </div>
     </section>
   );
 }
+
