@@ -74,7 +74,7 @@ export default function AboutSection() {
 
                   <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-0.5 sm:gap-2">
                     <span className="text-zinc-500 text-[11px]">Pokédex Region</span>
-                    <span className="text-emerald-700 font-bold">{profile.region} // No. {profile.dexNumber}</span>
+                    <span className="text-emerald-700 font-bold">{profile.region} {"//"} No. {profile.dexNumber}</span>
                   </div>
                 </div>
               </SpotlightCard>

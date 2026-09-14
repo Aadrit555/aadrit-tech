@@ -52,11 +52,12 @@ export default function PrivacyPage() {
               <span>2. Information Collection</span>
             </h2>
             <p>
-              No personal information is collected simply by browsing the site. The only data processed is:
+              No personal information is collected simply by browsing the site. Information processed by this site may include:
             </p>
             <ul className="list-disc list-inside space-y-1.5 pl-2 text-zinc-600 font-mono text-xs">
               <li>Contact Form: Name, email address, subject, and message submitted voluntarily for correspondence.</li>
-              <li>Application-Level Rate Limiting: Client IP addresses processed temporarily in-memory to prevent rapid request bursts.</li>
+              <li>Client Metadata & Security Logging: Client IP address, user-agent string, and timestamp recorded in local security logs to prevent automated abuse and unauthorized access.</li>
+              <li>Application-Level Rate Limiting: Client IP addresses processed temporarily in-memory to throttle excessive request bursts.</li>
             </ul>
           </section>
 
@@ -101,7 +102,7 @@ export default function PrivacyPage() {
             </Link>
             <span>/</span>
             <Link href="/admin/login" className="hover:text-zinc-950 transition-colors">
-              Console
+              Admin
             </Link>
           </div>
 

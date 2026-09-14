@@ -22,11 +22,16 @@ export function middleware(request: NextRequest) {
     }
   }
 
-  // 3. CORS check for API requests
+  // 3. Exact Origin Validation for API requests
   const origin = request.headers.get("origin");
-  const allowedOrigin = process.env.ALLOWED_ORIGIN || "http://localhost:3000";
+  const allowedOrigins = new Set([
+    "https://aadrit.tech",
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    process.env.ALLOWED_ORIGIN,
+  ].filter(Boolean));
 
-  if (pathname.startsWith("/api") && origin && origin !== allowedOrigin && !origin.includes("localhost")) {
+  if (pathname.startsWith("/api") && origin && !allowedOrigins.has(origin)) {
     return NextResponse.json({ error: "CORS policy violation" }, { status: 403 });
   }
 

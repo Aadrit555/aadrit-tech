@@ -46,7 +46,7 @@ export default function NotFound() {
 
             <Link href="/#contact" className="btn-secondary flex items-center gap-2">
               <HelpCircle className="w-3.5 h-3.5" />
-              <span>Report Issue</span>
+              <span>Contact Aadrit</span>
             </Link>
           </div>
         </div>

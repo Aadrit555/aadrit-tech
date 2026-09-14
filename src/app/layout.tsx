@@ -1,13 +1,8 @@
 import type { Metadata } from "next";
 import { Instrument_Serif, Inter } from "next/font/google";
 import "./globals.css";
-import Link from "next/link";
-import { Terminal } from "lucide-react";
-import InteractiveGrid from "@/components/animations/InteractiveGrid";
 import PokemonBackground from "@/components/pokemon/PokemonBackground";
 import GastlyLoadingScreen from "@/components/pokemon/GastlyLoadingScreen";
-import ScrollProgressBar from "@/components/animations/ScrollProgressBar";
-
 import Header from "@/components/navigation/Header";
 
 const instrumentSerif = Instrument_Serif({
@@ -65,6 +60,30 @@ export const metadata: Metadata = {
     locale: "en_US",
     type: "website",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Aadrit | AI/ML & Systems Developer",
+    description:
+      "Computer Science undergraduate at SRM University AP building lightweight machine learning systems in Python and systems software in C.",
+    images: ["/images/aadrit.png"],
+  },
+};
+
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Aadrit",
+  url: "https://aadrit.tech",
+  image: "https://aadrit.tech/images/aadrit.png",
+  jobTitle: "AI/ML & Systems Developer",
+  affiliation: {
+    "@type": "Organization",
+    name: "SRM University AP",
+  },
+  sameAs: [
+    "https://github.com/Aadrit555",
+    "https://linkedin.com/in/aadrit-shrivastava",
+  ],
 };
 
 export default function RootLayout({
@@ -74,6 +93,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${instrumentSerif.variable} ${inter.variable}`}>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+        />
+      </head>
       <body className="bg-transparent text-text-primary min-h-screen flex flex-col font-sans selection:bg-[#f9452d]/15 selection:text-zinc-900 antialiased relative">
         <GastlyLoadingScreen />
         <PokemonBackground />
@@ -85,4 +110,3 @@ export default function RootLayout({
     </html>
   );
 }
-

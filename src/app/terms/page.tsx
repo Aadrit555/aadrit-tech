@@ -98,7 +98,7 @@ export default function TermsPage() {
             </Link>
             <span>/</span>
             <Link href="/admin/login" className="hover:text-zinc-950 transition-colors">
-              Console
+              Admin
             </Link>
           </div>
 

@@ -1,8 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 import { Shield, LogOut, Mail, Clock, Globe, RefreshCw, Terminal, AlertTriangle } from "lucide-react";
 
 interface ContactMessage {
@@ -23,7 +22,7 @@ export default function AdminDashboardPage() {
   const [error, setError] = useState("");
   const router = useRouter();
 
-  const fetchRecords = async () => {
+  const fetchRecords = useCallback(async () => {
     setLoading(true);
     setError("");
     try {
@@ -44,11 +43,11 @@ export default function AdminDashboardPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [router]);
 
   useEffect(() => {
     fetchRecords();
-  }, []);
+  }, [fetchRecords]);
 
   const handleLogout = async () => {
     try {

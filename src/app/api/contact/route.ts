@@ -28,7 +28,16 @@ export async function POST(request: Request) {
     const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "127.0.0.1";
     const userAgent = request.headers.get("user-agent") || "unknown";
 
-    // 1. IP Rate Limiting (Max 5 submissions per 10 minutes)
+    // 1. Payload Size Guard (Max 32KB)
+    const contentLength = request.headers.get("content-length");
+    if (contentLength && parseInt(contentLength, 10) > 32 * 1024) {
+      return NextResponse.json(
+        { error: "Payload exceeds maximum allowed size (32KB)" },
+        { status: 413 }
+      );
+    }
+
+    // 2. IP Rate Limiting (Max 5 submissions per 10 minutes)
     const rateCheck = checkRateLimit(`contact:${ip}`, 5, 10 * 60 * 1000);
     if (!rateCheck.allowed) {
       const waitSeconds = Math.ceil((rateCheck.resetTime - Date.now()) / 1000);
@@ -40,7 +49,7 @@ export async function POST(request: Request) {
       );
     }
 
-    // 2. Parse & Validate Payload
+    // 3. Parse & Validate Payload
     let body: unknown;
     try {
       body = await request.json();

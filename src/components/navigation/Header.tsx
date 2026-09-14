@@ -55,6 +55,16 @@ export default function Header() {
     setMobileMenuOpen(false);
   };
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && mobileMenuOpen) {
+        closeMobileMenu();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [mobileMenuOpen]);
+
   return (
     <header className="sticky top-0 z-40 w-full border-b-2 border-red-800/80 bg-zinc-950/90 text-zinc-100 backdrop-blur-md shadow-md">
       <ScrollProgressBar />
@@ -116,6 +126,7 @@ export default function Header() {
           onClick={toggleMobileMenu}
           aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
           aria-expanded={mobileMenuOpen}
+          aria-controls="mobile-navigation"
           className="md:hidden flex items-center justify-center w-11 h-11 rounded-md text-zinc-300 hover:text-white hover:bg-zinc-800/80 transition-colors focus:outline-none focus:ring-2 focus:ring-red-500"
         >
           {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -124,7 +135,7 @@ export default function Header() {
 
       {/* Mobile Navigation Drawer Dropdown */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-t border-zinc-800 bg-zinc-950/95 backdrop-blur-lg px-4 py-3 space-y-1 shadow-2xl animate-in slide-in-from-top-2 duration-150">
+        <div id="mobile-navigation" className="md:hidden border-t border-zinc-800 bg-zinc-950/95 backdrop-blur-lg px-4 py-3 space-y-1 shadow-2xl animate-in slide-in-from-top-2 duration-150">
           {NAV_ITEMS.map((item) => {
             const isActive = activeSection === item.id;
             return (

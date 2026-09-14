@@ -96,8 +96,7 @@ export default function GastlyLoadingScreen({ onComplete }: GastlyLoadingScreenP
       aria-label="Loading Portfolio"
       aria-busy={!isFading}
       role="status"
-      onClick={finishLoading}
-      className={`fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#c5b6f2] select-none transition-opacity duration-500 ease-out cursor-pointer ${isFading ? "opacity-0 pointer-events-none" : "opacity-100"
+      className={`fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#c5b6f2] select-none transition-opacity duration-500 ease-out ${isFading ? "opacity-0 pointer-events-none" : "opacity-100"
         }`}
     >
       {/* Top Telemetry Header */}
@@ -108,10 +107,7 @@ export default function GastlyLoadingScreen({ onComplete }: GastlyLoadingScreenP
 
       {/* Skip Button */}
       <button
-        onClick={(e) => {
-          e.stopPropagation();
-          finishLoading();
-        }}
+        onClick={finishLoading}
         type="button"
         className="absolute top-4 right-4 sm:top-6 sm:right-6 text-[10px] font-mono tracking-wider text-[#2e2154] hover:text-[#1a1233] bg-[#b49fe2]/70 hover:bg-[#b49fe2] px-3 py-1 rounded border border-[#9a85ce] transition-colors shadow-xs"
         title="Skip intro animation (Esc)"
@@ -124,7 +120,8 @@ export default function GastlyLoadingScreen({ onComplete }: GastlyLoadingScreenP
         <div className="relative w-64 h-52 sm:w-80 sm:h-64 flex items-center justify-center">
           <Image
             src="/images/gastly_loader.gif"
-            alt="Gastly Ghost Animation"
+            alt=""
+            aria-hidden="true"
             width={400}
             height={300}
             priority
