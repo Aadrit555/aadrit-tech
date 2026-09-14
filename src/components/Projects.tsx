@@ -213,11 +213,10 @@ export default function Projects() {
               <button
                 key={tab.key}
                 onClick={() => setActiveFilter(tab.key)}
-                className={`px-3.5 py-1.5 rounded-md text-xs font-mono transition-all cursor-pointer border ${
-                  isActive
+                className={`px-3.5 py-1.5 rounded-md text-xs font-mono transition-all cursor-pointer border ${isActive
                     ? "bg-surface-raised text-white border-border-bright shadow-sm"
                     : "bg-surface/50 text-text-muted hover:text-text-primary border-border-dim hover:border-border-bright"
-                }`}
+                  }`}
               >
                 {tab.label}
               </button>

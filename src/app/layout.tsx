@@ -61,50 +61,48 @@ export default function RootLayout({
         <InteractiveGrid />
         {/* Top Operational Status & Header */}
         <header className="sticky top-0 z-40 w-full border-b border-border-dim bg-background/90 backdrop-blur-md">
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
-            {/* Logo Monogram */}
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+            {/* Brand Logo matching Akash* */}
             <Link
               href="/"
-              className="flex items-center gap-2 text-text-primary hover:text-white font-mono text-sm tracking-tight font-semibold"
+              className="flex items-center text-white font-mono text-base tracking-tight font-bold hover:text-accent-emerald transition-colors"
             >
-              <span className="text-accent-emerald">[</span>
-              <span>AS</span>
-              <span className="text-accent-emerald">]</span>
-              <span className="text-text-secondary text-xs hidden sm:inline">aadrit.dev</span>
+              <span>Aadrit</span>
+              <span className="text-accent-emerald text-lg ml-0.5">*</span>
             </Link>
 
-            {/* Navigation Links */}
-            <nav className="flex items-center gap-1 sm:gap-2 text-xs font-mono">
+            {/* Navigation Links matching Akash's menu */}
+            <nav className="flex items-center gap-1 sm:gap-4 text-xs font-mono">
               <Link
-                href="/#projects"
-                className="px-2.5 py-1.5 rounded text-text-secondary hover:text-text-primary hover:bg-surface transition-colors"
+                href="/#work"
+                className="px-2.5 py-1.5 text-text-secondary hover:text-white transition-colors"
               >
-                Projects
+                Work
+              </Link>
+              <Link
+                href="/#about"
+                className="px-2.5 py-1.5 text-text-secondary hover:text-white transition-colors"
+              >
+                About me
               </Link>
               <Link
                 href="/#experience"
-                className="px-2.5 py-1.5 rounded text-text-secondary hover:text-text-primary hover:bg-surface transition-colors"
+                className="px-2.5 py-1.5 text-text-secondary hover:text-white transition-colors"
               >
                 Experience
               </Link>
               <Link
-                href="/#skills"
-                className="px-2.5 py-1.5 rounded text-text-secondary hover:text-text-primary hover:bg-surface transition-colors"
-              >
-                Skills
-              </Link>
-              <Link
                 href="/#terminal"
-                className="px-2.5 py-1.5 rounded text-text-secondary hover:text-text-primary hover:bg-surface transition-colors hidden md:inline-flex items-center gap-1"
+                className="px-2.5 py-1.5 text-text-secondary hover:text-white transition-colors hidden sm:inline-flex items-center gap-1"
               >
                 <Terminal className="w-3.5 h-3.5" />
-                Terminal
+                <span>Terminal</span>
               </Link>
               <Link
                 href="/#contact"
-                className="ml-2 px-3 py-1.5 rounded-md border border-border-bright bg-surface text-text-primary hover:bg-surface-raised transition-colors"
+                className="ml-2 px-3.5 py-1.5 rounded-md bg-zinc-100 text-zinc-900 hover:bg-white font-medium transition-all shadow-sm"
               >
-                Contact
+                Say Hi!
               </Link>
             </nav>
           </div>
@@ -112,37 +110,6 @@ export default function RootLayout({
 
         {/* Main Content Area */}
         <main className="flex-1">{children}</main>
-
-        {/* Hardened Minimal Footer */}
-        <footer className="w-full border-t border-border-dim bg-surface py-8 text-xs font-mono text-text-muted">
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div className="flex items-center gap-3">
-              <span className="inline-block w-2 h-2 rounded-full bg-accent-emerald animate-pulse"></span>
-              <span>System Status: Fully Operational</span>
-              <span className="text-border-bright">|</span>
-              <span>TLS 1.3 / HSTS / CSP Enabled</span>
-            </div>
-
-            <div className="flex items-center gap-4 text-text-secondary">
-              <Link href="/privacy" className="hover:text-text-primary transition-colors">
-                Privacy Policy
-              </Link>
-              <span>/</span>
-              <Link href="/terms" className="hover:text-text-primary transition-colors">
-                Terms of Use
-              </Link>
-              <span>/</span>
-              <Link href="/admin/login" className="hover:text-text-primary transition-colors flex items-center gap-1">
-                <Shield className="w-3 h-3" />
-                Console
-              </Link>
-            </div>
-
-            <div className="text-text-muted">
-              (c) {new Date().getFullYear()} Aadrit Srivastava. All rights reserved.
-            </div>
-          </div>
-        </footer>
       </body>
     </html>
   );

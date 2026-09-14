@@ -39,7 +39,7 @@ export default function NotFound() {
               <span>Return to Workstation</span>
             </Link>
 
-            <Link href="/#projects" className="btn-secondary flex items-center gap-2">
+            <Link href="/#work" className="btn-secondary flex items-center gap-2">
               <Terminal className="w-3.5 h-3.5" />
               <span>Inspect Projects</span>
             </Link>

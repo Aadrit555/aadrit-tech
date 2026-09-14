@@ -89,6 +89,29 @@ export default function TermsPage() {
             </p>
           </section>
         </div>
+
+        {/* Bottom Legal Navigation */}
+        <div className="mt-16 pt-8 border-t border-border-dim flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-text-muted">
+          <Link
+            href="/"
+            className="text-text-secondary hover:text-white transition-colors flex items-center gap-1.5"
+          >
+            <ArrowLeft className="w-3.5 h-3.5" />
+            <span>Return to Workstation</span>
+          </Link>
+
+          <div className="flex items-center gap-4 text-text-secondary">
+            <Link href="/privacy" className="hover:text-white transition-colors">
+              Privacy Policy
+            </Link>
+            <span>/</span>
+            <Link href="/admin/login" className="hover:text-white transition-colors">
+              Console
+            </Link>
+          </div>
+
+          <div>(c) {new Date().getFullYear()} Aadrit. All rights reserved.</div>
+        </div>
       </div>
     </div>
   );

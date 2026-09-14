@@ -72,8 +72,8 @@ export default function Hero() {
 
             {/* Precise, non-vague description from resume */}
             <p className="text-sm sm:text-base text-text-secondary leading-relaxed max-w-2xl">
-              Building working AI/ML systems and low-level software: lightweight NLP intent-classification models, 
-              adversarial simulation frameworks with continuous learning agents, and firmware-level cryptographic 
+              Building working AI/ML systems and low-level software: lightweight NLP intent-classification models,
+              adversarial simulation frameworks with continuous learning agents, and firmware-level cryptographic
               defenses in C. Focused on systems, information retrieval, and resource-constrained edge execution.
             </p>
 

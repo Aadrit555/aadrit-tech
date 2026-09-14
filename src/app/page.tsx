@@ -1,20 +1,19 @@
-import Hero from "@/components/Hero";
-import Projects from "@/components/Projects";
-import Experience from "@/components/Experience";
-import Skills from "@/components/Skills";
+import HeroSection from "@/components/akash-style/HeroSection";
+import SelectedWork from "@/components/akash-style/SelectedWork";
+import AboutSection from "@/components/akash-style/AboutSection";
+import WorkHistory from "@/components/akash-style/WorkHistory";
 import TerminalConsole from "@/components/TerminalConsole";
-import ContactSection from "@/components/ContactSection";
+import FooterCta from "@/components/akash-style/FooterCta";
 
 export default function Home() {
   return (
     <div className="space-y-0">
-      <Hero />
-      <Projects />
-      <Experience />
-      <Skills />
+      <HeroSection />
+      <SelectedWork />
+      <AboutSection />
+      <WorkHistory />
       <TerminalConsole />
-      <ContactSection />
+      <FooterCta />
     </div>
   );
 }
-
