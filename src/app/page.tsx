@@ -3,6 +3,7 @@ import SelectedWork from "@/components/akash-style/SelectedWork";
 import AboutSection from "@/components/akash-style/AboutSection";
 import WorkHistory from "@/components/akash-style/WorkHistory";
 import TerminalConsole from "@/components/TerminalConsole";
+import ArcadeSection from "@/components/game/ArcadeSection";
 import FooterCta from "@/components/akash-style/FooterCta";
 
 export default function Home() {
@@ -13,6 +14,7 @@ export default function Home() {
       <WorkHistory />
       <AboutSection />
       <TerminalConsole />
+      <ArcadeSection />
       <FooterCta />
     </div>
   );

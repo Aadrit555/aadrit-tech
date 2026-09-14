@@ -136,9 +136,8 @@ export default function HeroSection() {
               >
                 <div className="w-3.5 h-3.5 rounded-full bg-white/70 absolute top-1.5 left-2 blur-[0.3px]" />
                 <span
-                  className={`w-2 h-2 rounded-full bg-cyan-200 ${
-                    audioMode !== "idle" ? "animate-ping opacity-100" : "animate-pulse opacity-75"
-                  }`}
+                  className={`w-2 h-2 rounded-full bg-cyan-200 ${audioMode !== "idle" ? "animate-ping opacity-100" : "animate-pulse opacity-75"
+                    }`}
                 />
               </div>
 
@@ -268,15 +267,14 @@ export default function HeroSection() {
                       {focusAreas.map((area) => (
                         <div key={area.id} className="flex flex-col">
                           <span
-                            className={`font-bold ${
-                              area.id === "systems"
+                            className={`font-bold ${area.id === "systems"
                                 ? "text-emerald-700"
                                 : area.id === "ml"
                                   ? "text-cyan-700"
                                   : area.id === "security"
                                     ? "text-amber-700"
                                     : "text-zinc-700"
-                            }`}
+                              }`}
                           >
                             {area.title}
                           </span>
@@ -325,13 +323,12 @@ export default function HeroSection() {
                       <div className="p-1.5 rounded bg-zinc-100 border border-zinc-200 text-[10px] font-mono text-zinc-700 flex items-center justify-between gap-2">
                         <div className="flex items-center gap-1.5 min-w-0">
                           <span
-                            className={`w-2 h-2 rounded-full flex-shrink-0 ${
-                              audioMode === "voice"
+                            className={`w-2 h-2 rounded-full flex-shrink-0 ${audioMode === "voice"
                                 ? "bg-emerald-500 animate-ping"
                                 : audioMode === "cry"
                                   ? "bg-amber-500 animate-ping"
                                   : "bg-emerald-500"
-                            }`}
+                              }`}
                           />
                           <span className="font-bold truncate text-zinc-800">
                             {audioMode === "voice"
@@ -343,19 +340,16 @@ export default function HeroSection() {
                         </div>
                         <div className="flex items-end gap-0.5 h-3 flex-shrink-0" title="Audio Spectrum">
                           <span
-                            className={`w-0.5 bg-emerald-600 rounded-xs transition-all duration-150 ${
-                              audioMode !== "idle" ? "h-3 animate-pulse" : "h-1"
-                            }`}
+                            className={`w-0.5 bg-emerald-600 rounded-xs transition-all duration-150 ${audioMode !== "idle" ? "h-3 animate-pulse" : "h-1"
+                              }`}
                           />
                           <span
-                            className={`w-0.5 bg-emerald-600 rounded-xs transition-all duration-150 delay-75 ${
-                              audioMode !== "idle" ? "h-2 animate-pulse" : "h-1.5"
-                            }`}
+                            className={`w-0.5 bg-emerald-600 rounded-xs transition-all duration-150 delay-75 ${audioMode !== "idle" ? "h-2 animate-pulse" : "h-1.5"
+                              }`}
                           />
                           <span
-                            className={`w-0.5 bg-emerald-600 rounded-xs transition-all duration-150 delay-150 ${
-                              audioMode !== "idle" ? "h-3.5 animate-pulse" : "h-1"
-                            }`}
+                            className={`w-0.5 bg-emerald-600 rounded-xs transition-all duration-150 delay-150 ${audioMode !== "idle" ? "h-3.5 animate-pulse" : "h-1"
+                              }`}
                           />
                         </div>
                       </div>
@@ -364,11 +358,10 @@ export default function HeroSection() {
                         <button
                           type="button"
                           onClick={playDexVoice}
-                          className={`pokedex-btn-action flex items-center justify-center gap-1 text-[11px] py-2 px-1.5 font-mono transition-colors cursor-pointer ${
-                            audioMode === "voice"
+                          className={`pokedex-btn-action flex items-center justify-center gap-1 text-[11px] py-2 px-1.5 font-mono transition-colors cursor-pointer ${audioMode === "voice"
                               ? "bg-emerald-600 text-white border-emerald-400 font-bold"
                               : "bg-zinc-900 hover:bg-zinc-800 text-emerald-400 border border-emerald-500/50"
-                          }`}
+                            }`}
                           title="Play Pokédex voice entry"
                         >
                           {audioMode === "voice" ? (
@@ -382,11 +375,10 @@ export default function HeroSection() {
                         <button
                           type="button"
                           onClick={playRayquazaCry}
-                          className={`pokedex-btn-action flex items-center justify-center gap-1 text-[11px] py-2 px-1.5 font-mono transition-colors cursor-pointer ${
-                            audioMode === "cry"
+                          className={`pokedex-btn-action flex items-center justify-center gap-1 text-[11px] py-2 px-1.5 font-mono transition-colors cursor-pointer ${audioMode === "cry"
                               ? "bg-amber-600 text-white border-amber-400 font-bold"
                               : "bg-zinc-900 hover:bg-zinc-800 text-amber-400 border border-amber-500/50"
-                          }`}
+                            }`}
                           title="Play Rayquaza cry (No. 384)"
                         >
                           {audioMode === "cry" ? (

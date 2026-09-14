@@ -45,7 +45,7 @@ export default function GastlyLoadingScreen({ onComplete }: GastlyLoadingScreenP
     ) {
       try {
         sessionStorage.setItem("hasSeenIntro", "true");
-      } catch {}
+      } catch { }
       setLoading(false);
       if (onComplete) onComplete();
       return;
@@ -97,9 +97,8 @@ export default function GastlyLoadingScreen({ onComplete }: GastlyLoadingScreenP
       aria-busy={!isFading}
       role="status"
       onClick={finishLoading}
-      className={`fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#c5b6f2] select-none transition-opacity duration-500 ease-out cursor-pointer ${
-        isFading ? "opacity-0 pointer-events-none" : "opacity-100"
-      }`}
+      className={`fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#c5b6f2] select-none transition-opacity duration-500 ease-out cursor-pointer ${isFading ? "opacity-0 pointer-events-none" : "opacity-100"
+        }`}
     >
       {/* Top Telemetry Header */}
       <div className="absolute top-4 left-4 sm:top-6 sm:left-6 flex items-center gap-2 font-mono text-xs text-[#2e2154]">

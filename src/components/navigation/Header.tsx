@@ -10,6 +10,7 @@ const NAV_ITEMS = [
   { label: "Experience", href: "#experience", id: "experience" },
   { label: "About", href: "#about", id: "about" },
   { label: "Terminal", href: "#terminal", id: "terminal", icon: true },
+  { label: "Arcade", href: "#arcade", id: "arcade" },
 ];
 
 export default function Header() {
@@ -17,7 +18,7 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    const sectionIds = ["work", "experience", "about", "terminal", "contact"];
+    const sectionIds = ["work", "experience", "about", "terminal", "arcade", "contact"];
 
     const observerCallback = (entries: IntersectionObserverEntry[]) => {
       const visible = entries.find((entry) => entry.isIntersecting);
@@ -81,11 +82,10 @@ export default function Header() {
               <a
                 key={item.id}
                 href={item.href}
-                className={`px-2.5 py-1.5 rounded-md transition-all font-medium flex items-center gap-1.5 ${
-                  isActive
-                    ? "text-white bg-zinc-800/90 border border-zinc-700 shadow-2xs font-semibold"
-                    : "text-zinc-300 hover:text-white hover:bg-zinc-800/60"
-                }`}
+                className={`px-2.5 py-1.5 rounded-md transition-all font-medium flex items-center gap-1.5 ${isActive
+                  ? "text-white bg-zinc-800/90 border border-zinc-700 shadow-2xs font-semibold"
+                  : "text-zinc-300 hover:text-white hover:bg-zinc-800/60"
+                  }`}
               >
                 {isActive && (
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
@@ -98,11 +98,10 @@ export default function Header() {
 
           <a
             href="#contact"
-            className={`ml-1.5 px-3.5 py-1.5 rounded-md text-white font-bold transition-all shadow-sm border border-red-400 text-xs flex items-center gap-1.5 ${
-              activeSection === "contact"
-                ? "bg-[#b91c1c] ring-2 ring-red-400"
-                : "bg-[#dc2626] hover:bg-[#b91c1c]"
-            }`}
+            className={`ml-1.5 px-3.5 py-1.5 rounded-md text-white font-bold transition-all shadow-sm border border-red-400 text-xs flex items-center gap-1.5 ${activeSection === "contact"
+              ? "bg-[#b91c1c] ring-2 ring-red-400"
+              : "bg-[#dc2626] hover:bg-[#b91c1c]"
+              }`}
           >
             {activeSection === "contact" && (
               <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
@@ -133,11 +132,10 @@ export default function Header() {
                 key={item.id}
                 href={item.href}
                 onClick={closeMobileMenu}
-                className={`flex items-center justify-between px-4 py-3 rounded-lg text-sm font-mono transition-colors min-h-[44px] ${
-                  isActive
-                    ? "text-white bg-zinc-800/90 font-bold border border-zinc-700"
-                    : "text-zinc-300 hover:text-white hover:bg-zinc-800/60"
-                }`}
+                className={`flex items-center justify-between px-4 py-3 rounded-lg text-sm font-mono transition-colors min-h-[44px] ${isActive
+                  ? "text-white bg-zinc-800/90 font-bold border border-zinc-700"
+                  : "text-zinc-300 hover:text-white hover:bg-zinc-800/60"
+                  }`}
               >
                 <div className="flex items-center gap-2">
                   {item.icon && <Terminal className="w-4 h-4 text-accent-emerald" />}
@@ -164,3 +162,4 @@ export default function Header() {
     </header>
   );
 }
+
