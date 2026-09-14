@@ -96,10 +96,6 @@ export default function TermsPage() {
             <Link href="/privacy" className="hover:text-zinc-950 transition-colors">
               Privacy Policy
             </Link>
-            <span>/</span>
-            <Link href="/admin/login" className="hover:text-zinc-950 transition-colors">
-              Admin
-            </Link>
           </div>
 
           <div>(c) {new Date().getFullYear()} Aadrit. All rights reserved.</div>

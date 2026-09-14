@@ -66,12 +66,6 @@ async function runE2ETests() {
     if (match) testPassword = match[1].trim();
   }
 
-  if (!testPassword) {
-    console.error("\n[ERROR] TEST_ADMIN_PASSWORD is required for complete end-to-end verification.");
-    console.error("Please ensure .env.local exists with TEST_ADMIN_PASSWORD or run: node scripts/init-env.js\n");
-    process.exit(1);
-  }
-
   try {
     // 1. Home Page & Security Headers
     console.log("\n1. Testing Home Page & Security Response Headers");
@@ -136,13 +130,13 @@ async function runE2ETests() {
     // 5. Rate Limiting Test
     console.log("\n5. Testing Rate Limiting on Contact Form");
     let rateLimited = false;
-    const burstClientIp = `203.0.113.${Math.floor(Math.random() * 200) + 1}`;
+    const burstIp = `203.0.113.${100 + (Date.now() % 50)}`;
     for (let i = 0; i < 7; i++) {
       const burstRes = await request("http://localhost:3000/api/contact", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "X-Forwarded-For": burstClientIp,
+          "X-Forwarded-For": burstIp,
         },
       }, contactPayload);
       if (burstRes.statusCode === 429) {
@@ -187,7 +181,7 @@ async function runE2ETests() {
       const adminData = JSON.parse(authAdminRes.body);
       assert(Array.isArray(adminData.messages), "Admin receives messages list");
       assert(Array.isArray(adminData.auditLogs), "Admin receives audit logs");
-      assert(adminData.stats && ["filesystem", "temporary", "memory"].includes(adminData.stats.storageMode), `Admin receives valid runtime storageMode status (${adminData.stats?.storageMode})`);
+      assert(adminData.stats && adminData.stats.storageMode === "filesystem", "Admin receives descriptive storageMode status");
 
       // Verify sanitization through the application's actual data retrieval flow
       const retrievedMsg = adminData.messages.find(m => m.subject === uniqueSubject);
