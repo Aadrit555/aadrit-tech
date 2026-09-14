@@ -74,8 +74,8 @@ export const focusAreas: FocusArea[] = [
   {
     id: "systems",
     title: "Systems",
-    subtitle: "C · Embedded · Memory",
-    description: "Low-level C code for perceptual hashing, cryptographic verification, and memory safety.",
+    subtitle: "C · Embedded · Low-level",
+    description: "Low-level C systems code for image processing, cryptographic verification, and embedded work.",
   },
   {
     id: "ml",
@@ -85,9 +85,9 @@ export const focusAreas: FocusArea[] = [
   },
   {
     id: "security",
-    title: "Security",
-    subtitle: "Perceptual Hash · Signatures · Integrity",
-    description: "Cryptographic checks, perceptual hashing, and tamper detection algorithms.",
+    title: "Security & Integrity",
+    subtitle: "ECDSA · Perceptual Hash · Provenance",
+    description: "Cryptographic verification, perceptual hashing, and tamper detection algorithms.",
   },
   {
     id: "oss",
@@ -102,7 +102,7 @@ export const projects: Project[] = [
     id: "slm",
     tmNumber: "TM-01",
     category: "Machine Learning & PyTorch",
-    title: "SLM (Character-Level Intent Model)",
+    title: "DidSomethinSLM (Character-Level Intent Model)",
     description:
       "A lightweight character-level intent model built from scratch in Python, using self-attention and REINFORCE to map text inputs to discrete actions.",
     bullets: [
@@ -125,9 +125,9 @@ export const projects: Project[] = [
     title: "Hemlock (Adversarial Image Defense & Provenance)",
     awardBadge: "FOSS United JUST A HACKATHON Winner · 2024",
     description:
-      "A C-based image protection and verification system combining perceptual hashing, RSA signatures, and adversarial pixel perturbation to detect modification and establish file provenance.",
+      "A C-based image protection and verification system combining perceptual hashing, ECDSA signatures, and adversarial pixel perturbation to detect modification and establish file provenance.",
     bullets: [
-      "Wrote core C modules for perceptual hashing and RSA signature verification.",
+      "Wrote core C modules for perceptual hashing and ECDSA signature verification.",
       "Applied subtle adversarial pixel perturbations to defend visual assets against automated alteration.",
       "Recognized as a winning project at FOSS United JUST A HACKATHON 2024.",
     ],
@@ -135,7 +135,7 @@ export const projects: Project[] = [
     technicalDetails: [
       { value: "Winner", label: "FOSS United Hackathon" },
       { value: "C Lang", label: "Core Algorithms" },
-      { value: "RSA + pHash", label: "Tamper Detection" },
+      { value: "ECDSA + pHash", label: "Tamper Detection" },
     ],
     githubUrl: "https://github.com/Aadrit555/Hemlock",
   },
@@ -240,7 +240,7 @@ export const academicAndHonors: HonorItem[] = [
     role: "FOSS United",
     period: "2024",
     description:
-      "Winning project at FOSS United JUST A HACKATHON 2024 for C systems implementation.",
+      "Winning project at FOSS United JUST A HACKATHON 2024 for media integrity and tamper detection.",
   },
 ];
 

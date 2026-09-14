@@ -41,6 +41,15 @@ const DATA_DIR = resolveDataDir();
 const MESSAGES_FILE = path.join(DATA_DIR, "messages.json");
 const AUDIT_FILE = path.join(DATA_DIR, "audit.log");
 
+export type StorageMode = "filesystem" | "temporary" | "memory";
+
+export function getStorageMode(): StorageMode {
+  const localDir = path.join(process.cwd(), "data");
+  if (DATA_DIR === localDir) return "filesystem";
+  if (DATA_DIR.includes("portfolio-data") || DATA_DIR === os.tmpdir()) return "temporary";
+  return "memory";
+}
+
 // In-memory buffer fallback for environments with transient storage limits
 const memoryMessages: ContactMessage[] = [];
 const memoryAudit: string[] = [];

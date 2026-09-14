@@ -129,17 +129,19 @@ export default function HeroSection() {
         <div className="pokedex-chassis rounded-2xl p-3 sm:p-5 relative">
           <div className="flex items-center justify-between px-2 sm:px-3 pt-1 pb-3 border-b-2 border-red-900/60">
             <div className="flex items-center gap-3">
-              <div
-                className="w-10 h-10 sm:w-12 sm:h-12 rounded-full pokedex-optic-lens relative flex items-center justify-center flex-shrink-0 cursor-pointer transition-transform hover:scale-105"
+              <button
+                type="button"
+                className="w-10 h-10 sm:w-12 sm:h-12 rounded-full pokedex-optic-lens relative flex items-center justify-center flex-shrink-0 cursor-pointer transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-cyan-300"
                 onClick={audioMode === "idle" ? playDexVoice : stopAudio}
                 title="Pokédex Optical Sensor (Click to Scan & Readout)"
+                aria-label="Pokédex Optical Sensor (Click to Scan & Readout)"
               >
                 <div className="w-3.5 h-3.5 rounded-full bg-white/70 absolute top-1.5 left-2 blur-[0.3px]" />
                 <span
                   className={`w-2 h-2 rounded-full bg-cyan-200 ${audioMode !== "idle" ? "animate-ping opacity-100" : "animate-pulse opacity-75"
                     }`}
                 />
-              </div>
+              </button>
 
               <div className="flex items-center gap-2">
                 <div className="w-3.5 h-3.5 rounded-full pokedex-led-red animate-pulse" title="System Power" />
@@ -224,12 +226,12 @@ export default function HeroSection() {
                       {focusAreas.map((area) => (
                         <div key={area.id} className="p-2 rounded bg-zinc-100/90 border border-zinc-200/80">
                           <span className={`font-bold block ${area.id === "systems"
-                              ? "text-emerald-700"
-                              : area.id === "ml"
-                                ? "text-cyan-700"
-                                : area.id === "security"
-                                  ? "text-amber-700"
-                                  : "text-zinc-700"
+                            ? "text-emerald-700"
+                            : area.id === "ml"
+                              ? "text-cyan-700"
+                              : area.id === "security"
+                                ? "text-amber-700"
+                                : "text-zinc-700"
                             }`}>
                             {area.title}
                           </span>

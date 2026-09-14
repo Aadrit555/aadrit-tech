@@ -66,6 +66,12 @@ async function runE2ETests() {
     if (match) testPassword = match[1].trim();
   }
 
+  if (!testPassword) {
+    console.error("\n[ERROR] TEST_ADMIN_PASSWORD is required for complete end-to-end verification.");
+    console.error("Please ensure .env.local exists with TEST_ADMIN_PASSWORD or run: node scripts/init-env.js\n");
+    process.exit(1);
+  }
+
   try {
     // 1. Home Page & Security Headers
     console.log("\n1. Testing Home Page & Security Response Headers");
@@ -181,7 +187,7 @@ async function runE2ETests() {
       const adminData = JSON.parse(authAdminRes.body);
       assert(Array.isArray(adminData.messages), "Admin receives messages list");
       assert(Array.isArray(adminData.auditLogs), "Admin receives audit logs");
-      assert(adminData.stats && adminData.stats.storageMode === "filesystem", "Admin receives descriptive storageMode status");
+      assert(adminData.stats && ["filesystem", "temporary", "memory"].includes(adminData.stats.storageMode), `Admin receives valid runtime storageMode status (${adminData.stats?.storageMode})`);
 
       // Verify sanitization through the application's actual data retrieval flow
       const retrievedMsg = adminData.messages.find(m => m.subject === uniqueSubject);

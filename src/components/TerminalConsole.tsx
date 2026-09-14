@@ -22,7 +22,7 @@ export default function TerminalConsole() {
       command: "welcome",
       output: [
         "DEVON CORP. HOENN POKÉDEX DIAGNOSTICS [v3.0-emerald]",
-        `${profile.name} :: ${profile.role} Register`,
+        `${profile.name} :: ${profile.role}`,
         "Type 'help' to inspect system commands or click quick actions below.",
       ],
     },
@@ -195,7 +195,7 @@ export default function TerminalConsole() {
         <div className="text-center mb-8 p-6 sm:p-8 bg-white/85 backdrop-blur-md border border-white/70 rounded-2xl shadow-md">
           <div className="text-xs font-mono text-[#dc2626] tracking-wider uppercase mb-2 font-bold flex items-center justify-center gap-2">
             <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
-            <span>Devon Corp. Diagnostics // Pokédex Firmware REPL</span>
+            <span>Devon Corp. Diagnostics // Pokédex Terminal</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-normal tracking-tight text-zinc-950 font-sans">
             System & <span className="font-serif italic font-normal text-zinc-600">command console</span>

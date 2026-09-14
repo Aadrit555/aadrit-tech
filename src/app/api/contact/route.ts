@@ -75,7 +75,7 @@ export async function POST(request: Request) {
     return NextResponse.json({
       success: true,
       messageId: saved.id,
-      message: "Message received securely. I will respond to your inquiry directly.",
+      message: "Message received. I'll respond directly. Thank you.",
     });
   } catch {
     return NextResponse.json(

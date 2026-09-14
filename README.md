@@ -11,10 +11,10 @@
 ## Overview
 
 A responsive personal engineering portfolio featuring:
-- **Pokédex Interface**: Hoenn Devon Corp. OS design system with glassmorphic cards, custom Pokeball cursor, and interactive sound synthesis.
-- **Selected Systems & Experiments**: Detailed writeups of machine learning intent models (SLM), C image defense and provenance (Hemlock), multi-agent simulations (Chimera), and modular search pipelines (SuperRAG).
+- **Pokédex Interface**: Hoenn Devon Corp. OS design system with glassmorphic cards, custom Pokeball cursor, and Pokédex-inspired audio with browser speech synthesis fallback.
+- **Selected Systems & Experiments**: Detailed writeups of machine learning intent models (DidSomethinSLM), C image defense and provenance (Hemlock with ECDSA and perceptual hashing), multi-agent simulations (Chimera), and modular search pipelines (SuperRAG).
 - **Interactive Terminal Console**: Client-side command shell with built-in commands (`whoami`, `projects`, `skills`, `experience`, `security`, `contact`).
-- **Implemented Security Controls**: Server-side input validation via Zod, HMAC-SHA256 signed session tokens, security response headers (CSP, HSTS, X-Frame-Options, nosniff), and request rate limiting.
+- **Implemented Security Controls**: Server-side input validation via Zod, HMAC-SHA256 signed session tokens, configured security headers (CSP, HSTS, X-Frame-Options, nosniff), and application-level request rate limiting.
 
 ---
 

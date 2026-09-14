@@ -82,44 +82,45 @@ export default function RootLayout({
             {/* Pokédex Brand & Sensor Array */}
             <Link
               href="/"
-              className="flex items-center gap-2 text-zinc-100 font-mono text-sm sm:text-base tracking-tight font-bold hover:opacity-90 transition-opacity"
+              className="flex items-center gap-1 sm:gap-2 text-zinc-100 font-mono text-xs sm:text-base tracking-tight font-bold hover:opacity-90 transition-opacity flex-shrink-0"
             >
-              <div className="flex items-center gap-1.5">
-                <span className="w-3.5 h-3.5 rounded-full bg-cyan-400 border border-white shadow-[0_0_8px_rgba(6,182,212,0.8)] animate-pulse" />
-                <span className="w-2 h-2 rounded-full bg-red-500" />
-                <span className="w-2 h-2 rounded-full bg-amber-400" />
-                <span className="w-2 h-2 rounded-full bg-emerald-500" />
+              <div className="flex items-center gap-1">
+                <span className="w-3 h-3 sm:w-3.5 sm:h-3.5 rounded-full bg-cyan-400 border border-white shadow-[0_0_8px_rgba(6,182,212,0.8)] animate-pulse" />
+                <span className="w-1.5 h-1.5 rounded-full bg-red-500 hidden sm:inline-block" />
+                <span className="w-1.5 h-1.5 rounded-full bg-amber-400 hidden sm:inline-block" />
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 hidden sm:inline-block" />
               </div>
-              <span className="ml-1 text-white font-mono tracking-wider">POKÉDEX</span>
-              <span className="text-[#f9452d] text-lg -ml-1 font-sans">*</span>
-              <span className="text-[10px] font-mono text-zinc-400 hidden sm:inline px-1.5 py-0.5 rounded bg-zinc-800 border border-zinc-700">
+              <span className="text-white font-mono tracking-wider text-xs sm:text-sm">POKÉDEX</span>
+              <span className="text-[#f9452d] text-base sm:text-lg -ml-1 font-sans">*</span>
+              <span className="text-[10px] font-mono text-zinc-400 hidden md:inline px-1.5 py-0.5 rounded bg-zinc-800 border border-zinc-700">
                 HOENN v3.0
               </span>
             </Link>
 
             {/* Conventional Section Navigation */}
-            <nav className="flex items-center gap-1 sm:gap-2 text-xs font-mono">
+            <nav className="flex items-center gap-0.5 sm:gap-1.5 text-[11px] sm:text-xs font-mono">
               <Link
                 href="/#work"
-                className="px-2 py-1 text-zinc-300 hover:text-white hover:bg-zinc-800/80 rounded transition-colors font-medium"
+                className="px-1.5 sm:px-2 py-1 text-zinc-300 hover:text-white hover:bg-zinc-800/80 rounded transition-colors font-medium"
               >
                 Work
               </Link>
               <Link
                 href="/#experience"
-                className="px-2 py-1 text-zinc-300 hover:text-white hover:bg-zinc-800/80 rounded transition-colors font-medium"
+                className="px-1.5 sm:px-2 py-1 text-zinc-300 hover:text-white hover:bg-zinc-800/80 rounded transition-colors font-medium"
               >
-                Experience
+                <span className="hidden sm:inline">Experience</span>
+                <span className="sm:hidden">Exp</span>
               </Link>
               <Link
                 href="/#about"
-                className="px-2 py-1 text-zinc-300 hover:text-white hover:bg-zinc-800/80 rounded transition-colors font-medium"
+                className="px-1.5 sm:px-2 py-1 text-zinc-300 hover:text-white hover:bg-zinc-800/80 rounded transition-colors font-medium"
               >
                 About
               </Link>
               <Link
                 href="/#terminal"
-                className="px-2 py-1 text-zinc-300 hover:text-white hover:bg-zinc-800/80 rounded transition-colors hidden sm:inline-flex items-center gap-1"
+                className="px-2 py-1 text-zinc-300 hover:text-white hover:bg-zinc-800/80 rounded transition-colors hidden md:inline-flex items-center gap-1"
                 title="Pokédex System Terminal"
               >
                 <Terminal className="w-3.5 h-3.5 text-accent-emerald" />
@@ -127,7 +128,7 @@ export default function RootLayout({
               </Link>
               <Link
                 href="/#contact"
-                className="ml-1 px-3 py-1 rounded-md bg-[#dc2626] hover:bg-[#b91c1c] text-white font-bold transition-all shadow-sm border border-red-400"
+                className="ml-0.5 sm:ml-1 px-2.5 sm:px-3 py-1 rounded-md bg-[#dc2626] hover:bg-[#b91c1c] text-white font-bold transition-all shadow-sm border border-red-400 text-[11px] sm:text-xs"
               >
                 Contact
               </Link>

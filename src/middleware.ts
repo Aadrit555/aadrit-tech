@@ -4,18 +4,7 @@ import type { NextRequest } from "next/server";
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // 1. Path Traversal & Probing Defense
-  if (
-    pathname.includes("..") ||
-    pathname.includes(".env") ||
-    pathname.includes(".git") ||
-    pathname.toLowerCase().endsWith(".php") ||
-    pathname.includes("/eval")
-  ) {
-    return new NextResponse("Access Denied", { status: 403 });
-  }
-
-  // 2. Route Protection for Admin UI (/admin except /admin/login)
+  // 1. Route Protection for Admin UI (/admin except /admin/login)
   if (pathname.startsWith("/admin") && pathname !== "/admin/login") {
     const sessionCookie = request.cookies.get("session_token");
     if (!sessionCookie?.value) {
@@ -25,7 +14,7 @@ export function middleware(request: NextRequest) {
     }
   }
 
-  // 3. API Protection for Admin Endpoints (/api/admin/*)
+  // 2. API Protection for Admin Endpoints (/api/admin/*)
   if (pathname.startsWith("/api/admin")) {
     const sessionCookie = request.cookies.get("session_token");
     if (!sessionCookie?.value) {
@@ -33,7 +22,7 @@ export function middleware(request: NextRequest) {
     }
   }
 
-  // 5. CORS check for API requests
+  // 3. CORS check for API requests
   const origin = request.headers.get("origin");
   const allowedOrigin = process.env.ALLOWED_ORIGIN || "http://localhost:3000";
 
@@ -41,17 +30,7 @@ export function middleware(request: NextRequest) {
     return NextResponse.json({ error: "CORS policy violation" }, { status: 403 });
   }
 
-  const response = NextResponse.next();
-
-  // 6. Security Headers Injection
-  response.headers.set("X-DNS-Prefetch-Control", "on");
-  response.headers.set("Strict-Transport-Security", "max-age=63072000; includeSubDomains; preload");
-  response.headers.set("X-Frame-Options", "DENY");
-  response.headers.set("X-Content-Type-Options", "nosniff");
-  response.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
-  response.headers.set("Permissions-Policy", "camera=(), microphone=(), geolocation=(), browsing-topics=()");
-
-  return response;
+  return NextResponse.next();
 }
 
 export const config = {

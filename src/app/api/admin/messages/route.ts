@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { verifySessionToken } from "@/lib/security";
-import { getMessages, getRecentAuditLogs } from "@/lib/storage";
+import { getMessages, getRecentAuditLogs, getStorageMode } from "@/lib/storage";
 
 export async function GET(request: Request) {
   try {
@@ -27,7 +27,7 @@ export async function GET(request: Request) {
       auditLogs,
       stats: {
         totalMessages: messages.length,
-        storageMode: "filesystem",
+        storageMode: getStorageMode(),
         lastAuditCount: auditLogs.length,
       },
     });

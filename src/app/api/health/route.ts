@@ -1,17 +1,12 @@
 import { NextResponse } from "next/server";
+import { getStorageMode } from "@/lib/storage";
 
 export async function GET() {
   return NextResponse.json({
-    status: "healthy",
+    status: "ok",
     timestamp: new Date().toISOString(),
-    uptime: process.uptime(),
-    security: {
-      headersEnforced: true,
-      rateLimiting: "ACTIVE",
-      xssDefense: "STRICT",
-      cspEnforced: true,
-      corsRestricted: true,
-    },
+    uptime: Math.floor(process.uptime()),
+    storage: getStorageMode(),
     version: "1.0.0",
   });
 }

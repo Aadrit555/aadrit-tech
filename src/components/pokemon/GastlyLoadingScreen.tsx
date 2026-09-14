@@ -18,7 +18,7 @@ export default function GastlyLoadingScreen({ onComplete }: GastlyLoadingScreenP
     const fadeTimer = setTimeout(() => {
       setLoading(false);
       if (onComplete) onComplete();
-    }, 600);
+    }, 350);
     return () => clearTimeout(fadeTimer);
   }, [onComplete]);
 
@@ -34,7 +34,7 @@ export default function GastlyLoadingScreen({ onComplete }: GastlyLoadingScreenP
 
   useEffect(() => {
     const startTime = Date.now();
-    const duration = 1600;
+    const duration = 850;
 
     const updateInterval = setInterval(() => {
       const elapsed = Date.now() - startTime;
@@ -50,9 +50,9 @@ export default function GastlyLoadingScreen({ onComplete }: GastlyLoadingScreenP
         clearInterval(updateInterval);
         setTimeout(() => {
           finishLoading();
-        }, 200);
+        }, 120);
       }
-    }, 30);
+    }, 20);
 
     return () => clearInterval(updateInterval);
   }, [finishLoading]);
