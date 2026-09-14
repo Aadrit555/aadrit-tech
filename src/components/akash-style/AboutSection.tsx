@@ -30,7 +30,7 @@ export default function AboutSection() {
                     <div className="text-[10px] font-mono text-zinc-400 uppercase tracking-wider">
                       TRAINER CARD // NO. 0384
                     </div>
-                    <div className="font-mono font-bold text-zinc-950 text-base">Aadrit Srivastava</div>
+                    <div className="font-mono font-bold text-zinc-950 text-base">Aadrit</div>
                     <div className="text-xs font-mono text-zinc-500">AI/ML & Systems Undergrad</div>
                   </div>
                   <span className="text-[#dc2626] flex items-center gap-1 text-[11px] font-mono font-bold px-2 py-0.5 rounded bg-red-50 border border-red-200">
@@ -64,7 +64,7 @@ export default function AboutSection() {
 
                   <div className="flex items-center justify-between pb-1.5 border-b border-zinc-100">
                     <span className="text-zinc-400">Degree Focus</span>
-                    <span className="text-zinc-900 font-medium">B.Tech CSE (2023 - 2027)</span>
+                    <span className="text-zinc-900 font-medium">B.Tech CSE (2025 - 2029)</span>
                   </div>
 
                   <div className="flex items-center justify-between pb-1.5 border-b border-zinc-100">

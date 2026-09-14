@@ -15,7 +15,7 @@ export default function TerminalConsole() {
       command: "welcome",
       output: [
         "DEVON CORP. HOENN POKÉDEX DIAGNOSTICS [v3.0-emerald]",
-        "Aadrit Srivastava :: Systems & AI/ML Engineer Register",
+        "Aadrit :: Systems & AI/ML Engineer Register",
         "Type 'help' to inspect system commands or click quick actions below.",
       ],
     },
@@ -59,7 +59,7 @@ export default function TerminalConsole() {
 
       case "whoami":
         output = [
-          "NAME:     Aadrit Srivastava",
+          "NAME:     Aadrit",
           "ROLE:     AI/ML & Systems Developer",
           "SCHOOL:   SRM University AP (B.Tech Computer Science & Engineering)",
           "LOCATION: Lucknow, Uttar Pradesh, India",

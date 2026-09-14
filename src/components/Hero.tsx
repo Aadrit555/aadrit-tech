@@ -53,7 +53,7 @@ export default function Hero() {
             <div className="space-y-2">
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white font-sans">
                 <DecryptedText
-                  text="Aadrit Srivastava"
+                  text="Aadrit"
                   speed={35}
                   maxIterations={12}
                   className="text-white"
@@ -148,7 +148,7 @@ export default function Hero() {
               <div className="w-full aspect-square relative rounded border border-border-dim overflow-hidden bg-surface-raised">
                 <Image
                   src="/images/aadrit.png"
-                  alt="Aadrit Srivastava"
+                  alt="Aadrit"
                   fill
                   priority
                   sizes="(max-width: 768px) 256px, 288px"

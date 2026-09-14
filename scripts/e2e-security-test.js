@@ -59,7 +59,7 @@ async function runE2ETests() {
     assert(homeRes.headers["referrer-policy"] === "strict-origin-when-cross-origin", "Referrer-Policy header present");
     assert(homeRes.headers["content-security-policy"]?.includes("default-src 'self'"), "CSP header present");
     assert(!homeRes.headers["x-powered-by"], "X-Powered-By is suppressed (no fingerprinting)");
-    assert(homeRes.body.includes("Aadrit Srivastava"), "Home page contains Aadrit Srivastava");
+    assert(homeRes.body.includes("Aadrit"), "Home page contains Aadrit");
     assert(homeRes.body.includes("/images/aadrit.png"), "Home page references authentic portrait image");
 
     // 2. Dedicated Pages

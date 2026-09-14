@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ArrowLeft, FileText, Check, AlertTriangle, ShieldCheck } from "lucide-react";
 
 export const metadata = {
-  title: "Terms of Use | Aadrit Srivastava",
+  title: "Terms of Use | Aadrit",
   description: "Terms and conditions of use for aadrit.dev",
 };
 
@@ -57,8 +57,8 @@ export default function TermsPage() {
               hosted on GitHub.
             </p>
             <p>
-              The original written articles, personal branding, and portfolio layouts are the property of Aadrit
-              Srivastava. Uncredited reproduction or verbatim imitation for commercial misrepresentation is strictly prohibited.
+              The original written articles, personal branding, and portfolio layouts are the property of Aadrit.
+              Uncredited reproduction or verbatim imitation for commercial misrepresentation is strictly prohibited.
             </p>
           </section>
 
@@ -84,7 +84,7 @@ export default function TermsPage() {
             </h2>
             <p>
               The materials and research code on this site are provided on an &quot;as is&quot; basis without warranties of
-              any kind, either expressed or implied. Aadrit Srivastava shall not be held liable for any damages arising
+              any kind, either expressed or implied. Aadrit shall not be held liable for any damages arising
               from the use or inability to use the research materials or demonstrations.
             </p>
           </section>
@@ -110,7 +110,7 @@ export default function TermsPage() {
             </Link>
           </div>
 
-          <div>(c) {new Date().getFullYear()} Aadrit Srivastava. All rights reserved.</div>
+          <div>(c) {new Date().getFullYear()} Aadrit. All rights reserved.</div>
         </div>
       </div>
     </div>

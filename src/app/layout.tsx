@@ -21,11 +21,11 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Aadrit Srivastava | AI/ML & Systems Engineer",
+  title: "Aadrit | AI/ML & Systems Engineer",
   description:
-    "Portfolio of Aadrit Srivastava. Computer Science undergraduate at SRM University AP building lightweight NLP models, adversarial AI simulation frameworks, and firmware-level cryptographic security in C and Python.",
+    "Portfolio of Aadrit. Computer Science undergraduate at SRM University AP building lightweight NLP models, adversarial AI simulation frameworks, and firmware-level cryptographic security in C and Python.",
   keywords: [
-    "Aadrit Srivastava",
+    "Aadrit",
     "Systems Engineer",
     "Machine Learning",
     "SRM University AP",
@@ -35,8 +35,8 @@ export const metadata: Metadata = {
     "SuperRAG",
     "Next Tech Lab",
   ],
-  authors: [{ name: "Aadrit Srivastava" }],
-  creator: "Aadrit Srivastava",
+  authors: [{ name: "Aadrit" }],
+  creator: "Aadrit",
   metadataBase: new URL("https://aadrit.dev"),
   alternates: {
     canonical: "https://aadrit.dev",
@@ -47,17 +47,17 @@ export const metadata: Metadata = {
     apple: "/favicon.svg",
   },
   openGraph: {
-    title: "Aadrit Srivastava | AI/ML & Systems Engineer",
+    title: "Aadrit | AI/ML & Systems Engineer",
     description:
       "Computer Science undergraduate at SRM University AP building lightweight NLP models, adversarial AI simulations, and firmware-level security in C and Python.",
     url: "https://aadrit.dev",
-    siteName: "Aadrit Srivastava Portfolio",
+    siteName: "Aadrit Portfolio",
     images: [
       {
         url: "/images/aadrit.png",
         width: 600,
         height: 600,
-        alt: "Aadrit Srivastava",
+        alt: "Aadrit",
       },
     ],
     locale: "en_US",

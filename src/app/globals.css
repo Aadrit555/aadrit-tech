@@ -27,7 +27,7 @@ html {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  cursor: url('/images/pokeball_cursor.png') 12 12, url('/images/pokeball_cursor.svg') 12 12, auto;
+  cursor: url('/images/pokeball_cursor.png') 16 16, auto;
 }
 
 body {
@@ -37,11 +37,11 @@ body {
   background-color: transparent;
   color: #09090b;
   overflow-x: hidden;
-  cursor: url('/images/pokeball_cursor.png') 12 12, url('/images/pokeball_cursor.svg') 12 12, auto;
+  cursor: url('/images/pokeball_cursor.png') 16 16, auto;
 }
 
 a, button, [role="button"], input, select, textarea, .cursor-pointer, summary {
-  cursor: url('/images/pokeball_pointer.png') 14 14, url('/images/pokeball_pointer.svg') 14 14, pointer !important;
+  cursor: url('/images/pokeball_pointer.png') 16 16, pointer !important;
 }
 
 /* Subtle Pixelated Grid Background on Light Mode */

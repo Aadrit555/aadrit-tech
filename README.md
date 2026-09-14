@@ -1,6 +1,6 @@
 # aadrit.tech
 
-> Personal portfolio and interactive Pokédex-inspired technical dossier for **Aadrit Srivastava** — AI/ML & Systems Engineering Undergrad at SRM University AP.
+> Personal portfolio and interactive Pokédex-inspired technical dossier for **Aadrit** — AI/ML & Systems Engineering Undergrad at SRM University AP.
 
 [![Security Audit](https://img.shields.io/badge/Security%20Audit-33%2F33%20Passed-emerald.svg)](scripts/security-audit.js)
 [![Next.js](https://img.shields.io/badge/Next.js-14-black.svg)](https://nextjs.org/)
@@ -71,4 +71,5 @@ Open [http://localhost:3000](http://localhost:3000) to view the application in y
 
 ## License
 
-MIT © [Aadrit Srivastava](https://github.com/Aadrit555)
+MIT © [Aadrit](https://github.com/Aadrit555)
+

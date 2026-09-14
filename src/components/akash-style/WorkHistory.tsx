@@ -60,7 +60,7 @@ const academicAndHonors = [
     category: "Education",
     title: "SRM University AP",
     role: "B.Tech in Computer Science & Engineering",
-    period: "2023 - 2027",
+    period: "2025 - 2029",
     description:
       "Studying core computer science: operating systems, data structures, algorithms, and networks.",
   },

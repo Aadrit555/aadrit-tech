@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ArrowLeft, Shield, Lock, EyeOff, Server } from "lucide-react";
 
 export const metadata = {
-  title: "Privacy Policy | Aadrit Srivastava",
+  title: "Privacy Policy | Aadrit",
   description: "Privacy policy and data protection principles for aadrit.dev",
 };
 
@@ -41,7 +41,7 @@ export default function PrivacyPage() {
             </h2>
             <p>
               This website (<span className="font-mono text-zinc-900 font-medium">aadrit.dev</span>) is the personal
-              portfolio and engineering showcase of Aadrit Srivastava. I believe in zero unnecessary surveillance,
+              portfolio and engineering showcase of Aadrit. I believe in zero unnecessary surveillance,
               zero tracking pixels, and absolute data minimization.
             </p>
           </section>
@@ -119,7 +119,7 @@ export default function PrivacyPage() {
             </Link>
           </div>
 
-          <div>(c) {new Date().getFullYear()} Aadrit Srivastava. All rights reserved.</div>
+          <div>(c) {new Date().getFullYear()} Aadrit. All rights reserved.</div>
         </div>
       </div>
     </div>

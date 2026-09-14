@@ -195,7 +195,7 @@ export default function HeroSection() {
                 <div className="md:col-span-7 space-y-4">
                   <div>
                     <h1 className="text-3xl sm:text-5xl md:text-6xl font-normal tracking-tight text-zinc-950 font-sans leading-none">
-                      Aadrit Srivastava<span className="text-[#dc2626] font-serif italic">*</span>
+                      Aadrit<span className="text-[#dc2626] font-serif italic">*</span>
                     </h1>
                     <div className="text-lg sm:text-xl md:text-2xl text-zinc-600 font-serif italic font-normal mt-1">
                       AI/ML & Systems Engineer
@@ -306,7 +306,7 @@ export default function HeroSection() {
                       <div className="relative w-full h-full rounded-xs overflow-hidden bg-zinc-900">
                         <Image
                           src="/images/aadrit.png"
-                          alt="Aadrit Srivastava"
+                          alt="Aadrit"
                           fill
                           priority
                           sizes="(max-width: 768px) 176px, 192px"
@@ -424,7 +424,7 @@ export default function HeroSection() {
                 <span className="text-zinc-300 hidden sm:inline">·</span>
                 <span className="flex items-center gap-1.5">
                   <span className="w-2 h-2 rounded-full bg-amber-500" />
-                  <span className="text-zinc-900 font-bold">Academic:</span> B.Tech CSE Undergrad (2023 - 2027)
+                  <span className="text-zinc-900 font-bold">Academic:</span> B.Tech CSE Undergrad (2025 - 2029)
                 </span>
               </div>
 

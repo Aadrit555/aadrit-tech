@@ -100,7 +100,7 @@ export default function FooterCta() {
           <div className="pt-8 border-t border-border-dim flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-zinc-500">
             <div className="flex items-center gap-2">
               <span className="inline-block w-2 h-2 rounded-full bg-accent-emerald animate-pulse"></span>
-              <span>Aadrit Srivastava</span>
+              <span>Aadrit</span>
               <span className="text-zinc-300">/</span>
               <span>Lucknow, UP, India</span>
             </div>
@@ -120,7 +120,7 @@ export default function FooterCta() {
               </Link>
             </div>
 
-            <div>(c) {new Date().getFullYear()} Aadrit Srivastava. All rights reserved.</div>
+            <div>(c) {new Date().getFullYear()} Aadrit. All rights reserved.</div>
           </div>
         </div>
       </div>
