@@ -3,7 +3,7 @@ import { Instrument_Serif, Inter } from "next/font/google";
 import "./globals.css";
 import PokemonBackground from "@/components/pokemon/PokemonBackground";
 import GastlyLoadingScreen from "@/components/pokemon/GastlyLoadingScreen";
-import Header from "@/components/navigation/Header";
+import RohanHeader from "@/components/rohan-style/RohanHeader";
 
 const instrumentSerif = Instrument_Serif({
   weight: "400",
@@ -102,7 +102,7 @@ export default function RootLayout({
       <body className="bg-transparent text-text-primary min-h-screen flex flex-col font-sans selection:bg-[#f9452d]/15 selection:text-zinc-900 antialiased relative">
         <GastlyLoadingScreen />
         <PokemonBackground />
-        <Header />
+        <RohanHeader />
 
         {/* Main Content Area */}
         <main className="flex-1 relative z-10">{children}</main>

@@ -4,8 +4,9 @@ import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import dynamic from "next/dynamic";
 import { Gamepad2 } from "lucide-react";
+import ScrollReveal from "@/components/animations/ScrollReveal";
 
-// Dynamic import of Three.js game with SSR disabled
+// Dynamic import with SSR disabled to prevent Three.js window/DOM errors during static build
 const PokedexArcadeGame = dynamic(() => import("./PokedexArcadeGame"), {
   ssr: false,
   loading: () => (
@@ -52,30 +53,42 @@ export default function ArcadeSection() {
       }}
     >
       <div className="relative w-full max-w-4xl max-h-[95vh] overflow-hidden rounded-2xl shadow-2xl border border-zinc-700/80">
-        {/* 3D Game Engine */}
         <PokedexArcadeGame onClose={() => setIsOpen(false)} />
       </div>
     </div>
   ) : null;
 
   return (
-    <>
-      {/* Subtle, discreet small button at the very end */}
-      <div className="flex justify-center pb-8 pt-2 relative z-10">
-        <button
-          type="button"
-          onClick={() => setIsOpen(true)}
-          className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-mono text-zinc-500 hover:text-emerald-400 bg-zinc-900/50 hover:bg-zinc-900 border border-zinc-800/80 hover:border-emerald-500/40 transition-all cursor-pointer shadow-xs group"
-          title="Launch secret Devon Corp 3D Simulation Chamber"
-        >
-          <Gamepad2 className="w-3.5 h-3.5 text-zinc-600 group-hover:text-emerald-400 transition-colors" />
-          <span>Devon 3D Field Sim</span>
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500/60 group-hover:bg-emerald-400 animate-pulse" />
-        </button>
-      </div>
+    <section id="arcade" className="py-8 sm:py-12 bg-transparent relative z-10 max-w-5xl mx-auto px-4 sm:px-6">
+      <ScrollReveal>
+        <div className="p-6 sm:p-8 border border-[var(--border-subtle)] bg-[var(--bg-surface)] rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <div className="text-xs font-mono text-[#f9452d] tracking-wider uppercase mb-1 font-bold flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
+              <span>Devon Corp // 3D Simulation Chamber</span>
+            </div>
+            <h3 className="text-xl sm:text-2xl font-medium tracking-tight text-[var(--text-main)]">
+              Interactive 3D Ballistics Simulator
+            </h3>
+            <p className="text-xs sm:text-sm text-[var(--text-secondary)] mt-1 max-w-xl">
+              Real-time Three.js WebGL ballistic physics, procedural chiptune audio, and Hoenn targets.
+            </p>
+          </div>
 
-      {/* Portal rendered to body so it floats above all layout stacking contexts */}
+          <div className="flex items-center gap-3">
+            <button
+              type="button"
+              onClick={() => setIsOpen(true)}
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-md bg-zinc-900 text-white hover:bg-zinc-800 transition-all font-mono text-xs font-bold cursor-pointer shadow-sm group"
+            >
+              <Gamepad2 className="w-4 h-4 text-emerald-400 group-hover:rotate-12 transition-transform" />
+              <span>Launch Simulator</span>
+            </button>
+          </div>
+        </div>
+      </ScrollReveal>
+
       {mounted && typeof document !== "undefined" && createPortal(modalContent, document.body)}
-    </>
+    </section>
   );
 }

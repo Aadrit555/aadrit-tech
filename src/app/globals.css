@@ -14,6 +14,17 @@
   --text-main: #09090b;
   --text-secondary: #52525b;
   --text-muted: #71717a;
+
+  /* Rohan-style design tokens */
+  --background: #ffffff;
+  --foreground: #09090b;
+  --muted: #71717a;
+  --border: #e4e4e7;
+  --card: #ffffff;
+  --card-hover: #fafafa;
+  --background-hover: #f4f4f5;
+  --accent: #059669;
+  --accent-rgb: 5, 150, 105;
 }
 
 * {
@@ -87,6 +98,24 @@ body {
   100% {
     transform: translateX(100%);
   }
+}
+
+@keyframes ripple {
+  0% {
+    transform: translate(-50%, -50%) scale(0.8);
+    opacity: 0.25;
+  }
+  50% {
+    opacity: 0.15;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.6);
+    opacity: 0;
+  }
+}
+
+.animate-ripple {
+  animation: ripple 3.5s cubic-bezier(0, 0.2, 0.8, 1) infinite;
 }
 
 /* Crisp Scrollbar */

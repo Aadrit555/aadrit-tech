@@ -10,6 +10,7 @@ const NAV_ITEMS = [
   { label: "Experience", href: "#experience", id: "experience" },
   { label: "About", href: "#about", id: "about" },
   { label: "Terminal", href: "#terminal", id: "terminal", icon: true },
+  { label: "Arcade", href: "#arcade", id: "arcade" },
 ];
 
 export default function Header() {
@@ -17,7 +18,7 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    const sectionIds = ["work", "experience", "about", "terminal", "contact"];
+    const sectionIds = ["work", "experience", "about", "terminal", "arcade", "contact"];
 
     const observerCallback = (entries: IntersectionObserverEntry[]) => {
       const visible = entries.find((entry) => entry.isIntersecting);
