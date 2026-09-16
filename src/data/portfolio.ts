@@ -15,6 +15,7 @@ export interface Project {
   githubUrl?: string;
   demoUrl?: string;
   awardBadge?: string;
+  imageUrl?: string;
 }
 
 export interface FocusArea {
@@ -138,6 +139,7 @@ export const projects: Project[] = [
       { value: "C Language", label: "Core Engine" },
       { value: "pHash + ECDSA", label: "Tamper Detection" },
     ],
+    imageUrl: "/images/just-a-hack.png",
     githubUrl: "https://github.com/Aadrit555/Hemlock",
   },
   {

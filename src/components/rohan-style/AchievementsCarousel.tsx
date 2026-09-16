@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { Trophy, ChevronLeft, ChevronRight, ExternalLink, Award } from "lucide-react";
 
 interface Achievement {
@@ -12,6 +13,7 @@ interface Achievement {
   link?: string;
   badge: string;
   icon: React.ReactNode;
+  imageUrl?: string;
 }
 
 const ACHIEVEMENTS: Achievement[] = [
@@ -25,6 +27,7 @@ const ACHIEVEMENTS: Achievement[] = [
     link: "https://github.com/Aadrit555/Hemlock",
     badge: "Hackathon",
     icon: <Trophy className="w-8 h-8 text-amber-500" />,
+    imageUrl: "/images/just-a-hack.png",
   },
   {
     id: "manak-inspire",
@@ -63,13 +66,31 @@ export default function AchievementsCarousel() {
           {/* Left Visual Area */}
           <div className="w-full lg:w-2/5 h-44 sm:h-56 lg:h-72 bg-gradient-to-br from-zinc-900 to-zinc-950 p-6 flex flex-col items-center justify-center text-center relative overflow-hidden">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(16,185,129,0.15)_0%,transparent_70%)] pointer-events-none" />
-            <div className="w-16 h-16 rounded-2xl bg-zinc-800/80 border border-zinc-700 flex items-center justify-center mb-3 shadow-lg">
-              {current.icon}
-            </div>
-            <span className="font-mono text-xs text-emerald-400 font-bold uppercase tracking-wider">
+            {current.imageUrl && (
+              <div
+                className="absolute inset-0 bg-cover bg-center opacity-15 blur-sm scale-110 pointer-events-none"
+                style={{ backgroundImage: `url(${current.imageUrl})` }}
+              />
+            )}
+            {current.imageUrl ? (
+              <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-zinc-900/90 border border-zinc-700/80 p-2 flex items-center justify-center mb-3 shadow-xl relative overflow-hidden backdrop-blur-sm">
+                <Image
+                  src={current.imageUrl}
+                  alt={current.title}
+                  width={96}
+                  height={96}
+                  className="w-full h-full object-contain rounded-xl"
+                />
+              </div>
+            ) : (
+              <div className="w-16 h-16 rounded-2xl bg-zinc-800/80 border border-zinc-700 flex items-center justify-center mb-3 shadow-lg relative">
+                {current.icon}
+              </div>
+            )}
+            <span className="font-mono text-xs text-emerald-400 font-bold uppercase tracking-wider relative">
               {current.badge}
             </span>
-            <span className="font-mono text-[11px] text-zinc-400 mt-1">
+            <span className="font-mono text-[11px] text-zinc-400 mt-1 relative">
               RECORD // 0{currentIndex + 1} OF 0{ACHIEVEMENTS.length}
             </span>
           </div>

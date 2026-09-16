@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { ArrowUpRight, Github, ExternalLink, Zap, Trophy, X } from "lucide-react";
 import { projects, Project } from "@/data/portfolio";
 
@@ -137,6 +138,23 @@ export default function ProjectsTable() {
               <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-amber-500/10 border border-amber-500/20 text-xs font-mono text-amber-700 dark:text-amber-300">
                 <Trophy className="w-3.5 h-3.5 text-amber-500" />
                 <span>{selectedProject.awardBadge}</span>
+              </div>
+            )}
+
+            {/* Project Graphic / Brand Banner if present */}
+            {selectedProject.imageUrl && (
+              <div className="w-full h-36 sm:h-44 rounded-lg border border-[var(--border)] bg-zinc-950 flex items-center justify-center overflow-hidden relative p-3">
+                <div
+                  className="absolute inset-0 bg-cover bg-center opacity-15 blur-sm scale-110 pointer-events-none"
+                  style={{ backgroundImage: `url(${selectedProject.imageUrl})` }}
+                />
+                <Image
+                  src={selectedProject.imageUrl}
+                  alt={selectedProject.title}
+                  width={110}
+                  height={110}
+                  className="object-contain max-h-full rounded-lg shadow-lg relative z-10"
+                />
               </div>
             )}
 
