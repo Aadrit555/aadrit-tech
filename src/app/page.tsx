@@ -55,7 +55,7 @@ export default function Home() {
       {/* Footer */}
       <footer className="py-8 sm:py-12 max-w-5xl mx-auto border-t border-[var(--border)] px-4 sm:px-6 mt-12">
         <div className="flex flex-col sm:flex-row justify-between items-center gap-4 text-xs font-mono text-[var(--muted)]">
-          <p>Aadrit Shrivastava © {new Date().getFullYear()} · Hoenn Dex #0384</p>
+          <p>Aadrit © {new Date().getFullYear()} · Hoenn Dex #0384</p>
           <div className="flex items-center gap-4">
             <a
               href="https://github.com/Aadrit555"

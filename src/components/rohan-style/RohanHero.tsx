@@ -73,7 +73,7 @@ export default function RohanHero() {
               className="text-4xl sm:text-6xl md:text-7xl font-semibold lowercase leading-none tracking-tight font-sans"
               style={{ lineHeight: 1.05 }}
             >
-              aadrit shrivastava
+              aadrit
             </h1>
 
             <a

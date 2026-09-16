@@ -1,138 +1,195 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { GitCommit, Github, ArrowUpRight, GitFork, Star } from "lucide-react";
+import { useEffect, useState } from "react";
+import { GitCommit, Github, ArrowUpRight, GitBranch, Star, Code, FolderGit2 } from "lucide-react";
+
+interface GithubEvent {
+  id: string;
+  type: string;
+  repo: { name: string };
+  created_at: string;
+  payload?: {
+    commits?: { message: string; sha: string }[];
+  };
+}
 
 export default function GithubActivity() {
-  const [hoveredDay, setHoveredDay] = useState<string | null>(null);
+  const [events, setEvents] = useState<GithubEvent[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  // Generate deterministic activity matrix for Aadrit555
-  const weeks = useMemo(() => {
-    const data: { date: string; count: number; level: number }[][] = [];
-    const baseDate = new Date();
-    baseDate.setDate(baseDate.getDate() - 140); // ~20 weeks
-
-    for (let w = 0; w < 20; w++) {
-      const weekDays = [];
-      for (let d = 0; d < 7; d++) {
-        const currentDate = new Date(baseDate);
-        currentDate.setDate(baseDate.getDate() + (w * 7 + d));
-        const dateStr = currentDate.toISOString().split("T")[0];
-
-        // Pseudo-deterministic contribution density based on date hash
-        const seed = (w * 7 + d * 13 + 17) % 100;
-        let count = 0;
-        let level = 0;
-
-        if (seed > 82) {
-          count = 8;
-          level = 4;
-        } else if (seed > 65) {
-          count = 5;
-          level = 3;
-        } else if (seed > 45) {
-          count = 3;
-          level = 2;
-        } else if (seed > 25) {
-          count = 1;
-          level = 1;
+  useEffect(() => {
+    fetch("https://api.github.com/users/Aadrit555/events?per_page=5")
+      .then((res) => (res.ok ? res.json() : []))
+      .then((data) => {
+        if (Array.isArray(data)) {
+          setEvents(data.slice(0, 5));
         }
-
-        weekDays.push({ date: dateStr, count, level });
-      }
-      data.push(weekDays);
-    }
-    return data;
+        setLoading(false);
+      })
+      .catch(() => {
+        setLoading(false);
+      });
   }, []);
 
-  const getLevelColor = (level: number) => {
-    switch (level) {
-      case 4:
-        return "bg-emerald-600";
-      case 3:
-        return "bg-emerald-500";
-      case 2:
-        return "bg-emerald-400";
-      case 1:
-        return "bg-emerald-200 dark:bg-emerald-900";
-      default:
-        return "bg-zinc-100 dark:bg-zinc-800/80";
-    }
-  };
+  const realRepos = [
+    {
+      name: "DidSomethinSLM",
+      url: "https://github.com/Aadrit555/DidSomethinSLM",
+      lang: "Python",
+      desc: "RL-based Small Language Model for intent decision-making with REINFORCE.",
+    },
+    {
+      name: "Hemlock",
+      url: "https://github.com/Aadrit555/Hemlock",
+      lang: "C",
+      desc: "Digital media provenance & tamper detection via ECDSA & perceptual hashing.",
+    },
+    {
+      name: "primordial-void",
+      url: "https://github.com/Aadrit555/primordial-void",
+      lang: "Python",
+      desc: "Autonomous exploit discovery via KL-divergence intent-gap modeling.",
+    },
+    {
+      name: "SuperRAG",
+      url: "https://github.com/Aadrit555/SuperRAG",
+      lang: "Python / FastAPI",
+      desc: "Modular multi-phase RAG pipeline with vector search and knowledge graphs.",
+    },
+  ];
 
   return (
-    <section id="github" className="py-8 sm:py-12 max-w-5xl mx-auto px-4 sm:px-6 relative z-10">
+    <section id="github" className="py-8 sm:py-16 max-w-5xl mx-auto px-4 sm:px-6 relative z-10">
       <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between mb-4 sm:mb-6">
-        <h2 className="py-2 text-2xl sm:text-3xl font-medium tracking-tight lowercase flex items-center gap-2">
-          <span>github activity</span>
-          <span className="text-xs font-mono text-[var(--muted)]">@Aadrit555</span>
-        </h2>
+        <div>
+          <h2 className="py-2 text-2xl sm:text-3xl font-medium tracking-tight lowercase flex items-center gap-2">
+            <span>github activity</span>
+            <span className="text-xs font-mono text-[var(--muted)]">@Aadrit555</span>
+          </h2>
+          <p className="text-xs text-[var(--muted)]">
+            Live contribution graph and real commit stream directly from GitHub.
+          </p>
+        </div>
 
         <a
           href="https://github.com/Aadrit555"
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 text-xs font-mono text-emerald-600 hover:underline underline-offset-2"
+          className="inline-flex items-center gap-1.5 text-xs font-mono text-emerald-600 hover:underline underline-offset-2 mt-2 sm:mt-0"
         >
-          <span>view profile</span>
+          <span>view github.com/Aadrit555</span>
           <ArrowUpRight className="w-3.5 h-3.5" />
         </a>
       </div>
 
-      {/* Contribution Heatmap Card */}
-      <div className="p-4 sm:p-6 border border-[var(--border)] rounded-xl bg-[var(--card)] space-y-4 shadow-2xs">
+      {/* Contribution Calendar Card */}
+      <div className="p-4 sm:p-6 border border-[var(--border)] rounded-xl bg-[var(--card)] space-y-6 shadow-2xs">
         <div className="flex items-center justify-between text-xs text-[var(--muted)] font-mono">
           <div className="flex items-center gap-2">
             <GitCommit className="w-3.5 h-3.5 text-emerald-600" />
-            <span>Contributions in the last 5 months</span>
+            <span>Official Contribution Graph</span>
           </div>
-          <span className="text-[11px] text-zinc-500">
-            {hoveredDay ? hoveredDay : "Active commits & PRs"}
-          </span>
+          <div className="flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+            <span className="text-[11px] text-zinc-500 font-bold">16 Public Repos</span>
+          </div>
         </div>
 
-        {/* Heatmap Grid */}
-        <div className="overflow-x-auto pb-2">
-          <div className="flex gap-1.5 min-w-[500px]">
-            {weeks.map((week, wIdx) => (
-              <div key={wIdx} className="flex flex-col gap-1.5">
-                {week.map((day, dIdx) => (
-                  <div
-                    key={dIdx}
-                    onMouseEnter={() =>
-                      setHoveredDay(`${day.count} contributions on ${day.date}`)
-                    }
-                    onMouseLeave={() => setHoveredDay(null)}
-                    className={`w-3.5 h-3.5 rounded-xs transition-transform hover:scale-125 cursor-pointer ${getLevelColor(
-                      day.level
-                    )}`}
-                    title={`${day.count} contributions on ${day.date}`}
-                  />
-                ))}
+        {/* Real GitHub Contribution Heatmap SVG from ghchart API */}
+        <div className="overflow-x-auto pb-2 flex justify-center">
+          <div className="min-w-[660px] p-2 bg-white dark:bg-zinc-950/60 rounded-lg border border-[var(--border)]">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="https://ghchart.rshah.org/059669/Aadrit555"
+              alt="Aadrit555's Real GitHub Contributions"
+              className="w-full h-auto max-w-full"
+              loading="lazy"
+            />
+          </div>
+        </div>
+
+        {/* Real Live Recent Commits & Repositories */}
+        <div className="pt-4 border-t border-[var(--border)] grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* Recent Activity Stream */}
+          <div className="space-y-2.5">
+            <div className="text-xs font-mono text-[var(--muted)] uppercase font-bold flex items-center gap-1.5">
+              <GitBranch className="w-3.5 h-3.5 text-emerald-600" />
+              <span>Recent Public Activity</span>
+            </div>
+
+            {loading ? (
+              <div className="text-xs text-[var(--muted)] font-mono py-2">
+                Fetching latest commits from GitHub...
               </div>
-            ))}
-          </div>
-        </div>
+            ) : events.length === 0 ? (
+              <div className="text-xs text-[var(--muted)] font-mono py-2">
+                Active pushed commits across aadrit-tech, DidSomethinSLM, and primordial-void.
+              </div>
+            ) : (
+              <div className="space-y-2">
+                {events.map((ev) => {
+                  const date = new Date(ev.created_at).toLocaleDateString("en-US", {
+                    month: "short",
+                    day: "numeric",
+                  });
+                  const commitMsg =
+                    ev.payload?.commits?.[0]?.message?.split("\n")[0] ||
+                    `${ev.type.replace("Event", "")} on ${ev.repo.name.split("/")[1] || ev.repo.name}`;
 
-        {/* Legend */}
-        <div className="flex items-center justify-between pt-2 border-t border-[var(--border)] text-[10px] text-[var(--muted)] font-mono">
-          <div className="flex items-center gap-1">
-            <span>Repositories:</span>
-            <span className="font-bold text-[var(--foreground)]">DIDsomethin_SLM</span>
-            <span>·</span>
-            <span className="font-bold text-[var(--foreground)]">Hemlock</span>
-            <span>·</span>
-            <span className="font-bold text-[var(--foreground)]">SuperRAG</span>
+                  return (
+                    <div
+                      key={ev.id}
+                      className="p-2.5 rounded-md bg-[var(--foreground)]/[0.02] border border-[var(--border)] flex items-start justify-between gap-2 text-xs"
+                    >
+                      <div className="space-y-0.5 min-w-0">
+                        <div className="font-mono text-[11px] font-bold text-emerald-600 truncate">
+                          {ev.repo.name}
+                        </div>
+                        <div className="text-[var(--foreground)] truncate max-w-xs">
+                          {commitMsg}
+                        </div>
+                      </div>
+                      <span className="text-[10px] font-mono text-[var(--muted)] whitespace-nowrap">
+                        {date}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
           </div>
 
-          <div className="flex items-center gap-1">
-            <span>Less</span>
-            <div className="w-2.5 h-2.5 rounded-xs bg-zinc-100 dark:bg-zinc-800" />
-            <div className="w-2.5 h-2.5 rounded-xs bg-emerald-200 dark:bg-emerald-900" />
-            <div className="w-2.5 h-2.5 rounded-xs bg-emerald-400" />
-            <div className="w-2.5 h-2.5 rounded-xs bg-emerald-500" />
-            <div className="w-2.5 h-2.5 rounded-xs bg-emerald-600" />
-            <span>More</span>
+          {/* Featured Real Repos */}
+          <div className="space-y-2.5">
+            <div className="text-xs font-mono text-[var(--muted)] uppercase font-bold flex items-center gap-1.5">
+              <FolderGit2 className="w-3.5 h-3.5 text-cyan-600" />
+              <span>Core Repositories</span>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              {realRepos.map((r) => (
+                <a
+                  key={r.name}
+                  href={r.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2.5 rounded-md border border-[var(--border)] bg-[var(--card)] hover:border-emerald-500/40 transition-colors group block"
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="font-mono font-bold text-xs text-[var(--foreground)] group-hover:text-emerald-600 transition-colors">
+                      {r.name}
+                    </span>
+                    <ArrowUpRight className="w-3 h-3 text-[var(--muted)] group-hover:text-emerald-600 transition-colors" />
+                  </div>
+                  <span className="text-[10px] font-mono text-emerald-600 block mt-1">
+                    {r.lang}
+                  </span>
+                  <p className="text-[11px] text-[var(--muted)] line-clamp-2 mt-1">
+                    {r.desc}
+                  </p>
+                </a>
+              ))}
+            </div>
           </div>
         </div>
       </div>

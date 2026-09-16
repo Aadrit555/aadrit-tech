@@ -5,10 +5,11 @@ import { ArrowUpRight, Github, ExternalLink, Zap, Trophy, X } from "lucide-react
 import { projects, Project } from "@/data/portfolio";
 
 const PROJECT_DATES: Record<string, string> = {
-  slm: "January, 2025",
-  hemlock: "December, 2024",
-  chimera: "October, 2024",
-  superrag: "August, 2024",
+  slm: "January, 2026",
+  hemlock: "January, 2026",
+  "primordial-void": "June, 2026",
+  superrag: "February, 2026",
+  "aadrit-tech": "September, 2026",
 };
 
 export default function ProjectsTable() {
