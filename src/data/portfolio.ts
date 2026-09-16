@@ -224,7 +224,7 @@ export const leadershipRoles: LeadershipRole[] = [
     organization: "FOSS SRMAP",
     role: "Co-Lead at FOSS SRMAP",
     slug: "foss",
-    period: "2024 - Present",
+    period: "2026 - Present",
     website: "https://fossunited.org",
     logoUrl: "/images/foss.png",
     actionText: "Visit website",

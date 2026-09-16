@@ -98,7 +98,7 @@ async function runAudit() {
   const revocableToken = signSessionToken({ user: "admin" }, secret);
   const parsedBeforeRevocation = verifySessionToken(revocableToken, secret);
   assert(parsedBeforeRevocation.valid, "Token is initially valid before revocation");
-  
+
   const jtiToRevoke = parsedBeforeRevocation.data.jti;
   revokeSessionToken(jtiToRevoke, parsedBeforeRevocation.data.exp);
   assert(isSessionRevoked(jtiToRevoke), "isSessionRevoked confirms token marked as revoked");

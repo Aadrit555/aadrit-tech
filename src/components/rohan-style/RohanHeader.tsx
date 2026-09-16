@@ -32,7 +32,7 @@ export default function RohanHeader() {
     try {
       const crySound = new Audio("/sounds/rayquaza_cry.mp3");
       crySound.volume = 0.7;
-      crySound.play().catch(() => {});
+      crySound.play().catch(() => { });
     } catch {
       // ignore
     }
@@ -50,11 +50,10 @@ export default function RohanHeader() {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-40 w-full flex justify-center px-4 py-3 backdrop-blur-md border-b transition-all duration-300 overflow-x-hidden ${
-          isScrolled
+        className={`fixed top-0 left-0 right-0 z-40 w-full flex justify-center px-4 py-3 backdrop-blur-md border-b transition-all duration-300 overflow-x-hidden ${isScrolled
             ? "bg-white/80 dark:bg-zinc-950/80 border-[var(--border)] shadow-xs"
             : "bg-transparent border-transparent"
-        }`}
+          }`}
       >
         <div className="w-full max-w-5xl flex items-center justify-between px-2 sm:px-4">
           {/* Left Navigation */}

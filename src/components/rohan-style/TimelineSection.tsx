@@ -35,7 +35,7 @@ const TIMELINE_ITEMS: TimelineItem[] = [
   {
     role: "Co-Lead & Student Developer Mentor",
     organization: "FOSS SRMAP",
-    period: "2024 - present",
+    period: "2026 - present",
     location: "amaravati, ap",
   },
 ];

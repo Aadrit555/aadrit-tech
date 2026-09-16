@@ -259,11 +259,10 @@ export default function CommandPalette({
                   type="button"
                   onClick={item.action}
                   onMouseEnter={() => setSelectedIndex(index)}
-                  className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-left text-xs transition-colors ${
-                    isSelected
+                  className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-left text-xs transition-colors ${isSelected
                       ? "bg-[var(--foreground)]/5 text-[var(--foreground)] font-medium"
                       : "text-[var(--foreground)]/80 hover:bg-[var(--foreground)]/5"
-                  }`}
+                    }`}
                 >
                   <div className="flex items-center gap-2.5">
                     <span className="flex-shrink-0">{item.icon}</span>
