@@ -1,8 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
-import { Trophy, ChevronLeft, ChevronRight, ExternalLink, Award, Shield, Sparkles } from "lucide-react";
+import { Trophy, ChevronLeft, ChevronRight, ExternalLink, Award } from "lucide-react";
 
 interface Achievement {
   id: string;
@@ -18,35 +17,24 @@ interface Achievement {
 const ACHIEVEMENTS: Achievement[] = [
   {
     id: "foss-hackathon",
-    title: "1st Place at FOSS United JUST A HACKATHON",
-    date: "2024",
+    title: "FOSS United JUST A HACKATHON",
+    date: "2025",
     description:
       "Engineered Hemlock, a low-level C cryptographic media integrity system combining perceptual hashing, ECDSA signatures, and adversarial pixel perturbation to detect unauthorized modification and preserve media provenance.",
-    prizeText: "1st Place Winner · FOSS United Foundation",
+    prizeText: "FOSS United Foundation",
     link: "https://github.com/Aadrit555/Hemlock",
-    badge: "Hackathon Winner",
+    badge: "Hackathon",
     icon: <Trophy className="w-8 h-8 text-amber-500" />,
   },
   {
     id: "manak-inspire",
     title: "National MANAK Inspire Award",
-    date: "DST, Govt. of India",
+    date: "2024",
     description:
       "Conferred the prestigious National MANAK Inspire Award by the Department of Science and Technology, Government of India, recognizing original applied engineering innovation and problem-solving.",
     prizeText: "National Honor · Department of Science & Technology",
     badge: "National Award",
     icon: <Award className="w-8 h-8 text-emerald-500" />,
-  },
-  {
-    id: "slm-research",
-    title: "DidSomethinSLM: Local CPU Intent Architecture",
-    date: "2025",
-    description:
-      "Designed and implemented a lightweight character-level attention policy network from scratch in PyTorch, mapping inputs to discrete actions via REINFORCE policy gradients without external pretrained weights.",
-    prizeText: "Independent Systems & ML Research",
-    link: "https://github.com/Aadrit555/DIDsomethin_SLM",
-    badge: "ML Systems Research",
-    icon: <Sparkles className="w-8 h-8 text-cyan-500" />,
   },
 ];
 

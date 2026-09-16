@@ -17,19 +17,19 @@ const TIMELINE_ITEMS: TimelineItem[] = [
   {
     role: "National MANAK Inspire Awardee",
     organization: "DST, Govt. of India",
-    period: "national recognition",
+    period: "2024",
     location: "new delhi, india",
   },
   {
-    role: "Winner at JUST A HACKATHON (Hemlock)",
+    role: "JUST A HACKATHON (Hemlock)",
     organization: "FOSS United Foundation",
-    period: "2024",
+    period: "2025",
     location: "india",
   },
   {
     role: "Member & Systems/ML Researcher",
     organization: "Next Tech Lab AP",
-    period: "nov 2024 - present",
+    period: "nov 2025 - present",
     location: "amaravati, ap",
   },
   {

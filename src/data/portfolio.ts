@@ -60,7 +60,7 @@ export const profile = {
   bio: [
     "I am a Computer Science student at SRM University AP, a member at Next Tech Lab (ntlap), and co-lead at FOSS SRMAP.",
     "I work with C for microcontrollers and embedded systems, and Python for lightweight machine learning models designed to run on standard hardware.",
-    "Recipient of the national MANAK Inspire Award by DST and winner at FOSS United JUST A HACKATHON.",
+    "Recipient of the national MANAK Inspire Award (2024) by DST and developer of Hemlock at FOSS United JUST A HACKATHON (2025).",
   ],
   contact: {
     email: "aadrit.yks@gmail.com",
@@ -124,17 +124,17 @@ export const projects: Project[] = [
     tmNumber: "02",
     category: "C & Image Security",
     title: "Hemlock",
-    awardBadge: "1st Place · FOSS United Hackathon 2024",
+    awardBadge: "FOSS United Hackathon 2025",
     description:
       "A security tool written in C to detect whether an image has been altered. It combines digital signatures (ECDSA) and perceptual image hashing to verify origin and catch tampering.",
     bullets: [
       "Wrote core image processing and verification logic in C.",
       "Uses perceptual hashing (pHash) and ECDSA signatures to verify file integrity.",
-      "Won first place at FOSS United JUST A HACKATHON 2024.",
+      "Built and presented at FOSS United JUST A HACKATHON 2025.",
     ],
     tags: ["C", "Security", "ECDSA", "Image Hashing", "FOSS United"],
     technicalDetails: [
-      { value: "1st Place", label: "FOSS United Hackathon" },
+      { value: "2025", label: "FOSS United Hackathon" },
       { value: "C Language", label: "Core Engine" },
       { value: "pHash + ECDSA", label: "Tamper Detection" },
     ],
@@ -207,7 +207,7 @@ export const leadershipRoles: LeadershipRole[] = [
     organization: "Next Tech Lab AP",
     role: "Member at NTL AP",
     slug: "ntlap",
-    period: "Nov 2024 - Present",
+    period: "Nov 2025 - Present",
     website: "https://www.ntlap.in",
     logoUrl: "/images/ntl.png",
     actionText: "Visit website",
@@ -252,17 +252,17 @@ export const academicAndHonors: HonorItem[] = [
     category: "National Honor",
     title: "MANAK Inspire Award",
     role: "National Recognition",
-    period: "DST, Govt. of India",
+    period: "2024",
     description:
       "Awarded by the Department of Science and Technology for innovative applied engineering.",
   },
   {
     category: "Hackathon",
-    title: "JUST A HACKATHON Winner",
+    title: "JUST A HACKATHON",
     role: "FOSS United",
-    period: "2024",
+    period: "2025",
     description:
-      "Winning project at FOSS United JUST A HACKATHON 2024 for media integrity and tamper detection.",
+      "Presented Hemlock at FOSS United JUST A HACKATHON 2025 for media integrity and tamper detection.",
   },
 ];
 

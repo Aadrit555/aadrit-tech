@@ -28,7 +28,7 @@ export default function ServicesSection() {
 
   const reasons = [
     "deep focus on low-level efficiency and local computation on standard hardware",
-    "proven track record: National MANAK Inspire Award & FOSS United Hackathon winner",
+    "proven track record: National MANAK Inspire Award & FOSS United Hackathon",
     "clean, well-structured, production-ready C and Python implementations",
     "active leader in student developer communities (Next Tech Lab & FOSS SRMAP)",
     "fast turnaround time and transparent technical communication",
