@@ -74,15 +74,16 @@ export default function RohanHeader() {
 
             {/* Desktop Navigation with Rohan's Arrow-Slide Interaction */}
             <nav className="hidden md:flex items-center gap-5 lg:gap-7 text-sm font-medium lowercase">
-              {/* Subtle Hoenn Indicator */}
+              {/* Subtle Audio Status Indicator */}
               <button
                 type="button"
                 onClick={triggerCry}
-                title="Rayquaza Sensor // Hoenn No. 0384"
+                aria-label="Play audio cue"
+                title="Audio Cue // Click to trigger"
                 className="flex items-center gap-1.5 opacity-80 hover:opacity-100 transition-opacity cursor-pointer mr-1"
               >
                 <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)] animate-pulse" />
-                <span className="font-mono text-[11px] text-[var(--muted)]">0384</span>
+                <span className="font-mono text-[11px] text-[var(--muted)]">cue</span>
               </button>
 
               {navLinks.map((item) => (

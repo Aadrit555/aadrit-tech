@@ -25,9 +25,14 @@ jobs:
       - name: Run lint
         run: npm run lint
 
+      - name: Run TypeScript typecheck
+        run: npm run typecheck
+
       - name: Run security unit tests
         run: npm run test:security
 
+      - name: Dependency security scan
+        run: npm audit --audit-level=high || true
+
       - name: Build Next.js application
         run: npm run build
-

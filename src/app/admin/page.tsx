@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
-import { Shield, LogOut, Mail, Clock, Globe, RefreshCw, Terminal, AlertTriangle } from "lucide-react";
+import { Shield, LogOut, Mail, Clock, RefreshCw, Terminal, AlertTriangle } from "lucide-react";
 
 interface ContactMessage {
   id: string;
@@ -10,8 +10,7 @@ interface ContactMessage {
   email: string;
   subject: string;
   message: string;
-  ip: string;
-  userAgent: string;
+  userAgent?: string;
   receivedAt: string;
 }
 
@@ -151,10 +150,7 @@ export default function AdminDashboardPage() {
                     </div>
 
                     <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-border-dim text-[10px] font-mono text-zinc-400">
-                      <span className="flex items-center gap-1">
-                        <Globe className="w-3 h-3" />
-                        <span>IP: {msg.ip}</span>
-                      </span>
+                      <span>Status: Received &amp; Stored</span>
                       <span>ID: {msg.id}</span>
                     </div>
                   </div>

@@ -290,7 +290,7 @@ export default function CommandPalette({
             <span>↵ Select</span>
             <span>ESC Close</span>
           </div>
-          <span className="text-[10px] text-emerald-600 font-bold">POKÉDEX // CMD</span>
+          <span className="text-[10px] text-emerald-600 font-bold">WORKSTATION // CMD</span>
         </div>
       </div>
     </div>

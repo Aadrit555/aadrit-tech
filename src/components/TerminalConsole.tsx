@@ -21,7 +21,7 @@ export default function TerminalConsole() {
     {
       command: "welcome",
       output: [
-        "DEVON CORP. HOENN POKÉDEX DIAGNOSTICS [v3.0-emerald]",
+        "AADRIT WORKSTATION DIAGNOSTICS & TERMINAL [v3.0]",
         `${profile.name} :: ${profile.role}`,
         "Type 'help' to inspect system commands or click quick actions below.",
       ],
@@ -195,10 +195,10 @@ export default function TerminalConsole() {
         <div className="text-center mb-8 p-6 sm:p-8 bg-white/85 backdrop-blur-md border border-white/70 rounded-2xl shadow-md">
           <div className="text-xs font-mono text-[#dc2626] tracking-wider uppercase mb-2 font-bold flex items-center justify-center gap-2">
             <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
-            <span>Devon Corp. Diagnostics // Pokédex Terminal</span>
+            <span>Interactive Engineering Shell // Diagnostics</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-normal tracking-tight text-zinc-950 font-sans">
-            System & <span className="font-serif italic font-normal text-zinc-600">command console</span>
+            System &amp; <span className="font-serif italic font-normal text-zinc-600">command console</span>
           </h2>
           <p className="text-xs text-zinc-600 font-mono mt-2 mb-4">
             Inspect selected projects, focus areas, and implemented security controls directly.
@@ -229,7 +229,7 @@ export default function TerminalConsole() {
               <span className="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
               <span className="text-zinc-400 ml-2 flex items-center gap-1.5">
                 <TerminalIcon className="w-3.5 h-3.5 text-accent-emerald" />
-                <span>devon-os@pokedex-hoenn:~</span>
+                <span>aadrit@workstation:~</span>
               </span>
             </div>
 
@@ -257,6 +257,9 @@ export default function TerminalConsole() {
           {/* Terminal Body */}
           <div
             ref={terminalBodyRef}
+            role="log"
+            aria-live="polite"
+            aria-label="Terminal command history and output"
             className="p-4 sm:p-6 font-mono text-xs text-text-secondary min-h-[300px] max-h-[440px] overflow-y-auto space-y-4"
             onClick={() => inputRef.current?.focus()}
           >
@@ -284,19 +287,24 @@ export default function TerminalConsole() {
               }}
               className="flex items-center gap-2 text-text-primary pt-1"
             >
-              <span className="text-accent-emerald font-semibold">&gt;</span>
+              <label htmlFor="terminal-command-input" className="sr-only">
+                Terminal command input
+              </label>
+              <span className="text-accent-emerald font-semibold" aria-hidden="true">&gt;</span>
               <input
+                id="terminal-command-input"
                 ref={inputRef}
                 type="text"
                 value={input}
                 onKeyDown={handleKeyDown}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="type command (use up/down arrows for history)..."
+                aria-label="Terminal command input"
                 className="flex-1 bg-transparent border-none outline-none text-text-primary font-mono text-xs placeholder:text-zinc-700"
                 autoComplete="off"
                 spellCheck="false"
               />
-              <button type="submit" className="text-text-muted hover:text-white">
+              <button type="submit" aria-label="Execute command" className="text-text-muted hover:text-white">
                 <CornerDownLeft className="w-3.5 h-3.5" />
               </button>
             </form>

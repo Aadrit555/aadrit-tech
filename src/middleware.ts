@@ -1,24 +1,47 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { verifySessionTokenEdge } from "@/lib/edge-crypto";
 
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
+  const sessionSecret = process.env.SESSION_SECRET;
 
   // 1. Route Protection for Admin UI (/admin except /admin/login)
   if (pathname.startsWith("/admin") && pathname !== "/admin/login") {
     const sessionCookie = request.cookies.get("session_token");
-    if (!sessionCookie?.value) {
+    let isValid = false;
+
+    if (sessionCookie?.value && sessionSecret) {
+      const verification = await verifySessionTokenEdge(sessionCookie.value, sessionSecret);
+      isValid = verification.valid;
+    }
+
+    if (!isValid) {
       const loginUrl = new URL("/admin/login", request.url);
       loginUrl.searchParams.set("redirect", pathname);
-      return NextResponse.redirect(loginUrl);
+      const response = NextResponse.redirect(loginUrl);
+      if (sessionCookie) {
+        response.cookies.delete("session_token");
+      }
+      return response;
     }
   }
 
   // 2. API Protection for Admin Endpoints (/api/admin/*)
   if (pathname.startsWith("/api/admin")) {
     const sessionCookie = request.cookies.get("session_token");
-    if (!sessionCookie?.value) {
-      return NextResponse.json({ error: "Unauthorized access. Valid credentials required." }, { status: 401 });
+    let isValid = false;
+
+    if (sessionCookie?.value && sessionSecret) {
+      const verification = await verifySessionTokenEdge(sessionCookie.value, sessionSecret);
+      isValid = verification.valid;
+    }
+
+    if (!isValid) {
+      return NextResponse.json(
+        { error: "Unauthorized access. Valid credentials required." },
+        { status: 401 }
+      );
     }
   }
 

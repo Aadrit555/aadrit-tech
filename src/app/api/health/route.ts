@@ -1,13 +1,12 @@
 import { NextResponse } from "next/server";
-import { getStorageMode } from "@/lib/storage";
 
+/**
+ * Public health check endpoint.
+ * Returns minimal operational status without leaking system uptime,
+ * storage architecture, or internal software versions.
+ */
 export async function GET() {
   return NextResponse.json({
     status: "ok",
-    timestamp: new Date().toISOString(),
-    uptime: Math.floor(process.uptime()),
-    storage: getStorageMode(),
-    version: "1.0.0",
   });
 }
-

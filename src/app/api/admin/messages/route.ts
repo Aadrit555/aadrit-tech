@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 import { verifySessionToken } from "@/lib/security";
 import { getMessages, getRecentAuditLogs, getStorageMode } from "@/lib/storage";
 
-export async function GET(request: Request) {
+export async function GET() {
   try {
     const cookieStore = await cookies();
     const sessionCookie = cookieStore.get("session_token");
@@ -15,7 +15,10 @@ export async function GET(request: Request) {
 
     const verification = verifySessionToken(sessionCookie.value, secret);
     if (!verification.valid) {
-      return NextResponse.json({ error: "Session token invalid or expired." }, { status: 401 });
+      return NextResponse.json(
+        { error: verification.error || "Session token invalid, expired, or revoked." },
+        { status: 401 }
+      );
     }
 
     const messages = getMessages();
@@ -30,9 +33,14 @@ export async function GET(request: Request) {
         totalMessages: messages.length,
         storageMode: getStorageMode(),
         lastAuditCount: auditLogs.length,
+        uptime: Math.floor(process.uptime()),
       },
     });
   } catch {
     return NextResponse.json({ error: "Failed to retrieve administrative records" }, { status: 500 });
   }
+}
+
+export async function POST() {
+  return NextResponse.json({ error: "Method Not Allowed" }, { status: 405 });
 }

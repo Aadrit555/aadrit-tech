@@ -8,8 +8,7 @@ export interface ContactMessage {
   email: string;
   subject: string;
   message: string;
-  ip: string;
-  userAgent: string;
+  userAgent?: string;
   receivedAt: string;
 }
 
@@ -24,7 +23,7 @@ function resolveDataDir(): string {
     fs.unlinkSync(testFile);
     return localDir;
   } catch {
-    // Read-only filesystem detected (e.g., serverless environments)
+    // Fallback for read-only / transient serverless environments
     const tmpDir = path.join(os.tmpdir(), "portfolio-data");
     try {
       if (!fs.existsSync(tmpDir)) {
@@ -50,10 +49,31 @@ export function getStorageMode(): StorageMode {
   return "memory";
 }
 
-// In-memory buffer fallback for environments with transient storage limits
+// In-memory buffer fallback for transient environments
 const memoryMessages: ContactMessage[] = [];
 const memoryAudit: string[] = [];
 
+/**
+ * Anonymizes client IP addresses for security audit logging without persisting PII.
+ */
+export function maskIp(ip: string): string {
+  if (!ip || ip === "127.0.0.1" || ip === "::1") return "localhost";
+  if (ip.includes(".")) {
+    const parts = ip.split(".");
+    if (parts.length === 4) {
+      return `${parts[0]}.${parts[1]}.${parts[2]}.xxx`;
+    }
+  } else if (ip.includes(":")) {
+    const parts = ip.split(":");
+    return `${parts.slice(0, 3).join(":")}:xxxx:...`;
+  }
+  return "masked-ip";
+}
+
+/**
+ * Saves contact message. In compliance with user privacy principles,
+ * visitor IP addresses are NOT stored in persistent message records.
+ */
 export function saveMessage(msg: Omit<ContactMessage, "id" | "receivedAt">): ContactMessage {
   const id = `msg_${Date.now()}_${Math.random().toString(36).substring(2, 8)}`;
   const messageObj: ContactMessage = {
@@ -86,7 +106,9 @@ export function saveMessage(msg: Omit<ContactMessage, "id" | "receivedAt">): Con
     console.warn("Notice: Message saved to in-memory buffer (read-only filesystem):", err);
   }
 
-  logSecurityEvent("MESSAGE_RECEIVED", `Message ID ${id} from ${msg.email} (${msg.ip})`);
+  // Mask email for internal audit log to minimize stored personal data
+  const maskedEmail = msg.email.replace(/^(.)(.*)(@.*)$/, (_, first, _rest, domain) => `${first}***${domain}`);
+  logSecurityEvent("MESSAGE_RECEIVED", `Message ID ${id} from ${maskedEmail}`);
   return messageObj;
 }
 
@@ -108,7 +130,7 @@ export function logSecurityEvent(type: string, details: string) {
   try {
     fs.appendFileSync(AUDIT_FILE, line, { mode: 0o600, encoding: "utf-8" });
   } catch {
-    // Fail silently in read-only environments
+    // Fail gracefully in read-only environments
   }
 }
 

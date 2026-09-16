@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "typecheck": "tsc --noEmit",
     "test:security": "tsx scripts/security-audit.js",
     "test:e2e": "node scripts/e2e-security-test.js"
   },

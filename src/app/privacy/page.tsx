@@ -55,20 +55,21 @@ export default function PrivacyPage() {
               No personal information is collected simply by browsing the site. Information processed by this site may include:
             </p>
             <ul className="list-disc list-inside space-y-1.5 pl-2 text-zinc-600 font-mono text-xs">
-              <li>Contact Form: Name, email address, subject, and message submitted voluntarily for correspondence.</li>
-              <li>Client Metadata & Security Logging: Client IP address, user-agent string, and timestamp recorded in local security logs to prevent automated abuse and unauthorized access.</li>
-              <li>Application-Level Rate Limiting: Client IP addresses processed temporarily in-memory to throttle excessive request bursts.</li>
+              <li>Contact Form: Name, email address, subject, and message submitted voluntarily for correspondence. Client IP addresses are not stored in message records.</li>
+              <li>Transient Rate Limiting: Client IP addresses are processed strictly in volatile memory (sliding-window buffer) to prevent automated abuse and brute-force attempts. They are never persisted to disk.</li>
+              <li>Security Audit Logs: Internal audit records track security events with masked IP representations to protect visitor privacy while maintaining system defenses.</li>
             </ul>
           </section>
 
           <section className="space-y-3">
             <h2 className="text-base font-bold text-zinc-950 font-mono flex items-center gap-2">
               <Server className="w-4 h-4 text-accent-emerald" />
-              <span>3. Data Handling & Security</span>
+              <span>3. Data Handling & Storage Architecture</span>
             </h2>
             <p>
-              Messages submitted through the contact endpoint are validated and stored on the server so I can read
-              and respond to inquiries. They are never sold, rented, or distributed to any third parties.
+              Correspondence submitted through the contact endpoint is validated against strict schemas and stored
+              locally on the server so I can review and respond to inquiries. Contact entries contain only the information
+              you voluntarily provide. They are never sold, shared, or distributed to any third parties.
             </p>
           </section>
 

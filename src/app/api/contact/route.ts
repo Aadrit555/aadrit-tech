@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { sanitizeInput } from "@/lib/security";
+import { sanitizeInput, getClientIp } from "@/lib/security";
 import { checkRateLimit } from "@/lib/rate-limiter";
 import { saveMessage } from "@/lib/storage";
 
@@ -21,11 +21,13 @@ const contactSchema = z.object({
     .string()
     .min(5, "Message must be at least 5 characters")
     .max(2500, "Message cannot exceed 2500 characters"),
+  // Anti-spam honeypot field (bots fill this, legitimate users leave empty)
+  hp_company: z.string().optional(),
 });
 
 export async function POST(request: Request) {
   try {
-    const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "127.0.0.1";
+    const ip = getClientIp(request);
     const userAgent = request.headers.get("user-agent") || "unknown";
 
     // 1. Payload Size Guard (Max 32KB)
@@ -63,21 +65,29 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: firstError }, { status: 422 });
     }
 
-    const { name, email, subject, message } = parseResult.data;
+    const { name, email, subject, message, hp_company } = parseResult.data;
 
-    // 3. Strict Server-Side Sanitization
+    // 4. Anti-spam honeypot trigger: quietly discard automated bot submissions
+    if (hp_company && hp_company.trim().length > 0) {
+      return NextResponse.json({
+        success: true,
+        messageId: `msg_${Date.now()}_hp`,
+        message: "Message received. I'll respond directly. Thank you.",
+      });
+    }
+
+    // 5. Server-side defense-in-depth input normalization
     const sanitizedName = sanitizeInput(name);
     const sanitizedEmail = sanitizeInput(email);
     const sanitizedSubject = sanitizeInput(subject);
     const sanitizedMessage = sanitizeInput(message);
 
-    // 4. Save to secure server storage
+    // 6. Save message (without persisting visitor IP address to preserve privacy)
     const saved = saveMessage({
       name: sanitizedName,
       email: sanitizedEmail,
       subject: sanitizedSubject,
       message: sanitizedMessage,
-      ip,
       userAgent: sanitizeInput(userAgent).slice(0, 200),
     });
 
@@ -94,8 +104,15 @@ export async function POST(request: Request) {
   }
 }
 
-// Reject all other HTTP methods
+// Reject unsupported HTTP methods
 export async function GET() {
   return NextResponse.json({ error: "Method Not Allowed" }, { status: 405 });
 }
 
+export async function PUT() {
+  return NextResponse.json({ error: "Method Not Allowed" }, { status: 405 });
+}
+
+export async function DELETE() {
+  return NextResponse.json({ error: "Method Not Allowed" }, { status: 405 });
+}

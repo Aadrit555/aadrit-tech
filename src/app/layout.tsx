@@ -38,6 +38,17 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://aadrit.tech",
   },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
   icons: {
     icon: "/favicon.svg",
     shortcut: "/favicon.svg",
@@ -82,7 +93,7 @@ const personJsonLd = {
   },
   sameAs: [
     "https://github.com/Aadrit555",
-    "https://linkedin.com/in/aadrit-shrivastava",
+    "https://linkedin.com/in/skaoldi-ntlap",
   ],
 };
 
@@ -100,12 +111,22 @@ export default function RootLayout({
         />
       </head>
       <body className="bg-transparent text-text-primary min-h-screen flex flex-col font-sans selection:bg-[#f9452d]/15 selection:text-zinc-900 antialiased relative">
+        {/* Skip Navigation Link for WCAG Accessibility */}
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-emerald-700 focus:text-white focus:rounded-md focus:shadow-xl focus:outline-none focus:ring-2 focus:ring-emerald-400 font-mono text-xs"
+        >
+          Skip to main content
+        </a>
+
         <GastlyLoadingScreen />
         <PokemonBackground />
         <RohanHeader />
 
-        {/* Main Content Area */}
-        <main className="flex-1 relative z-10">{children}</main>
+        {/* Main Content Landmark */}
+        <main id="main-content" className="flex-1 relative z-10" tabIndex={-1}>
+          {children}
+        </main>
       </body>
     </html>
   );
