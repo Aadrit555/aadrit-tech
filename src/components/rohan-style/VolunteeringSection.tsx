@@ -1,7 +1,8 @@
 "use client";
 
+import Image from "next/image";
 import { leadershipRoles } from "@/data/portfolio";
-import { ExternalLink, Users, FlaskConical } from "lucide-react";
+import { ExternalLink } from "lucide-react";
 
 export default function VolunteeringSection() {
   return (
@@ -17,8 +18,24 @@ export default function VolunteeringSection() {
             className="border border-[var(--border)] p-5 sm:p-6 rounded-lg hover:bg-[var(--background-hover)] transition-all duration-300 bg-[var(--card)]"
           >
             {/* Header: Organization & Date */}
-            <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-1 sm:gap-0 mb-2">
-              <div>
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-0 mb-3">
+              <div className="flex items-center gap-3">
+                {role.logoUrl && (
+                  <a
+                    href={role.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-10 h-10 rounded-lg border border-[var(--border)] bg-zinc-900/10 dark:bg-zinc-800/40 p-1 flex items-center justify-center overflow-hidden flex-shrink-0 hover:border-emerald-500 transition-colors"
+                  >
+                    <Image
+                      src={role.logoUrl}
+                      alt={`${role.organization} logo`}
+                      width={36}
+                      height={36}
+                      className="object-contain w-full h-full rounded"
+                    />
+                  </a>
+                )}
                 <h3 className="text-xl font-bold">
                   <a
                     href={role.website}
