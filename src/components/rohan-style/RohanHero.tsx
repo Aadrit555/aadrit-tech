@@ -5,11 +5,11 @@ import { Mail, Volume2, VolumeX, Sparkles } from "lucide-react";
 import { profile } from "@/data/portfolio";
 
 const ROLES = [
-  "AI/ML & Systems Developer",
-  "C & Low-Level Engineer",
-  "PyTorch Policy & Intent Models",
+  "Machine Learning & Systems",
+  "C & Low-Level Software",
+  "PyTorch Models",
   "FOSS SRMAP Co-Lead",
-  "DST MANAK Inspire Awardee",
+  "MANAK Inspire Awardee",
 ];
 
 export default function RohanHero() {
@@ -191,22 +191,22 @@ export default function RohanHero() {
           </span>
         </a>
 
-        {/* Rayquaza Dex Audio Pill */}
+        {/* Sound Pill */}
         <button
           type="button"
           onClick={toggleSound}
           className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-mono border border-[var(--border)] bg-[var(--background)] hover:bg-[var(--foreground)]/5 text-[var(--muted)] hover:text-[var(--foreground)] transition-all cursor-pointer ml-auto"
-          title="Play Dex Sound (Rayquaza Cry)"
+          title="Play Sound (Rayquaza Cry)"
         >
           {isPlayingAudio ? (
             <>
               <VolumeX className="w-3.5 h-3.5 text-[#f9452d] animate-pulse" />
-              <span className="text-[11px] text-[#f9452d]">playing cry...</span>
+              <span className="text-[11px] text-[#f9452d]">playing...</span>
             </>
           ) : (
             <>
               <Volume2 className="w-3.5 h-3.5 text-emerald-600" />
-              <span className="text-[11px]">hoenn #0384 sound</span>
+              <span className="text-[11px]">sound</span>
             </>
           )}
         </button>

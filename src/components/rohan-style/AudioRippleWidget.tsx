@@ -80,13 +80,13 @@ export default function AudioRippleWidget() {
                   isPlaying ? "bg-emerald-500 animate-ping" : "bg-zinc-400"
                 }`}
               />
-              <span>HOENN SOUND MATRIX // NO. 0384</span>
+              <span>AUDIO // HOENN NO. 0384</span>
             </div>
             <h3 className="text-xl sm:text-2xl font-medium tracking-tight text-[var(--foreground)]">
-              Rayquaza Ambient Resonance
+              Ambient Audio & Sound
             </h3>
             <p className="text-xs sm:text-sm text-[var(--muted)] max-w-md">
-              Acoustic chiptune and synthesizer resonance tuned to Hoenn skies. Click to initiate ripple harmonics.
+              A gentle chiptune sound inspired by Hoenn. Click to play the sound and trigger the animated ripple.
             </p>
           </div>
 
@@ -103,12 +103,12 @@ export default function AudioRippleWidget() {
               {isPlaying ? (
                 <>
                   <Disc3 className="w-4 h-4 animate-spin text-white" />
-                  <span>Resonance Active</span>
+                  <span>Playing Sound</span>
                 </>
               ) : (
                 <>
                   <Volume2 className="w-4 h-4 text-emerald-400" />
-                  <span>Emit Resonance</span>
+                  <span>Play Sound</span>
                 </>
               )}
             </button>

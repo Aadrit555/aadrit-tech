@@ -20,7 +20,7 @@ export default function SkillsBento() {
             </span>
           </div>
           <p className="leading-relaxed text-sm text-[var(--muted)]">
-            C (C99/C11), Embedded C, Low-Level Memory Management, Linux System Calls, POSIX Threads, Makefile, GCC/Clang, GDB, Valgrind, Hardware Interfacing.
+            C (C99/C11), Embedded C, memory management, Linux system calls, POSIX threads, Makefiles, GCC/Clang, GDB, Valgrind, and hardware interfacing.
           </p>
         </div>
 
@@ -28,29 +28,29 @@ export default function SkillsBento() {
         <div className="border border-[var(--border)] p-6 bg-[var(--card)] rounded-lg hover:border-cyan-500/40 transition-colors">
           <div className="flex items-center justify-between mb-3">
             <h3 className="text-lg font-semibold lowercase text-[var(--foreground)]">
-              machine learning & ai
+              machine learning
             </h3>
             <span className="font-mono text-[10px] text-cyan-600 font-bold px-1.5 py-0.5 rounded bg-cyan-500/10 border border-cyan-500/20">
               PYTORCH
             </span>
           </div>
           <p className="leading-relaxed text-sm text-[var(--muted)]">
-            Python, PyTorch, REINFORCE Policy Gradients, Self-Attention Mechanisms, Tokenization, NumPy, Local CPU Inference, Small Language Models (SLM).
+            Python, PyTorch, policy models, attention mechanisms, tokenizers, NumPy, and lightweight CPU inference for small models.
           </p>
         </div>
 
-        {/* Cryptography & Security */}
+        {/* Security & Image Integrity */}
         <div className="border border-[var(--border)] p-6 bg-[var(--card)] rounded-lg hover:border-amber-500/40 transition-colors">
           <div className="flex items-center justify-between mb-3">
             <h3 className="text-lg font-semibold lowercase text-[var(--foreground)]">
-              cryptography & security
+              security & verification
             </h3>
             <span className="font-mono text-[10px] text-amber-600 font-bold px-1.5 py-0.5 rounded bg-amber-500/10 border border-amber-500/20">
               HEMLOCK
             </span>
           </div>
           <p className="leading-relaxed text-sm text-[var(--muted)]">
-            ECDSA Signatures, Perceptual Hashing (pHash), Adversarial Pixel Perturbations, Cryptographic Tamper Verification, Media Provenance Systems.
+            Cryptographic signatures, perceptual image hashing, tamper detection algorithms, and content verification systems.
           </p>
         </div>
 
@@ -61,11 +61,11 @@ export default function SkillsBento() {
               tools & workflow
             </h3>
             <span className="font-mono text-[10px] text-purple-600 font-bold px-1.5 py-0.5 rounded bg-purple-500/10 border border-purple-500/20">
-              DEV STACK
+              STACK
             </span>
           </div>
           <p className="leading-relaxed text-sm text-[var(--muted)]">
-            Linux, Git & GitHub, Bash Scripting, Neovim, Docker, FastAPI, Three.js WebGL, Tailwind CSS, TypeScript, CI/CD Actions, Open-Source Sprint Leading.
+            Linux, Git & GitHub, Bash, Neovim, Docker, FastAPI, TypeScript, Next.js, and leading open-source student sprints.
           </p>
         </div>
       </div>

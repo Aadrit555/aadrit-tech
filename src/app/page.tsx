@@ -9,7 +9,6 @@ import ContactSegmentedBar from "@/components/rohan-style/ContactSegmentedBar";
 import ServicesSection from "@/components/rohan-style/ServicesSection";
 import AudioRippleWidget from "@/components/rohan-style/AudioRippleWidget";
 import TerminalConsole from "@/components/TerminalConsole";
-import ArcadeSection from "@/components/game/ArcadeSection";
 
 export default function Home() {
   return (
@@ -49,8 +48,6 @@ export default function Home() {
         <TerminalConsole />
       </div>
 
-      {/* 12. Devon Corp 3D Simulation Chamber */}
-      <ArcadeSection />
 
       {/* Footer */}
       <footer className="py-8 sm:py-12 max-w-5xl mx-auto border-t border-[var(--border)] px-4 sm:px-6 mt-12">

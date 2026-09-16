@@ -132,13 +132,7 @@ export default function CommandPalette({
       icon: <Terminal className="w-4 h-4 text-emerald-500" />,
       action: () => navigateTo("terminal"),
     },
-    {
-      id: "nav-arcade",
-      label: "Launch Devon 3D Arcade",
-      category: "Navigation",
-      icon: <Gamepad2 className="w-4 h-4 text-cyan-500" />,
-      action: () => navigateTo("arcade"),
-    },
+
     {
       id: "act-copy-email",
       label: copied ? "Email Copied to Clipboard!" : "Copy Email Address",
