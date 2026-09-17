@@ -3,6 +3,7 @@ import { Instrument_Serif, Inter } from "next/font/google";
 import "./globals.css";
 import PokemonBackground from "@/components/pokemon/PokemonBackground";
 import GastlyLoadingScreen from "@/components/pokemon/GastlyLoadingScreen";
+import RayquazaCompanion from "@/components/pokemon/RayquazaCompanion";
 import RohanHeader from "@/components/rohan-style/RohanHeader";
 
 const instrumentSerif = Instrument_Serif({
@@ -121,6 +122,7 @@ export default function RootLayout({
 
         <GastlyLoadingScreen />
         <PokemonBackground />
+        <RayquazaCompanion />
         <RohanHeader />
 
         {/* Main Content Landmark */}

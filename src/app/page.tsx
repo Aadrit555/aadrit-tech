@@ -7,7 +7,6 @@ import VolunteeringSection from "@/components/rohan-style/VolunteeringSection";
 import TimelineSection from "@/components/rohan-style/TimelineSection";
 import ContactSegmentedBar from "@/components/rohan-style/ContactSegmentedBar";
 import ServicesSection from "@/components/rohan-style/ServicesSection";
-import AudioRippleWidget from "@/components/rohan-style/AudioRippleWidget";
 import TerminalConsole from "@/components/TerminalConsole";
 
 export default function Home() {
@@ -40,10 +39,7 @@ export default function Home() {
       {/* 9. Services & Collaboration Section */}
       <ServicesSection />
 
-      {/* 10. Hoenn / Rayquaza Ripple Sound Widget */}
-      <AudioRippleWidget />
-
-      {/* 11. Interactive Terminal Console */}
+      {/* 10. Interactive Terminal Console */}
       <div id="terminal" className="pt-8">
         <TerminalConsole />
       </div>
