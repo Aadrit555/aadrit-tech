@@ -104,17 +104,17 @@ export default function AchievementsCarousel() {
                     {current.title}
                   </h3>
                 </div>
-                <span className="text-xs sm:text-sm text-[var(--muted)] whitespace-nowrap flex-shrink-0 font-mono">
+                <span className="text-xs sm:text-sm text-zinc-700 whitespace-nowrap flex-shrink-0 font-mono font-medium">
                   {current.date}
                 </span>
               </div>
 
-              <p className="text-xs sm:text-sm text-[var(--muted)] leading-relaxed">
+              <p className="text-xs sm:text-sm text-zinc-700 leading-relaxed font-normal">
                 {current.description}
               </p>
 
               <div className="flex items-center justify-between pt-1">
-                <p className="text-sm font-semibold text-emerald-600 dark:text-emerald-400">
+                <p className="text-sm font-bold text-emerald-700">
                   {current.prizeText}
                 </p>
 
@@ -141,11 +141,10 @@ export default function AchievementsCarousel() {
                     key={item.id}
                     type="button"
                     onClick={() => setCurrentIndex(idx)}
-                    className={`h-2 rounded-full transition-all duration-300 ${
-                      idx === currentIndex
+                    className={`h-2 rounded-full transition-all duration-300 ${idx === currentIndex
                         ? "w-6 bg-zinc-900 dark:bg-white"
                         : "w-2 bg-zinc-300 dark:bg-zinc-700 hover:bg-zinc-400"
-                    }`}
+                      }`}
                     aria-label={`Go to achievement ${idx + 1}`}
                   />
                 ))}

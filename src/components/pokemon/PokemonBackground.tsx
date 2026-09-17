@@ -43,8 +43,8 @@ export default function PokemonBackground() {
           <source src="/images/emerald_title.webm" type="video/webm" />
         </video>
 
-        {/* Ultra-subtle tint to ensure comfortable contrast */}
-        <div className="absolute inset-0 bg-sky-950/10" />
+        {/* Frosted paper backdrop overlay to ensure crisp, readable text contrast while keeping the Emerald animated scenery alive */}
+        <div className="absolute inset-0 bg-white/80 backdrop-blur-[2px]" />
       </div>
 
       {/* 2. Subtle Ambient Emerald Ozone Motes */}

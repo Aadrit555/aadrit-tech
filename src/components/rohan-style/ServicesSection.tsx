@@ -41,7 +41,7 @@ export default function ServicesSection() {
       </h2>
 
       <div className="border border-[var(--border)] p-6 sm:p-8 bg-[var(--card)] rounded-lg space-y-8">
-        <p className="text-sm sm:text-base text-[var(--muted)] leading-relaxed">
+        <p className="text-sm sm:text-base text-zinc-700 leading-relaxed font-normal">
           looking to engineer something robust? i am available for systems development, machine learning engineering, algorithmic research, and technical collaborations.
         </p>
 
@@ -56,7 +56,7 @@ export default function ServicesSection() {
                 <h4 className="font-semibold text-sm sm:text-base mb-1 text-[var(--foreground)]">
                   {svc.title}
                 </h4>
-                <p className="text-xs sm:text-sm text-[var(--muted)] leading-relaxed">
+                <p className="text-xs sm:text-sm text-zinc-600 leading-relaxed font-normal">
                   {svc.desc}
                 </p>
               </div>
@@ -71,7 +71,7 @@ export default function ServicesSection() {
           </h3>
           <ul className="space-y-2.5">
             {reasons.map((reason, idx) => (
-              <li key={idx} className="flex gap-2.5 text-xs sm:text-sm text-[var(--foreground)]/90">
+              <li key={idx} className="flex gap-2.5 text-xs sm:text-sm text-zinc-800 font-medium">
                 <span className="text-emerald-600 font-bold flex-shrink-0">→</span>
                 <span>{reason}</span>
               </li>

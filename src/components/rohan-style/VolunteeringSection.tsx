@@ -48,18 +48,18 @@ export default function VolunteeringSection() {
                   </a>
                 </h3>
               </div>
-              <span className="text-xs sm:text-sm text-[var(--muted)] font-mono whitespace-nowrap">
+              <span className="text-xs sm:text-sm text-zinc-700 font-mono font-medium whitespace-nowrap">
                 {role.period}
               </span>
             </div>
 
             {/* Role Title */}
-            <p className="text-sm font-medium text-emerald-600 dark:text-emerald-400 mb-3">
+            <p className="text-sm font-semibold text-emerald-700 mb-2">
               {role.role}
             </p>
 
             {/* Description & Bullets */}
-            <p className="text-xs sm:text-sm text-[var(--muted)] leading-relaxed mb-4">
+            <p className="text-xs sm:text-sm text-zinc-700 leading-relaxed mb-4 font-normal">
               {role.description}
             </p>
 
@@ -68,7 +68,7 @@ export default function VolunteeringSection() {
               {role.tags.map((tag, idx) => (
                 <span
                   key={idx}
-                  className="px-2.5 py-1 border border-[var(--border)] rounded-md text-xs font-mono font-medium text-[var(--foreground)]/80 bg-[var(--foreground)]/[0.02]"
+                  className="px-2.5 py-1 border border-zinc-200 rounded-md text-xs font-mono font-semibold text-zinc-800 bg-zinc-100"
                 >
                   {tag}
                 </span>

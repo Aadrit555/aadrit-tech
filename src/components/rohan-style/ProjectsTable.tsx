@@ -29,7 +29,7 @@ export default function ProjectsTable() {
       {/* Table Container */}
       <div className="w-full border-t border-[var(--border)]">
         {/* Table Header Row */}
-        <div className="hidden md:grid grid-cols-12 gap-4 py-3 border-b border-[var(--border)] sticky top-14 bg-[var(--background)]/90 backdrop-blur-md z-10 text-xs font-mono font-medium text-[var(--muted)] tracking-wider">
+        <div className="hidden md:grid grid-cols-12 gap-4 py-3 border-b border-[var(--border)] sticky top-14 bg-white/95 backdrop-blur-md z-10 text-xs font-mono font-bold text-zinc-700 tracking-wider">
           <div className="col-span-3">/ DATE</div>
           <div className="col-span-5">/ NAME</div>
           <div className="col-span-3 text-right">/ TYPE</div>
@@ -50,18 +50,18 @@ export default function ProjectsTable() {
                 {/* Mobile Row View */}
                 <div className="md:hidden flex flex-col gap-1.5">
                   <div className="flex items-center justify-between">
-                    <div className="font-medium text-base text-[var(--foreground)] group-hover:text-emerald-600 transition-colors flex items-center gap-2">
-                      <span className="text-xs font-mono px-1.5 py-0.5 rounded bg-[var(--foreground)]/5 border border-[var(--border)]">
+                    <div className="font-semibold text-base text-zinc-950 group-hover:text-emerald-700 transition-colors flex items-center gap-2">
+                      <span className="text-xs font-mono px-1.5 py-0.5 rounded bg-zinc-100 border border-zinc-200 text-zinc-800 font-semibold">
                         {proj.tmNumber}
                       </span>
                       <span>{proj.title.split("(")[0].trim()}</span>
                     </div>
-                    <span className="text-xs group-hover:rotate-45 group-hover:text-emerald-600 transition-all duration-300">
+                    <span className="text-xs group-hover:rotate-45 group-hover:text-emerald-700 transition-all duration-300 font-bold text-zinc-600">
                       ↑
                     </span>
                   </div>
 
-                  <div className="flex items-center justify-between text-xs text-[var(--muted)]">
+                  <div className="flex items-center justify-between text-xs text-zinc-600 font-medium">
                     <span>{dateStr}</span>
                     <span className="truncate max-w-[200px]">{proj.category}</span>
                   </div>
@@ -69,28 +69,28 @@ export default function ProjectsTable() {
 
                 {/* Desktop 4-Column Grid */}
                 <div className="hidden md:grid grid-cols-12 gap-4 items-center">
-                  <div className="col-span-3 text-xs text-[var(--muted)] font-mono group-hover:text-emerald-600 transition-colors">
+                  <div className="col-span-3 text-xs text-zinc-600 font-mono font-medium group-hover:text-emerald-700 transition-colors">
                     {dateStr}
                   </div>
 
-                  <div className="col-span-5 font-medium text-base text-[var(--foreground)] group-hover:text-emerald-600 transition-colors flex items-center gap-2">
-                    <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-[var(--foreground)]/5 border border-[var(--border)] text-[var(--muted)]">
+                  <div className="col-span-5 font-semibold text-base text-zinc-950 group-hover:text-emerald-700 transition-colors flex items-center gap-2">
+                    <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-zinc-100 border border-zinc-200 text-zinc-700 font-semibold">
                       {proj.tmNumber}
                     </span>
                     <span>{proj.title.split("(")[0].trim()}</span>
                     {proj.awardBadge && (
-                      <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-amber-500/10 text-amber-600 border border-amber-500/20 font-medium">
+                      <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-amber-500/10 text-amber-700 border border-amber-500/30 font-bold">
                         Award
                       </span>
                     )}
                   </div>
 
-                  <div className="col-span-3 text-xs text-right text-[var(--muted)] group-hover:text-[var(--foreground)] transition-colors truncate">
+                  <div className="col-span-3 text-xs text-right text-zinc-600 font-medium group-hover:text-zinc-950 transition-colors truncate">
                     {proj.category}
                   </div>
 
                   <div className="col-span-1 text-right text-xs pr-2">
-                    <span className="inline-block group-hover:rotate-45 group-hover:text-emerald-600 transition-all duration-300 text-[var(--muted)]">
+                    <span className="inline-block group-hover:rotate-45 group-hover:text-emerald-700 transition-all duration-300 text-zinc-500 font-bold">
                       ↑
                     </span>
                   </div>

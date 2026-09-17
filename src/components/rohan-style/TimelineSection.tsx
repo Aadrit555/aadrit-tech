@@ -54,15 +54,15 @@ export default function TimelineSection() {
             className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 sm:gap-4 py-3.5 sm:py-4 border-b border-[var(--border)] last:border-b-0 hover:bg-emerald-500/[0.02] transition-colors"
           >
             <div className="flex-1 min-w-0 flex flex-wrap items-baseline gap-1.5 text-sm sm:text-base">
-              <span className="font-medium text-[var(--foreground)]">{item.role}</span>
-              <span className="text-[var(--muted)] font-mono text-xs">@</span>
-              <span className="text-[var(--muted)]">{item.organization}</span>
+              <span className="font-semibold text-zinc-950">{item.role}</span>
+              <span className="text-zinc-500 font-mono text-xs font-bold">@</span>
+              <span className="text-zinc-700 font-medium">{item.organization}</span>
             </div>
 
-            <div className="text-xs sm:text-sm text-[var(--muted)] font-mono sm:text-right whitespace-nowrap">
+            <div className="text-xs sm:text-sm text-zinc-700 font-mono font-medium sm:text-right whitespace-nowrap">
               <span>{item.period}</span>
               <span className="mx-1.5 opacity-50">·</span>
-              <span className="opacity-80">{item.location}</span>
+              <span className="text-zinc-600">{item.location}</span>
             </div>
           </div>
         ))}

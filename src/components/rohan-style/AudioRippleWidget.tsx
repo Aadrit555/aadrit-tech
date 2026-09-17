@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
+import Image from "next/image";
 import { Volume2, VolumeX, Disc3, Sparkles } from "lucide-react";
 
 export default function AudioRippleWidget() {
@@ -45,47 +46,59 @@ export default function AudioRippleWidget() {
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full pointer-events-none flex items-center justify-center">
           <div className="relative w-[360px] h-[360px] flex items-center justify-center">
             <div
-              className={`absolute rounded-full border border-emerald-500/20 w-44 h-44 ${
-                isPlaying ? "animate-ripple" : "opacity-20"
-              }`}
+              className={`absolute rounded-full border border-emerald-500/20 w-44 h-44 ${isPlaying ? "animate-ripple" : "opacity-20"
+                }`}
               style={{ animationDelay: "0s" }}
             />
             <div
-              className={`absolute rounded-full border border-emerald-500/15 w-60 h-60 ${
-                isPlaying ? "animate-ripple" : "opacity-15"
-              }`}
+              className={`absolute rounded-full border border-emerald-500/15 w-60 h-60 ${isPlaying ? "animate-ripple" : "opacity-15"
+                }`}
               style={{ animationDelay: "0.6s" }}
             />
             <div
-              className={`absolute rounded-full border border-emerald-500/10 w-80 h-80 ${
-                isPlaying ? "animate-ripple" : "opacity-10"
-              }`}
+              className={`absolute rounded-full border border-emerald-500/10 w-80 h-80 ${isPlaying ? "animate-ripple" : "opacity-10"
+                }`}
               style={{ animationDelay: "1.2s" }}
             />
             <div
-              className={`absolute rounded-full border border-dashed border-emerald-500/10 w-96 h-96 ${
-                isPlaying ? "animate-ripple" : "opacity-5"
-              }`}
+              className={`absolute rounded-full border border-dashed border-emerald-500/10 w-96 h-96 ${isPlaying ? "animate-ripple" : "opacity-5"
+                }`}
               style={{ animationDelay: "1.8s" }}
             />
+
+            {/* Centered Moving Transparent Rayquaza */}
+            <div
+              className={`relative z-10 transition-all duration-500 select-none ${isPlaying
+                  ? "scale-115 drop-shadow-[0_0_24px_rgba(16,185,129,0.7)]"
+                  : "opacity-80 drop-shadow-[0_4px_12px_rgba(0,0,0,0.15)] hover:opacity-100 hover:scale-105"
+                }`}
+            >
+              <Image
+                src="/images/rayquaza_moving.gif"
+                alt="Moving Rayquaza"
+                width={120}
+                height={130}
+                unoptimized
+                className="object-contain pointer-events-none"
+              />
+            </div>
           </div>
         </div>
 
         {/* Foreground Content */}
         <div className="relative z-10 flex flex-col sm:flex-row items-center justify-between gap-6">
           <div className="space-y-2 text-center sm:text-left">
-            <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full border border-[var(--border)] bg-[var(--foreground)]/5 text-[10px] font-mono text-[var(--muted)]">
+            <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full border border-[var(--border)] bg-zinc-100 text-[10px] font-mono text-zinc-700 font-semibold">
               <span
-                className={`w-2 h-2 rounded-full ${
-                  isPlaying ? "bg-emerald-500 animate-ping" : "bg-zinc-400"
-                }`}
+                className={`w-2 h-2 rounded-full ${isPlaying ? "bg-emerald-500 animate-ping" : "bg-emerald-600"
+                  }`}
               />
               <span>AUDIO // HOENN NO. 0384</span>
             </div>
-            <h3 className="text-xl sm:text-2xl font-medium tracking-tight text-[var(--foreground)]">
+            <h3 className="text-xl sm:text-2xl font-semibold tracking-tight text-zinc-950">
               Ambient Audio & Sound
             </h3>
-            <p className="text-xs sm:text-sm text-[var(--muted)] max-w-md">
+            <p className="text-xs sm:text-sm text-zinc-600 font-medium max-w-md">
               A gentle chiptune sound inspired by Hoenn. Click to play the sound and trigger the animated ripple.
             </p>
           </div>
@@ -94,11 +107,10 @@ export default function AudioRippleWidget() {
             <button
               type="button"
               onClick={togglePlayback}
-              className={`flex items-center gap-2 px-5 py-3 rounded-full font-mono text-xs font-bold transition-all shadow-sm cursor-pointer ${
-                isPlaying
+              className={`flex items-center gap-2 px-5 py-3 rounded-full font-mono text-xs font-bold transition-all shadow-sm cursor-pointer ${isPlaying
                   ? "bg-emerald-600 text-white shadow-emerald-500/30 scale-105"
                   : "bg-zinc-900 text-white dark:bg-white dark:text-zinc-950 hover:opacity-90"
-              }`}
+                }`}
             >
               {isPlaying ? (
                 <>

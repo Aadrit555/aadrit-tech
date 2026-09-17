@@ -12,13 +12,13 @@
   --accent-cyan: #0891b2;
   --accent-orange: #f9452d;
   --text-main: #09090b;
-  --text-secondary: #52525b;
-  --text-muted: #71717a;
+  --text-secondary: #27272a;
+  --text-muted: #4b5563;
 
   /* Rohan-style design tokens */
   --background: #ffffff;
   --foreground: #09090b;
-  --muted: #71717a;
+  --muted: #4b5563;
   --border: #e4e4e7;
   --card: #ffffff;
   --card-hover: #fafafa;
