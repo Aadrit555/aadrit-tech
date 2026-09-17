@@ -99,8 +99,8 @@ export default function RohanHero() {
             </span>
             <span
               className={`inline-block font-bold text-zinc-950 transition-all duration-300 ${fadeState === "in"
-                  ? "opacity-100 translate-y-0 blur-none"
-                  : "opacity-0 -translate-y-1 blur-xs"
+                ? "opacity-100 translate-y-0 blur-none"
+                : "opacity-0 -translate-y-1 blur-xs"
                 }`}
             >
               {ROLES[roleIndex]}
